@@ -59,11 +59,11 @@ const BentoCard = ({
     <BorderBeam />
     <div>{background}</div>
     <div className="pointer-events-none  z-10 flex transform-gpu flex-col gap-1 max-sm:px-6 p-6 max-sm:py-2 transition-all duration-300 group-hover:-translate-y-5 ">
-      <Icon className="h-16 w-16 origin-left transform-gpu text-pink-100 transition-all duration-300 ease-in-out group-hover:scale-75 max-sm:h-8 max-sm:w-8" />
-      <h3 className="text-2xl font-semibold text-pink-200 max-sm:text-base ">
+      <Icon className="h-12 w-12 xl:h-16 xl:w-16 origin-left transform-gpu text-pink-100 transition-all duration-300 ease-in-out group-hover:scale-75 max-sm:h-8 max-sm:w-8" />
+      <h3 className="xl:text-2xl text-xl font-semibold text-pink-200 max-sm:text-base ">
         {name}
       </h3>
-      <p className="max-w-lg text-neutral-400 max-sm:hidden">{description}</p>
+      <p className="max-w-lg text-sm text-neutral-400 max-sm:hidden">{description}</p>
     </div>
 
     <div

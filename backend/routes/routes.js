@@ -241,10 +241,10 @@ router.post(
       .isURL()
       .withMessage("Image URL should be a valid URL."),
   ],
-  async (req, res) => {
+  async (req, res) => { 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ error: errors.array() });
     }
 
     try {
@@ -367,5 +367,22 @@ router.delete(
     }
   }
 );
+
+router.get("/productslist", fetchAdminUser, isAdmin, async (req, res) => {
+  const page = req.header('Page');
+  const pageSize = 5;
+
+  try {
+    const products = await Product.find().skip((page - 1) * pageSize).limit(pageSize);
+
+    const totalCount = await Product.countDocuments({});
+
+    res.status(200).json({ success: true, products, totalCount });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 module.exports = router;

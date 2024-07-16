@@ -5,7 +5,6 @@ import {
 
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
 import { DeleteIcon, List, Plus } from "lucide-react";
-import { MagicCard } from "@/components/magicui/magic-card";
 
 
 const Product = () => {
@@ -14,7 +13,7 @@ const Product = () => {
       Icon: Plus,
       name: "Add Products",
       description: "Seed your ecommerce website",
-      href: "/",
+      href: "/admin/addproducts",
       cta: "Go to",
       background: <img className="absolute -right-20 -top-20 opacity-60" />,
       className: "md:col-start-1 md:col-end-3 md:row-start-1 md:row-end-3",
@@ -32,7 +31,7 @@ const Product = () => {
       Icon: List,
       name: "Products List",
       description: "Get a list of al your products",
-      href: "/",
+      href: "/admin/productslist",
       cta: "Learn more",
       background: <img className="absolute -right-20 -top-20 opacity-60" />,
       className: "md:col-start-3 md:col-end-3 md:row-start-1 md:row-end-2",

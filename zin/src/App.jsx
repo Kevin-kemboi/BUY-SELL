@@ -5,12 +5,14 @@ import AdminRootLayout from "./zin-admin/_root/AdminRootLayout"
 import AdminDashboard from "./zin-admin/_root/pages/AdminDashboard"
 import { Route, Routes } from "react-router-dom"
 import Product from "./zin-admin/_root/pages/Product"
+import AddProducts from "./zin-admin/_root/pages/AddProducts"
+import ProductList from "./zin-admin/_root/pages/ProductList"
 
 
 function App() {
 
   return (
-    <main className="min-h-screen min-w-screen bg-dark-2 text-light-2">
+    <main className=" min-h-screen min-w-screen bg-dark-2 text-light-2">
       {/* Admin Public routes */}
       <Routes>
         <Route element={<AdminAuthLayout/>}>
@@ -23,7 +25,12 @@ function App() {
       <Routes>
         <Route element={<AdminRootLayout />} >
           <Route path="/admin" element={< AdminDashboard />} />
+          {/* product routes */}
           <Route path="/admin/products" element={< Product />} />
+          <Route path="/admin/addproducts" element={< AddProducts />} />
+          <Route path="/admin/updateproducts" element={< AddProducts />} />
+          <Route path="/admin/deleteproducts" element={< AddProducts />} />
+          <Route path="/admin/productslist" element={< ProductList />} />
         </Route>
 
       </Routes>

@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "@/zin-admin/context/AdminAuthProvider";
 import { loginAdmin } from "@/zin-admin/lib/api/api";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -21,6 +22,8 @@ const formSchema = z.object({
 });
 
 const AdminSignUp = () => {
+  const { toast } = useToast();
+
   const navigate = useNavigate();
   const { setIsAuthenticated } = useAdminAuth();
 
@@ -37,6 +40,10 @@ const AdminSignUp = () => {
     if (data.success) {
       localStorage.setItem("Cookie", data.authToken);
       navigate("/admin");
+      toast({
+        variant: "",
+        title: "Log-in Successful!!",
+      });
       form.reset();
       setIsAuthenticated(true);
     }
@@ -65,7 +72,7 @@ const AdminSignUp = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-5 w-[450px] flex flex-col text-pink-200 max-sm:w-[280px] "
+          className="space-y-5 bg-dark-2 p-7 rounded-xl w-[450px] flex flex-col text-pink-200 max-sm:w-[280px] "
         >
           <FormField
             control={form.control}
@@ -76,7 +83,7 @@ const AdminSignUp = () => {
                 <FormControl>
                   <Input
                     placeholder="Enter your email"
-                    className="bg-dark-2 text-light-2 border-none  "
+                    className="bg-dark-3 text-light-2 border border-dark-4  "
                     {...field}
                   />
                 </FormControl>
@@ -93,7 +100,7 @@ const AdminSignUp = () => {
                 <FormControl>
                   <Input
                     placeholder="Enter your password"
-                    className="bg-dark-2 text-light-2 border-none  "
+                    className="bg-dark-3 text-light-2 border border-dark-4   "
                     {...field}
                   />
                 </FormControl>
