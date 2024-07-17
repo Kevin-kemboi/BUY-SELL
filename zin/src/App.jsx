@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom"
 import Product from "./zin-admin/_root/pages/Product"
 import AddProducts from "./zin-admin/_root/pages/AddProducts"
 import ProductList from "./zin-admin/_root/pages/ProductList"
+import Users from "./zin-admin/_root/pages/Users"
 
 
 function App() {
@@ -31,6 +32,10 @@ function App() {
           <Route path="/admin/updateproducts" element={< AddProducts />} />
           <Route path="/admin/deleteproducts" element={< AddProducts />} />
           <Route path="/admin/productslist" element={< ProductList />} />
+
+          {/* User routes */}
+          <Route path="/admin/users" element={< Users />} />
+
         </Route>
 
       </Routes>

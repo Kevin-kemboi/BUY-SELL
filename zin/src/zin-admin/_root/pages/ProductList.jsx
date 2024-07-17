@@ -81,7 +81,9 @@ const ProductList = () => {
             <ProductCard key={product._id} product={product}/>
           ))
         ) : (
+          <div className="text-3xl w-full font-bold flex items-center justify-center col-start-1 text-pink-200 col-end-3">
           <p>No products available</p>
+          </div>
         )}
       </div>
       <div className="flex justify-between items-center w-full mt-5 max-md:mt-4 max-sm:mt-2 ">
@@ -100,7 +102,7 @@ const ProductList = () => {
                 ) : (
                   <PaginationLink
                     onClick={() => setCurrentPage(page)}
-                    className={page === currentPage ? "font-extrabold" : ""}
+                    className={page === currentPage ? "font-extrabold bg-white text-dark-2" : " "}
                   >
                     {page}
                   </PaginationLink>

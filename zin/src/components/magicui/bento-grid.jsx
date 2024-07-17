@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { BorderBeam } from "./border-beam";
 import { Link } from "react-router-dom";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import Particles from "./particles";
 
 const BentoGrid = ({ children, className }) => {
   return (
@@ -50,13 +49,6 @@ const BentoCard = ({
         className
       )}
     >
-      <Particles
-        className="absolute inset-0"
-        quantity={20}
-        ease={60}
-        color={"#ffffff"}
-        refresh
-      />
       <motion.div
         className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
         style={{

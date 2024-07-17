@@ -21,6 +21,7 @@ import {
 import { createAdminUser } from "../../lib/api/api";
 import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "@/zin-admin/context/AdminAuthProvider";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   username: z.string().min(3).max(50),
@@ -32,6 +33,7 @@ const formSchema = z.object({
 const AdminSignUp = () => {
   const navigate = useNavigate();
   const { setIsAuthenticated, setSignUp } = useAdminAuth();
+  const { toast } = useToast();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -51,6 +53,13 @@ const AdminSignUp = () => {
       form.reset();
       setIsAuthenticated(true);
       setSignUp(false);
+      toast({
+        title: "Sign-up successful!"
+      })
+    }else{
+      toast({
+        title: data.error
+      })
     }
   }
 

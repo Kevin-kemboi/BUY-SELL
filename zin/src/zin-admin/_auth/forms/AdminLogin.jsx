@@ -46,6 +46,10 @@ const AdminSignUp = () => {
       });
       form.reset();
       setIsAuthenticated(true);
+    }else{
+      toast({
+        title: data.error
+      })
     }
   }
 

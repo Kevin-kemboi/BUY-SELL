@@ -1,8 +1,8 @@
 // @/zin-admin/lib/constants/index.js or index.ts
-import { DeleteIcon, List, Plus } from "lucide-react";
+import { AmpersandIcon, DeleteIcon, List, Plus, User } from "lucide-react";
 import { UpdateIcon } from "@radix-ui/react-icons";
 
-export const features = [
+export const productMenu = [
   {
     Icon: Plus,
     name: "Add Products",
@@ -36,3 +36,22 @@ export const features = [
     className: "md:col-start-3 md:col-end-3 md:row-start-2 md:row-end-4",
   },
 ];
+
+export const usersMenu = [
+  {
+    Icon: User,
+    name: "Customers",
+    description: "Manage your store customers",
+    href: "/admin/users",
+    cta: "Go to",
+    className: "md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-3",
+  },
+  {
+    Icon: AmpersandIcon,
+    name: "Admins",
+    description: "Manage your Admin users",
+    href: "/admin/users",
+    cta: "Go to",
+    className: "md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-3",
+  },
+]
