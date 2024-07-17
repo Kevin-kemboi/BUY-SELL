@@ -10,6 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import ProductCard from "@/zin-admin/components/ProductCard";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -21,7 +22,7 @@ const ProductList = () => {
     if (data && data.products) {
       setProducts(data.products);
       const totalCount = data.totalCount;
-      const pageSize = 5;
+      const pageSize = 4;
       const totalPages = Math.ceil(totalCount / pageSize);
       setTotalPages(totalPages);
     }
@@ -45,7 +46,7 @@ const ProductList = () => {
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    const pageWindow = 1;
+    const pageWindow = 0;
   
     if (currentPage >= 1) {
       pageNumbers.push(1);
@@ -66,8 +67,6 @@ const ProductList = () => {
     if (totalPages > 1) {
       pageNumbers.push(totalPages);
     }
-
-    console.log(pageNumbers)
   
     return pageNumbers;
   };
@@ -75,28 +74,21 @@ const ProductList = () => {
 
   return (
     <div className="absolute inset-0 p-5 max-sm:p-2 min-h-full">
-      <div className="flex flex-wrap md:grid md:gap-4 overflow-auto gap-2 grid-rows-5 min-h-[90%]">
+      <h2 className="text-5xl m-5 font-bold pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-pink-200 to-dark-4 bg-clip-text leading-none text-transparent max-sm:text-3xl max-sm:text-center">Products List</h2>
+      <div className="flex flex-wrap md:grid md:gap-4 overflow-auto gap-2 grid-rows-2 grid-cols-2 min-h-[80%]">
         {products.length > 0 ? (
           products.map((product) => (
-            <div
-              key={product._id}
-              className="bg-dark-2 flex flex-col justify-center px-7 rounded-lg w-full text-dark-5 max-sm:px-3"
-            >
-              <h2 className="text-xl max-sm:text-lg font-bold">{product.name}</h2>
-              <p className="text-lg max-sm:text-sm">Price: ${product.price}</p>
-              <p className="text-lg max-sm:text-sm">Stock: {product.stock}</p>
-            </div>
+            <ProductCard key={product._id} product={product}/>
           ))
         ) : (
           <p>No products available</p>
         )}
       </div>
-      <div className="flex justify-between items-center w-full mt-7 max-md:mt-6 max-sm:mt-4">
+      <div className="flex justify-between items-center w-full mt-5 max-md:mt-4 max-sm:mt-2 ">
         <Pagination>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                href="#"
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               />
@@ -117,7 +109,6 @@ const ProductList = () => {
             ))}
             <PaginationItem>
               <PaginationNext
-                href="#"
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               />

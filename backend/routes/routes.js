@@ -370,7 +370,7 @@ router.delete(
 
 router.get("/productslist", fetchAdminUser, isAdmin, async (req, res) => {
   const page = req.header('Page');
-  const pageSize = 5;
+  const pageSize = 4;
 
   try {
     const products = await Product.find().skip((page - 1) * pageSize).limit(pageSize);

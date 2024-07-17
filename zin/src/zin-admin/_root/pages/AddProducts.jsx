@@ -23,26 +23,25 @@ const formSchema = z.object({
   name: z
     .string()
     .min(1, { message: "Name must be at least 1 character long" })
-    .max(50, { message: "Name must be at most 50 characters long" }),
+    .max(70, { message: "Name must be at most 70 characters long" }),
   description: z
     .string()
     .min(1, { message: "Description must be at least 1 character long" })
     .max(100, { message: "Description must be at most 100 characters long" }),
   price: z
     .string()
-    .min(1, { message: "Price must be at least 1 character long"}),
+    .min(1, { message: "Price must be at least 1 character long" }),
   category: z
     .string()
     .min(1, { message: "Category must be a non-empty string" }),
   stock: z
     .string()
-    .min(1, { message: "Stock must be at least 1 character long"}),
+    .min(1, { message: "Stock must be at least 1 character long" }),
   imageUrl: z.string().optional(),
 });
 
 const AddProducts = () => {
-
-  const {toast } = useToast()
+  const { toast } = useToast();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -56,18 +55,17 @@ const AddProducts = () => {
     },
   });
 
-  const onSubmit = async(values) => {
+  const onSubmit = async (values) => {
     const data = await addProduct(values);
-    if(data.success){
+    if (data.success) {
       toast({
         title: "Product added successfully",
-      })
-      form.reset()
-    }else{
-
+      });
+      form.reset();
+    } else {
       toast({
-        title: data.error
-      })
+        title: data.error,
+      });
     }
   };
 
@@ -92,6 +90,7 @@ const AddProducts = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="bg-dark-2 p-5 rounded-xl w-full mx-auto flex flex-col sm:grid sm:grid-cols-2 sm:items-center gap-6 min-h-[600px]"
       >
+        
         <FormField
           control={form.control}
           name="name"
@@ -181,7 +180,7 @@ const AddProducts = () => {
           control={form.control}
           name="imageUrl"
           render={({ field }) => (
-            <FormItem className="col-end-3 col-start-1" >
+            <FormItem className="col-end-3 col-start-1">
               <FormLabel>Image</FormLabel>
               <div
                 {...getRootProps()}
