@@ -6,8 +6,9 @@ import AdminDashboard from "./zin-admin/_root/pages/AdminDashboard"
 import { Route, Routes } from "react-router-dom"
 import Product from "./zin-admin/_root/pages/Product"
 import AddProducts from "./zin-admin/_root/pages/AddProducts"
-import ProductList from "./zin-admin/_root/pages/ProductList"
+import ProductProfile from "./zin-admin/_root/pages/ProductProfile"
 import Users from "./zin-admin/_root/pages/Users"
+import ProductList from "./zin-admin/components/ProductList"
 
 
 function App() {
@@ -29,9 +30,9 @@ function App() {
           {/* product routes */}
           <Route path="/admin/products" element={< Product />} />
           <Route path="/admin/addproducts" element={< AddProducts />} />
-          <Route path="/admin/updateproducts" element={< AddProducts />} />
-          <Route path="/admin/deleteproducts" element={< AddProducts />} />
-          <Route path="/admin/productslist" element={< ProductList />} />
+          <Route path="/admin/updateproducts" element={< ProductList />} />
+          <Route path="/admin/deleteproducts" element={< ProductList />} />
+          <Route path="/admin/productslist" element={< ProductProfile />} />
 
           {/* User routes */}
           <Route path="/admin/users" element={< Users />} />

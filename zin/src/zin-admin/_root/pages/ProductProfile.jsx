@@ -1,4 +1,4 @@
-// components/ProductList.jsx
+// components/ProductProfile.jsx
 import { getProducts } from "@/zin-admin/lib/api/api";
 import { useEffect, useState } from "react";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/pagination";
 import ProductCard from "@/zin-admin/components/ProductCard";
 
-const ProductList = () => {
+const ProductProfile = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -122,4 +122,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default ProductProfile;
