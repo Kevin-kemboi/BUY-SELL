@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/pagination";
 import { useLocation } from "react-router-dom";
 import UpdateModal from "./UpdateModal";
+import { Button } from "@/components/ui/button";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -80,15 +81,12 @@ const ProductList = () => {
 
   return (
     <div className="absolute inset-0 p-5 max-sm:p-2 min-h-full">
-      <h2 className="text-5xl m-5 font-bold pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-pink-200 to-dark-4 bg-clip-text leading-none text-transparent max-sm:text-3xl max-sm:text-center">
-        Products List
-      </h2>
-      <div className="flex flex-col md:gap-4 overflow-auto gap-2 h-[78%]">
+      <div className="flex flex-col md:gap-4 overflow-auto gap-2 h-[90%]">
         {products.length > 0 ? (
           products.map((product) => (
             <div
               key={product._id}
-              className=" bg-dark-2 flex  gap-2 px-7 w-full text-dark-5 max-sm:px-3 overflow-hidden h-full"
+              className=" bg-dark-2 flex  gap-2 px-7 w-full text-dark-5 max-sm:px-3 border border-dark-4 rounded-lg overflow-hidden h-1/4"
             >
               {product.imageUrl ? (
                 <div className="flex items-center justify-center w-1/3 mb-3 h-full max-sm:hidden ">
@@ -106,20 +104,29 @@ const ProductList = () => {
                   />
                 </div>
               )}
-              <div className="p-2 w-1/2">
+              <div className="p-2 w-1/2 max-sm:w-3/4 flex flex-col justify-center">
                 <h2 className="text-xl font-semibold">{product.name}</h2>
                 <p>
                   {product.description.substring(0, 90)}
                   {product.description.length < 90 ? "" : "..."}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-1/3">
-                {pathname === "/admin/updateproducts" ? (
+              <div className="flex items-center justify-center w-1/4">
+                {pathname === "/admin/updateproducts" && (
                   <div className="h-full w-full flex items-center justify-center">
                     <UpdateModal />
                   </div>
-                ) : (
-                  <div className=""></div>
+                )}
+                {pathname === "/admin/deleteproducts" && (
+                  <div className="h-full w-full flex items-center justify-center">
+                    <Button className="bg-transparent" >
+                      <img
+                        src="/icons/delete.svg"
+                        alt=""
+                        className="cursor-pointer"
+                      />
+                    </Button>
+                  </div>
                 )}
               </div>
             </div>

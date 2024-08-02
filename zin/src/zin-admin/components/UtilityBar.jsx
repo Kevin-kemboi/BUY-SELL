@@ -6,6 +6,8 @@ const UtilityBar = () => {
     "/admin/products",
     "/admin/addproducts",
     "/admin/productslist",
+    "/admin/deleteproducts",
+    "/admin/updateproducts"
   ].includes(pathname);
 
   return (
