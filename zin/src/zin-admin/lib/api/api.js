@@ -1,6 +1,8 @@
+const host = "http://localhost:5000"
+
 export const createAdminUser = async (params) => {
   const { username, email, password, role } = params;
-  const response = await fetch("http://localhost:5000/admin/signup", {
+  const response = await fetch(`${host}/admin/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,7 +18,7 @@ export const confirmAdmin = async (token) => {
     if (!token) {
       return false;
     }
-    const data = await fetch("http://localhost:5000/admin/userinfo", {
+    const data = await fetch(`${host}/admin/userinfo`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +40,7 @@ export const confirmAdmin = async (token) => {
 export const loginAdmin = async (params) => {
   const { email, password } = params;
 
-  const response = await fetch("http://localhost:5000/admin/login", {
+  const response = await fetch(`${host}/admin/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -51,7 +53,7 @@ export const loginAdmin = async (params) => {
 };
 
 export const getAdmins = async () => {
-  const adminCount = await fetch("http://localhost:5000/admin/getadmins", {
+  const adminCount = await fetch(`${host}/admin/getadmins`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -88,7 +90,7 @@ export const addProduct = async (params) => {
       body.imageUrl = imageUrl;
     }
 
-    const response = await fetch("http://localhost:5000/admin/addproduct", {
+    const response = await fetch(`${host}/admin/addproduct`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -111,7 +113,7 @@ export const getProducts = async (currentPage) => {
       console.log("Token not found");
       return false;
     }
-    const response = await fetch("http://localhost:5000/admin/productslist", {
+    const response = await fetch(`${host}/admin/productslist`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -132,4 +134,75 @@ export const getProducts = async (currentPage) => {
   }
 };
 
+export const getProductById = async (productId) => {
+  try {
+    const token = localStorage.getItem("Cookie");
+    if (!token) {
+      console.log("Token not found");
+      return false;
+    }
 
+    const body = {
+      id: productId
+    }
+
+    const response = await fetch(`${host}/admin/getproductbyid`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Token": token,
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch products");
+    }
+
+    const data = await response.json();
+    return data;
+
+    
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateProduct = async (id, product) => {
+  try {
+    const token = localStorage.getItem("Cookie");
+    if (!token) {
+      console.log("Token not found");
+      return false;
+    }
+
+    console.log(product)
+    const parsedPrice = parseFloat(product.price);
+    const parsedStock = parseInt(product.stock, 10);
+
+    const body = {
+      name: product.name,
+      description: product.description,
+      price: parsedPrice,
+      category: product.category,
+      stock: parsedStock,
+    }
+
+    const response = await fetch(`${host}/admin/updateproduct/${id}`,{
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Token": token,
+      },
+      body: JSON.stringify(body)
+    })
+
+    const data = await response.json()
+
+    return data
+
+  } catch (error) {
+    console.log(error)
+  }
+}

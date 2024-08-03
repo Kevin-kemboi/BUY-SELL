@@ -385,4 +385,16 @@ router.get("/productslist", fetchAdminUser, isAdmin, async (req, res) => {
 });
 
 
+router.post("/getproductbyid", fetchAdminUser, isAdmin, async(req, res)=> {
+  const { id } = req.body;
+  try {
+    const product = await Product.findById(id);
+    if(!product) throw new Error;
+    res.status(200).json({ success: true, product });
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
 module.exports = router;
