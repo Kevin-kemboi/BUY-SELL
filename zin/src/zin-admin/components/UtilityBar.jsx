@@ -4,10 +4,14 @@ const UtilityBar = () => {
   const { pathname } = useLocation();
   const isManageProductsPage = [
     "/admin/products",
-    "/admin/addproducts",
+    "/admin/addproducts", 
     "/admin/productslist",
     "/admin/deleteproducts",
     "/admin/updateproducts"
+  ].includes(pathname);
+  const isManageUsersPage = [
+    "/admin/users",
+    "/admin/admin-users", 
   ].includes(pathname);
 
   return (
@@ -25,7 +29,7 @@ const UtilityBar = () => {
       <Link to="/admin/users">
         <div
           className={`group flex gap-2 bg-dark-3 py-2 rounded-full px-4 font-semibold cursor-pointer hover:text-pink-300 hover:bg-zinc-800 ${
-            pathname === "/admin/users" ? "text-pink-300 bg-zinc-800" : ""
+            isManageUsersPage ? "text-pink-300 bg-zinc-800" : ""
           }`}
         >
           <img src="/icons/people.svg" className="w-5 group-hover:fill-black group-hover:text-pink-300" />

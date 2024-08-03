@@ -50,7 +50,7 @@ export const usersMenu = [
     Icon: AmpersandIcon,
     name: "Admins",
     description: "Manage your Admin users",
-    href: "/admin/users",
+    href: "/admin/admin-users",
     cta: "Go to",
     className: "md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-3",
   },

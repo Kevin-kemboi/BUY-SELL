@@ -13,6 +13,7 @@ const secret = process.env.JWT_SECRET;
 // ----------------------------------------
 // Admin auth routes
 // ----------------------------------------
+// admin signup
 router.post(
   "/signup",
   [
@@ -79,6 +80,8 @@ router.post(
   }
 );
 
+
+// admin login
 router.post(
   "/login",
   [body("email").isEmail(), body("password").notEmpty()],
@@ -132,6 +135,8 @@ router.get("/userinfo", fetchAdminUser, isAdmin, async (req, res) => {
   }
 });
 
+
+// new admin register
 router.post(
   "/register",
   fetchAdminUser,
@@ -192,10 +197,13 @@ router.post(
   }
 );
 
+
+// get no. of admins
 router.get("/getadmins", async (req, res) => {
   try {
     const adminCount = await AdminUser.countDocuments();
-    return res.status(200).json({ adminCount });
+    const admins = await AdminUser.find({}).select('-password');
+    return res.status(200).json({ success: true, adminCount, admins });
   } catch (error) {
     console.error(error);
   }
@@ -205,6 +213,7 @@ router.get("/getadmins", async (req, res) => {
 // Product Routes
 // --------------------------------------------
 
+// add a product
 router.post(
   "/addproduct",
   fetchAdminUser,
@@ -270,6 +279,8 @@ router.post(
   }
 );
 
+
+// update a product
 router.put(
   "/updateproduct/:id",
   fetchAdminUser,
@@ -341,6 +352,8 @@ router.put(
   }
 );
 
+
+//delete a product
 router.delete(
   "/deleteproduct/:id",
   fetchAdminUser,
@@ -368,6 +381,8 @@ router.delete(
   }
 );
 
+
+// get products, 4 at a time
 router.get("/productslist", fetchAdminUser, isAdmin, async (req, res) => {
   const page = req.header('Page');
   const pageSize = 4;
@@ -384,7 +399,7 @@ router.get("/productslist", fetchAdminUser, isAdmin, async (req, res) => {
   }
 });
 
-
+// get a product by id
 router.post("/getproductbyid", fetchAdminUser, isAdmin, async(req, res)=> {
   const { id } = req.body;
   try {
