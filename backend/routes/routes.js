@@ -276,7 +276,7 @@ router.put(
   isAdmin,
   [
     body("name")
-      .isString()
+      .isString() 
       .isLength({ min: 1 })
       .withMessage(
         "Product name is required and should be a non-empty string."

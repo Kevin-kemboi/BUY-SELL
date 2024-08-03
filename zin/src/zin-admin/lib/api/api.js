@@ -206,3 +206,29 @@ export const updateProduct = async (id, product) => {
     console.log(error)
   }
 }
+
+
+export const deleteProduct = async (id) => {
+  try {
+    const token = localStorage.getItem("Cookie");
+    if (!token) {
+      console.log("Token not found")
+      return false;
+    }
+
+    const response = await fetch(`${host}/admin/deleteproduct/${id}`,{
+      method: "DELETE",
+      headers: {
+        "Token": token
+      }
+    })
+
+    const data = await response.json();
+
+    return data
+
+
+  } catch (error) {
+    console.log(error)
+  }
+}
