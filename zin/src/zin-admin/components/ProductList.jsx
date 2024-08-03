@@ -114,7 +114,6 @@ const ProductList = () => {
                   />
                 </div>
               ) : (
-
                 <div className="flex items-center justify-center w-1/3 mb-3  h-full max-sm:hidden ">
                   <img
                     src="/images/thumb.png"
@@ -172,7 +171,7 @@ const ProductList = () => {
             </div>
           ))
         ) : (
-          <div className="text-3xl w-full font-bold flex items-center justify-center col-start-1 text-pink-200 col-end-3">
+          <div className="text-3xl w-full h-full font-bold flex items-center justify-center col-start-1 text-pink-200 col-end-3">
             <p>No products available</p>
           </div>
         )}
