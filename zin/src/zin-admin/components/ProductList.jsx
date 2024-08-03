@@ -114,14 +114,13 @@ const ProductList = () => {
                   />
                 </div>
               ) : (
-                console.log(product._id)
 
-                // <div className="flex items-center justify-center w-1/3 mb-3  h-full max-sm:hidden ">
-                //   <img
-                //     src="/images/thumb.png"
-                //     className=" w-[200px] h-[90px] rounded-md"
-                //   />
-                // </div>
+                <div className="flex items-center justify-center w-1/3 mb-3  h-full max-sm:hidden ">
+                  <img
+                    src="/images/thumb.png"
+                    className=" w-[200px] h-[90px] rounded-md"
+                  />
+                </div>
               )}
               <div className="p-2 w-1/2 max-sm:w-3/4 flex flex-col justify-center">
                 <h2 className="text-xl font-semibold">
