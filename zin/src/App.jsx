@@ -10,6 +10,8 @@ import ProductProfile from "./zin-admin/_root/pages/ProductProfile"
 import Users from "./zin-admin/_root/pages/Users"
 import ProductList from "./zin-admin/components/ProductList"
 import Admins from "./zin-admin/_root/pages/Admins"
+import RootLayout from "./zin-frontend/_root/RootLayout"
+import Home from "./zin-frontend/_root/pages/Home"
 
 
 function App() {
@@ -38,7 +40,10 @@ function App() {
           {/* User routes */}
           <Route path="/admin/users" element={< Users />} />
           <Route path="/admin/admin-users" element={< Admins />} />
+        </Route>
 
+        <Route element={<RootLayout/>}>
+          <Route path="/" element={<Home/>} />
         </Route>
 
       </Routes>
