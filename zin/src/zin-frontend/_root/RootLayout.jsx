@@ -1,7 +1,10 @@
+import RootNavbar from "../components/RootNavbar"
 
 const RootLayout = () => {
   return (
-    <div className=''>RootLayout</div>
+    <div className=''>
+      <RootNavbar/>
+    </div>
   )
 }
 
