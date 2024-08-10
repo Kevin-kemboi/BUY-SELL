@@ -2,7 +2,7 @@ import RootNavbar from "../components/RootNavbar"
 
 const RootLayout = () => {
   return (
-    <div className=''>
+    <div className='min-h-screen w-full bg-dark-4'>
       <RootNavbar/>
     </div>
   )

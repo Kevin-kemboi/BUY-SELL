@@ -76,14 +76,6 @@ export default {
         inter: ["Inter", "sans-serif"],
       },
       keyframes: {
-        "meteor": {
-          "0%": { transform: "rotate(215deg) translateX(0)", opacity: 1 },
-          "70%": { opacity: 1 },
-          "100%": {
-            transform: "rotate(215deg) translateX(-500px)",
-            opacity: 0,
-          },
-        },
         "border-beam": {
           "100%": {
             "offset-distance": "100%",
@@ -102,7 +94,6 @@ export default {
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "meteor": "meteor 5s linear infinite",
       },
     },
   },
