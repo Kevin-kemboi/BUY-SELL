@@ -4,11 +4,11 @@ const RootNavbar = () => {
     <div>
         <nav>
             <div className="">
-              logo 
+              logo  here
             </div>
 
             <div className="">
-              lists
+              lists here
             </div>
         </nav>
     </div>
