@@ -1,18 +1,5 @@
-
 const RootNavbar = () => {
-  return (
-    <div>
-        <nav>
-            <div className="">
-              logo  here
-            </div>
+  return <nav className="h-10 bg-dark-4 w-full"></nav>;
+};
 
-            <div className="">
-              lists here
-            </div>
-        </nav>
-    </div>
-  )
-}
-
-export default RootNavbar
+export default RootNavbar;
