@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Clock } from "lucide-react";
 
-export const ReviewCard = ({ icon, name, username, body }) => {
+export const ProductCard = ({ icon, name, username, body }) => {
   return (
     <figure
       className={cn(

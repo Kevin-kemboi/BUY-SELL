@@ -1,5 +1,5 @@
 import Marquee from "@/components/magicui/marquee";
-import { ReviewCard } from "@/components/magicui/ReviewCard";
+import { ProductCard } from "@/components/magicui/ProductCard";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Clock } from "lucide-react";
@@ -27,8 +27,8 @@ const items = [
 
 const Home = () => {
   return (
-    <div className="">
-      <BentoGrid className="max-w-4xl mx-auto md:grid-cols-3">
+    <div className="mt-2 px-3 w-full h-full">
+      <BentoGrid className="max-w-7xl h-[80%] mx-auto md:grid-cols-3 w-full">
         {items.map((item, i) => (
           <BentoGridItem
             key={i}
@@ -46,7 +46,7 @@ const Home = () => {
       <div className="">
         <Marquee pauseOnHover className="[--duration:20s]">
           {items.map((review) => (
-            <ReviewCard key={review.title} {...review} />
+            <ProductCard key={review.title} {...review} />
           ))}
         </Marquee>
       </div>
