@@ -28,7 +28,7 @@ const items = [
 const Home = () => {
   return (
     <div className="mt-2 px-3 w-full h-full">
-      <BentoGrid className="max-w-7xl h-[80%] mx-auto md:grid-cols-3 w-full">
+      <BentoGrid className="max-w-7xl h-[80%] max-sm:min-h-screen mx-auto md:grid-cols-3 w-full">
         {items.map((item, i) => (
           <BentoGridItem
             key={i}
@@ -36,15 +36,15 @@ const Home = () => {
             description={item.description}
             header={item.header}
             icon={item.icon}
-            className={`${i === 3 || i === 6 ? "md:col-span-2" : ""} ${
+            className={` ${i === 3 || i === 6 ? "md:col-span-2" : ""} ${
               item.className
             }`}
           />
         ))}
       </BentoGrid>
 
-      <div className="">
-        <Marquee pauseOnHover className="[--duration:20s]">
+      <div className="mt-3">
+        <Marquee pauseOnHover className="[--duration:30s]">
           {items.map((review) => (
             <ProductCard key={review.title} {...review} />
           ))}
