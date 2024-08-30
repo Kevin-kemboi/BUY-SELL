@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { getProductById, updateProduct } from "../lib/api/api";
+import { getProductById, updateProduct } from "../../lib/api/api";
 import { useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -42,7 +42,6 @@ const UpdateModal = ({ product, refreshProducts }) => {
   const { toast } = useToast();
   const { setOpen } = useModal();
 
-
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -63,7 +62,7 @@ const UpdateModal = ({ product, refreshProducts }) => {
       toast({
         title: "Product updated successfully",
       });
-      setOpen(false)
+      setOpen(false);
       refreshProducts();
     } else {
       toast({
@@ -172,7 +171,9 @@ const UpdateModal = ({ product, refreshProducts }) => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="mt-5">Submit</Button>
+          <Button type="submit" className="mt-5">
+            Submit
+          </Button>
         </form>
       </Form>
     </ModalContent>

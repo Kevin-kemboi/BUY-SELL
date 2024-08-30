@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { addProduct } from "@/zin-admin/lib/api/api";
+import { addProduct } from "@/lib/api/api";
 
 const formSchema = z.object({
   name: z
@@ -90,7 +90,6 @@ const AddProducts = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="bg-dark-2 p-5 rounded-xl w-full mx-auto flex flex-col sm:grid sm:grid-cols-2 sm:items-center gap-6 min-h-[600px]"
       >
-        
         <FormField
           control={form.control}
           name="name"

@@ -1,7 +1,6 @@
 import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
-import { productMenu } from "@/zin-admin/lib/constants/index";
+import { productMenu } from "@/lib/constants/index";
 const Product = () => {
-  
   return (
     <>
       <div className=" absolute inset-0 flex p-5 gap-2 max-sm:p-2">

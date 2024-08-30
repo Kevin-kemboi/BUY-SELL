@@ -1,5 +1,5 @@
 // components/ProductList.jsx
-import { deleteProduct, getProducts } from "@/zin-admin/lib/api/api";
+import { deleteProduct, getProducts } from "@/lib/api/api";
 import { useEffect, useState } from "react";
 import {
   Pagination,

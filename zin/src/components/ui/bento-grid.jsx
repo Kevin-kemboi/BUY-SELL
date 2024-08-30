@@ -13,7 +13,7 @@ export const BentoGrid = ({ className, children }) => {
   );
 };
 
-export const BentoGridItem = ({ className }) => {
+export const BentoGridItem = ({ className, name, price, _id }) => {
   return (
     <div
       className={cn(
@@ -23,8 +23,8 @@ export const BentoGridItem = ({ className }) => {
     >
       <img src="/images/t2.png" className="absolute inset-0 size-full object-contain hover:scale-110 transition-all duration-300" />
       <div className="z-10 mx-2 flex gap-2 border border-light-2/30 pl-3 pr-1 py-1 rounded-full bg-dark-1">
-        <p>shirt</p>
-        <p className="bg-blue-500 rounded-full px-2">10.99</p>
+        <p className="px-2">{name}</p>
+        <p className="bg-blue-500 rounded-full px-2">₹{price}</p>
       </div>
       
     </div>

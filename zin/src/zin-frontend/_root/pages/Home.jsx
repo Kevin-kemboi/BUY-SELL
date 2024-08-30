@@ -2,7 +2,10 @@ import Marquee from "@/components/magicui/marquee";
 import { ProductCard } from "@/components/magicui/ProductCard";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getProductsFrontend } from "@/lib/api/api";
 import { Clock } from "lucide-react";
+import { useEffect, useState } from "react";
+
 const items = [
   {
     title: "The Dawn of Innovation",
@@ -26,17 +29,42 @@ const items = [
 ];
 
 const Home = () => {
+  const [products, setProducts] = useState([]);
+
+  const displayProducts = products.slice(0, 3).map((product, index) => {
+    let className;
+    if (index === 0) {
+      className = "md:col-start-1 md:row-start-1 md:col-end-3 md:row-end-3";
+    }
+    return {
+      ...product,
+      className,
+    };
+  });
+  console.log(displayProducts);
+
+  const fetchProducts = async () => {
+    const data = await getProductsFrontend();
+    if (data && data.products) {
+
+      setProducts(data.products.slice(0,8));
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
     <div className="mt-2 px-3 w-full h-full">
       <BentoGrid className="max-w-7xl h-[80%] max-sm:min-h-screen mx-auto md:grid-cols-3 w-full">
-        {items.map((item, i) => (
+        {displayProducts.map((item) => (
           <BentoGridItem
-            key={i}
-            title={item.title}
-            description={item.description}
-            header={item.header}
-            icon={item.icon}
-            className={` ${i === 3 || i === 6 ? "md:col-span-2" : ""} ${
+            key={item._id}
+            _id={item._id}
+            name={item.name}
+            price={item.price}
+            className={` ${
               item.className
             }`}
           />
@@ -45,8 +73,8 @@ const Home = () => {
 
       <div className="mt-3">
         <Marquee pauseOnHover className="[--duration:30s]">
-          {items.map((review) => (
-            <ProductCard key={review.title} {...review} />
+          {products.map((item) => (
+            <ProductCard key={item._id} {...item} />
           ))}
         </Marquee>
       </div>

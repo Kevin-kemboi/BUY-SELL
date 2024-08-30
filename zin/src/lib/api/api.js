@@ -134,6 +134,27 @@ export const getProducts = async (currentPage) => {
   }
 };
 
+export const getProductsFrontend = async () => {
+  try {
+    const response = await fetch(`${host}/admin/productslist`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch products");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { products: [] }; // Return an empty list if there is an error
+  }
+};
+
 export const getProductById = async (productId) => {
   try {
     const token = localStorage.getItem("Cookie");

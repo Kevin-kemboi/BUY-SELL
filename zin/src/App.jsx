@@ -7,7 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import Product from "./zin-admin/_root/pages/Product";
 import AddProducts from "./zin-admin/_root/pages/AddProducts";
 import ProductProfile from "./zin-admin/_root/pages/ProductProfile";
-import Users from "./zin-admin/_root/pages/Users";
+import Users from "./zin-admin/_root/pages/Users"; 
 import ProductList from "./zin-admin/components/ProductList";
 import Admins from "./zin-admin/_root/pages/Admins";
 import RootLayout from "./zin-frontend/_root/RootLayout";

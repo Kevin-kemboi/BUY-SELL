@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Clock } from "lucide-react";
 
-export const ProductCard = ({ icon, name, username, body }) => {
+export const ProductCard = ({ _id, name, price }) => {
   return (
     <figure
       className={cn(
@@ -13,8 +13,8 @@ export const ProductCard = ({ icon, name, username, body }) => {
         className=" w-[70%] object-contain hover:scale-110 transition-all duration-300"
       />
       <div className="z-10 absolute bottom-5 left-3 mx-2 flex gap-2 border border-light-2/30 pl-3 pr-1 py-1 rounded-full bg-dark-1">
-        <p>shirt</p>
-        <p className="bg-blue-500 rounded-full px-2">10.99</p>
+        <p className="px-2">{name}</p>
+        <p className="bg-blue-500 rounded-full px-2">₹{price}</p>
       </div>
     </figure>
   );

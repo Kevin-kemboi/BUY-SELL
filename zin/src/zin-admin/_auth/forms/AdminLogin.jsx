@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "@/zin-admin/context/AdminAuthProvider";
-import { loginAdmin } from "@/zin-admin/lib/api/api";
+import { loginAdmin } from "@/lib/api/api";
 import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
@@ -46,16 +46,16 @@ const AdminSignUp = () => {
       });
       form.reset();
       setIsAuthenticated(true);
-    }else{
+    } else {
       toast({
-        title: data.error
-      })
+        title: data.error,
+      });
     }
   }
 
   return (
     <div className="bg-dark-3 min-h-[670px] w-[530px] rounded-md flex items-center justify-start flex-col mt-[50px] py-14 max-sm:w-[310px] ">
-      <img src="/icons/login.svg"/>
+      <img src="/icons/login.svg" />
 
       <h2 className="text-3xl font-bold text-pink-200 m-5">Admin Log-In</h2>
       <Form {...form}>

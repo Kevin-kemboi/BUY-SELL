@@ -80,7 +80,6 @@ router.post(
   }
 );
 
-
 // admin login
 router.post(
   "/login",
@@ -134,7 +133,6 @@ router.get("/userinfo", fetchAdminUser, isAdmin, async (req, res) => {
     res.status(500).json({ error: "internal server error" });
   }
 });
-
 
 // new admin register
 router.post(
@@ -197,12 +195,11 @@ router.post(
   }
 );
 
-
 // get no. of admins
 router.get("/getadmins", async (req, res) => {
   try {
     const adminCount = await AdminUser.countDocuments();
-    const admins = await AdminUser.find({}).select('-password');
+    const admins = await AdminUser.find({}).select("-password");
     return res.status(200).json({ success: true, adminCount, admins });
   } catch (error) {
     console.error(error);
@@ -250,7 +247,7 @@ router.post(
       .isURL()
       .withMessage("Image URL should be a valid URL."),
   ],
-  async (req, res) => { 
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ error: errors.array() });
@@ -279,7 +276,6 @@ router.post(
   }
 );
 
-
 // update a product
 router.put(
   "/updateproduct/:id",
@@ -287,7 +283,7 @@ router.put(
   isAdmin,
   [
     body("name")
-      .isString() 
+      .isString()
       .isLength({ min: 1 })
       .withMessage(
         "Product name is required and should be a non-empty string."
@@ -352,7 +348,6 @@ router.put(
   }
 );
 
-
 //delete a product
 router.delete(
   "/deleteproduct/:id",
@@ -381,14 +376,18 @@ router.delete(
   }
 );
 
-
 // get products, 4 at a time
-router.get("/productslist", fetchAdminUser, isAdmin, async (req, res) => {
-  const page = req.header('Page');
-  const pageSize = 4;
+router.get("/productslist", async (req, res) => {
+  const page = req.header("Page");
+  let pageSize;
+  if (page) {
+    pageSize = 4;
+  }
 
   try {
-    const products = await Product.find().skip((page - 1) * pageSize).limit(pageSize);
+    const products = await Product.find()
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
 
     const totalCount = await Product.countDocuments({});
 
@@ -400,16 +399,15 @@ router.get("/productslist", fetchAdminUser, isAdmin, async (req, res) => {
 });
 
 // get a product by id
-router.post("/getproductbyid", fetchAdminUser, isAdmin, async(req, res)=> {
+router.post("/getproductbyid", fetchAdminUser, isAdmin, async (req, res) => {
   const { id } = req.body;
   try {
     const product = await Product.findById(id);
-    if(!product) throw new Error;
+    if (!product) throw new Error();
     res.status(200).json({ success: true, product });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-})
-
+});
 
 module.exports = router;

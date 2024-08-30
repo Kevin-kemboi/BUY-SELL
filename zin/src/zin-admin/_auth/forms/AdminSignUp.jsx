@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createAdminUser } from "../../lib/api/api";
+import { createAdminUser } from "../../../lib/api/api";
 import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "@/zin-admin/context/AdminAuthProvider";
 import { useToast } from "@/components/ui/use-toast";
@@ -54,12 +54,12 @@ const AdminSignUp = () => {
       setIsAuthenticated(true);
       setSignUp(false);
       toast({
-        title: "Sign-up successful!"
-      })
-    }else{
+        title: "Sign-up successful!",
+      });
+    } else {
       toast({
-        title: data.error
-      })
+        title: data.error,
+      });
     }
   }
 
