@@ -10,6 +10,7 @@ const Product = require("../models/Product.model");
 const upload = require("../middleware/Upload");
 
 const secret = process.env.JWT_SECRET;
+console.log(secret)
 // ----------------------------------------
 // Admin auth routes
 // ----------------------------------------
@@ -75,7 +76,7 @@ router.post(
       res.json({ success: true, authToken });
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send(error.message);
     }
   }
 );
