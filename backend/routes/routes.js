@@ -10,7 +10,6 @@ const Product = require("../models/Product.model");
 const upload = require("../middleware/Upload");
 
 const secret = process.env.JWT_SECRET;
-
 // ----------------------------------------
 // Admin auth routes
 // ----------------------------------------

@@ -108,16 +108,11 @@ export const addProduct = async (params) => {
 
 export const getProducts = async (currentPage) => {
   try {
-    const token = localStorage.getItem("Cookie");
-    if (!token) {
-      console.log("Token not found");
-      return false;
-    }
+    
     const response = await fetch(`${host}/admin/productslist`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Token": token,
         "Page": currentPage
       },
     });
