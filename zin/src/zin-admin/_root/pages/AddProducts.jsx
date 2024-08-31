@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { Button } from "@/components/ui/button";
@@ -37,11 +37,12 @@ const formSchema = z.object({
   stock: z
     .string()
     .min(1, { message: "Stock must be at least 1 character long" }),
-  imageUrl: z.string().optional(),
 });
 
 const AddProducts = () => {
   const { toast } = useToast();
+  const [fileInserted, setFileInserted] = useState(false); // State to track file insertion
+
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -56,12 +57,27 @@ const AddProducts = () => {
   });
 
   const onSubmit = async (values) => {
-    const data = await addProduct(values);
+    // Create FormData to handle file upload
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+    formData.append("price", values.price);
+    formData.append("category", values.category);
+    formData.append("stock", values.stock);
+  
+    // Append the file (image) to the FormData
+    if (values.imageUrl) {
+      formData.append("imageFile", values.imageUrl);
+    }
+  
+    const data = await addProduct(formData);
     if (data.success) {
       toast({
         title: "Product added successfully",
       });
       form.reset();
+      setFileInserted(false); // Reset fileInserted state after submission
+
     } else {
       toast({
         title: data.error,
@@ -72,11 +88,13 @@ const AddProducts = () => {
   const onDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
-      const fileUrl = URL.createObjectURL(file);
-      form.setValue("imageUrl", fileUrl);
+      form.setValue("imageUrl", file); // Store the file in the form's imageUrl field
+      setFileInserted(true); // Set fileInserted to true
+
     },
     [form]
   );
+  
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -183,7 +201,7 @@ const AddProducts = () => {
               <FormLabel>Image</FormLabel>
               <div
                 {...getRootProps()}
-                className="border-dashed border-2 border-gray-500 p-5 rounded-md cursor-pointer h-[300px] flex items-center justify-center max-sm:h-[150px] "
+                className="border-dashed border-2 border-gray-500 p-5 rounded-md cursor-pointer h-[300px] flex items-center justify-center max-sm:h-[150px]"
               >
                 <input {...getInputProps()} />
                 <p>Drag & drop an image here, or click to select one</p>
@@ -192,6 +210,7 @@ const AddProducts = () => {
                 <Input type="hidden" {...field} />
               </FormControl>
               <FormMessage />
+              {fileInserted && <p className="text-green-500">File inserted successfully!</p>} {/* Feedback message */}
             </FormItem>
           )}
         />

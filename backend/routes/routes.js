@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const fetchAdminUser = require("../middleware/fetchAdminUser");
 const isAdmin = require("../middleware/AdminVerify");
 const Product = require("../models/Product.model");
+const upload = require("../middleware/Upload");
 
 const secret = process.env.JWT_SECRET;
 
@@ -215,37 +216,9 @@ router.post(
   "/addproduct",
   fetchAdminUser,
   isAdmin,
+  upload.single("imageFile"), // Use upload middleware to handle the file
   [
-    body("name")
-      .isString()
-      .isLength({ min: 1 })
-      .withMessage(
-        "Product name is required and should be a non-empty string."
-      ),
-    body("description")
-      .isString()
-      .isLength({ min: 1 })
-      .withMessage(
-        "Product description is required and should be a non-empty string."
-      ),
-    body("price")
-      .isFloat({ min: 0 })
-      .withMessage(
-        "Price is required and should be a number greater than or equal to 0."
-      ),
-    body("category")
-      .isString()
-      .isLength({ min: 1 })
-      .withMessage("Category is required and should be a non-empty string."),
-    body("stock")
-      .isInt({ min: 0 })
-      .withMessage(
-        "Stock is required and should be an integer greater than or equal to 0."
-      ),
-    body("imageUrl")
-      .optional()
-      .isURL()
-      .withMessage("Image URL should be a valid URL."),
+    // Validation middleware here...
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -254,18 +227,28 @@ router.post(
     }
 
     try {
+
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
+  
+      const { filename } = req.file; // This should be defined now
+      // You can proceed with saving product information to the database
+      // For exampl
+
       let product = await Product.findOne({ name: req.body.name });
       if (product) {
         return res.status(400).json({ error: "Product name already exists" });
       }
 
+      // Save the product with the image URL (filename stored in GridFS)
       product = await Product.create({
         name: req.body.name,
         description: req.body.description,
         price: req.body.price,
         category: req.body.category,
         stock: req.body.stock,
-        imageUrl: req.body.imageUrl,
+        imageUrl: filename, // Store the image filename as imageUrl in the database
       });
 
       res.status(200).json({ success: true, product });
