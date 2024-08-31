@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const fetchAdminUser = require("../middleware/fetchAdminUser");
 const isAdmin = require("../middleware/AdminVerify");
 const Product = require("../models/Product.model");
-const upload = require("../middleware/Upload");
+const upload = require("../middleware/storage");
 
 const secret = process.env.JWT_SECRET;
 console.log(secret)
@@ -211,12 +211,27 @@ router.get("/getadmins", async (req, res) => {
 // Product Routes
 // --------------------------------------------
 
+router.post("/api/upload", (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      return res.status(400).json({ error: err });
+    }
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+    res.json({
+      filename: req.file.filename,
+      filepath: `http://localhost:5000/uploads/${req.file.filename}`,
+    });
+  });
+});
+
 // add a product
 router.post(
   "/addproduct",
   fetchAdminUser,
   isAdmin,
-  upload.single("imageFile"), // Use upload middleware to handle the file
+ // Use upload middleware to handle the file
   [
     // Validation middleware here...
   ],
@@ -227,15 +242,6 @@ router.post(
     }
 
     try {
-
-      if (!req.file) {
-        return res.status(400).json({ error: "No file uploaded" });
-      }
-  
-      const { filename } = req.file; // This should be defined now
-      // You can proceed with saving product information to the database
-      // For exampl
-
       let product = await Product.findOne({ name: req.body.name });
       if (product) {
         return res.status(400).json({ error: "Product name already exists" });
@@ -248,7 +254,7 @@ router.post(
         price: req.body.price,
         category: req.body.category,
         stock: req.body.stock,
-        imageUrl: filename, // Store the image filename as imageUrl in the database
+        imageUrl: req.body.imageUrl, // Store the image filename as imageUrl in the database
       });
 
       res.status(200).json({ success: true, product });

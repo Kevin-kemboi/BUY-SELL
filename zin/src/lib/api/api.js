@@ -1,4 +1,4 @@
-const host = "http://localhost:5000"
+const host = "http://localhost:5000";
 
 export const createAdminUser = async (params) => {
   const { username, email, password, role } = params;
@@ -64,39 +64,29 @@ export const getAdmins = async () => {
   return data;
 };
 
-export const addProduct = async (params) => {
-  const { name, description, price, category, stock, imageUrl } = params;
-
+export const addProduct = async (formData) => {
   try {
+    const { name, description, price, category, stock, imageUrl } = formData;
     const token = localStorage.getItem("Cookie");
     if (!token) {
-      console.log("Token not found")
+      console.log("Token not found");
       return false;
     }
-    const parsedPrice = parseFloat(price);
-    const parsedStock = parseInt(stock, 10);
-
-    // Construct the body object
-    const body = {
-      name,
-      description,
-      price: parsedPrice,
-      category,
-      stock: parsedStock,
-    };
-
-    // Include imageUrl if it is provided
-    if (imageUrl) {
-      body.imageUrl = imageUrl;
-    }
-
+    console.log(formData);
     const response = await fetch(`${host}/admin/addproduct`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Token: token,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        name,
+        description,
+        price,
+        category,
+        stock,
+        imageUrl,
+      }), // Use the FormData directly
     });
 
     const data = await response.json();
@@ -108,12 +98,11 @@ export const addProduct = async (params) => {
 
 export const getProducts = async (currentPage) => {
   try {
-    
     const response = await fetch(`${host}/admin/productslist`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Page": currentPage
+        Page: currentPage,
       },
     });
 
@@ -159,16 +148,16 @@ export const getProductById = async (productId) => {
     }
 
     const body = {
-      id: productId
-    }
+      id: productId,
+    };
 
     const response = await fetch(`${host}/admin/getproductbyid`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Token": token,
+        Token: token,
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {
@@ -177,13 +166,10 @@ export const getProductById = async (productId) => {
 
     const data = await response.json();
     return data;
-
-    
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const updateProduct = async (id, product) => {
   try {
@@ -193,7 +179,7 @@ export const updateProduct = async (id, product) => {
       return false;
     }
 
-    console.log(product)
+    console.log(product);
     const parsedPrice = parseFloat(product.price);
     const parsedStock = parseInt(product.stock, 10);
 
@@ -203,48 +189,44 @@ export const updateProduct = async (id, product) => {
       price: parsedPrice,
       category: product.category,
       stock: parsedStock,
-    }
+    };
 
-    const response = await fetch(`${host}/admin/updateproduct/${id}`,{
+    const response = await fetch(`${host}/admin/updateproduct/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Token": token,
+        Token: token,
       },
-      body: JSON.stringify(body)
-    })
+      body: JSON.stringify(body),
+    });
 
-    const data = await response.json()
+    const data = await response.json();
 
-    return data
-
+    return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
-
+};
 
 export const deleteProduct = async (id) => {
   try {
     const token = localStorage.getItem("Cookie");
     if (!token) {
-      console.log("Token not found")
+      console.log("Token not found");
       return false;
     }
 
-    const response = await fetch(`${host}/admin/deleteproduct/${id}`,{
+    const response = await fetch(`${host}/admin/deleteproduct/${id}`, {
       method: "DELETE",
       headers: {
-        "Token": token
-      }
-    })
+        Token: token,
+      },
+    });
 
     const data = await response.json();
 
-    return data
-
-
+    return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};

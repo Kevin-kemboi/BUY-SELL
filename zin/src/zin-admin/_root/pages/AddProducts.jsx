@@ -37,11 +37,17 @@ const formSchema = z.object({
   stock: z
     .string()
     .min(1, { message: "Stock must be at least 1 character long" }),
+  imageUrl: z.string().optional(),
+  
 });
 
 const AddProducts = () => {
   const { toast } = useToast();
-  const [fileInserted, setFileInserted] = useState(false); // State to track file insertion
+  const [imagePreview, setImagePreview] = useState(null); // State to hold the image preview
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(""); // State to store the uploaded image URL
+
+
+
 
 
   const form = useForm({
@@ -57,26 +63,27 @@ const AddProducts = () => {
   });
 
   const onSubmit = async (values) => {
-    // Create FormData to handle file upload
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("description", values.description);
-    formData.append("price", values.price);
-    formData.append("category", values.category);
-    formData.append("stock", values.stock);
-  
-    // Append the file (image) to the FormData
-    if (values.imageUrl) {
-      formData.append("imageFile", values.imageUrl);
-    }
-  
-    const data = await addProduct(formData);
+    // Construct the body for adding the product
+    const body = {
+      name: values.name,
+      description: values.description,
+      price: parseFloat(values.price),
+      category: values.category,
+      stock: parseInt(values.stock, 10),
+      imageUrl: uploadedImageUrl, // Use the uploaded image URL
+    };
+
+    console.log({body})
+
+    // Add the product
+    const data = await addProduct(body);
     if (data.success) {
       toast({
         title: "Product added successfully",
       });
       form.reset();
-      setFileInserted(false); // Reset fileInserted state after submission
+      setUploadedImageUrl("");
+      setImagePreview(false); // Reset the uploaded image URL after submission
 
     } else {
       toast({
@@ -84,16 +91,35 @@ const AddProducts = () => {
       });
     }
   };
+  
 
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      form.setValue("imageUrl", file); // Store the file in the form's imageUrl field
-      setFileInserted(true); // Set fileInserted to true
+  const onDrop = useCallback(async (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    setImagePreview(URL.createObjectURL(file)); // Set the image preview
 
-    },
-    [form]
-  );
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("http://localhost:5000/admin/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      console.log(response)
+      if (!response.ok) {
+        throw new Error("Failed to upload image");
+      }
+
+      const data = await response.json();
+      console.log("Uploaded file:", data);
+      const imageUrl = `http://localhost:5000/uploads/${data.filename}`; // Construct the image URL
+      console.log(URL.createObjectURL(file))
+      setUploadedImageUrl(imageUrl); // Store the uploaded image URL
+      // You can now use data.filename or whatever the server returns
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  }, []);
   
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -193,7 +219,7 @@ const AddProducts = () => {
             </FormItem>
           )}
         />
-        <FormField
+         <FormField
           control={form.control}
           name="imageUrl"
           render={({ field }) => (
@@ -206,11 +232,15 @@ const AddProducts = () => {
                 <input {...getInputProps()} />
                 <p>Drag & drop an image here, or click to select one</p>
               </div>
+              {imagePreview && (
+                <div className="mt-2">
+                  <img src={imagePreview} alt="Image Preview" className="h-32 object-cover rounded-md" />
+                </div>
+              )}
               <FormControl>
                 <Input type="hidden" {...field} />
               </FormControl>
               <FormMessage />
-              {fileInserted && <p className="text-green-500">File inserted successfully!</p>} {/* Feedback message */}
             </FormItem>
           )}
         />
