@@ -214,16 +214,20 @@ router.get("/getadmins", async (req, res) => {
 router.post("/api/upload", (req, res) => {
   upload(req, res, (err) => {
     if (err) {
-      return res.status(400).json({ error: err });
+      console.error("Multer error:", err);
+      return res.status(400).json({ error: err.message || "Upload failed" });
     }
     if (!req.file) {
+      console.error("No file uploaded");
       return res.status(400).json({ error: "No file uploaded" });
     }
+    console.log("File uploaded successfully:", req.file);
     res.json({
       filename: req.file.filename,
-      filepath: `http://localhost:5000/uploads/${req.file.filename}`,
+      filepath: `http://localhost:5173/uploads/${req.file.filename}`,
     });
   });
+  
 });
 
 // add a product
