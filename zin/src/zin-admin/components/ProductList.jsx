@@ -15,6 +15,7 @@ import UpdateModal from "./UpdateModal";
 import { Button } from "@/components/ui/button";
 import { Modal, ModalBody, ModalTrigger } from "@/components/ui/animated-modal";
 import { toast } from "@/components/ui/use-toast";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -31,6 +32,7 @@ const ProductList = () => {
       const pageSize = 4;
       const totalPages = Math.ceil(totalCount / pageSize);
       setTotalPages(totalPages);
+      console.log(totalPages)
     }
   };
 
@@ -64,36 +66,7 @@ const ProductList = () => {
     }
   };
 
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    const pageWindow = 0;
 
-    if (currentPage >= 1) {
-      pageNumbers.push(1);
-    }
-
-    if (currentPage > pageWindow + 2) {
-      pageNumbers.push("...");
-    }
-
-    for (
-      let i = Math.max(2, currentPage - pageWindow);
-      i <= Math.min(totalPages - 1, currentPage + pageWindow);
-      i++
-    ) {
-      pageNumbers.push(i);
-    }
-
-    if (currentPage < totalPages - pageWindow - 1) {
-      pageNumbers.push("...");
-    }
-
-    if (totalPages > 1) {
-      pageNumbers.push(totalPages);
-    }
-
-    return pageNumbers;
-  };
 
   return (
     <div className="absolute inset-0 p-5 max-sm:p-2 min-h-full">
@@ -103,14 +76,14 @@ const ProductList = () => {
             // Main card div for product list
             <div
               key={product._id}
-              className=" bg-dark-4 flex  gap-2 px-7 w-full text-dark-5 max-sm:px-3 border border-dark-4 rounded-lg overflow-hidden h-1/4"
+              className=" bg-dark-2 flex  gap-2 px-7 w-full text-dark-5 max-sm:px-3 border-b border-dark-4 overflow-hidden h-1/4"
             >
               {product.imageUrl ? (
                 <div className="flex items-center justify-center w-1/3 mb-3 h-full max-sm:hidden ">
                   <img
                     src={product.imageUrl}
                     alt={product.name}
-                    className="h-full"
+                    className="w-[200px] h-[90px] rounded-md"
                   />
                 </div>
               ) : (
@@ -127,8 +100,8 @@ const ProductList = () => {
                 </h2>
                 {/* Title and description */}
                 <p className="text-sm">
-                  {product.description.substring(0, 90)}
-                  {product.description.length < 90 ? "" : "..."}
+                  {product.description.substring(0, 50)}
+                  {product.description.length < 50 ? "" : "..."}
                 </p>
               </div>
               <div className="flex items-center justify-center w-1/4">
@@ -156,7 +129,7 @@ const ProductList = () => {
                 {pathname === "/admin/deleteproducts" && (
                   <div className="h-full w-full flex items-center justify-center">
                     <Button
-                      className="bg-transparent"
+                      className="bg-transparent py-2"
                       onClick={() => handleDelete(product._id)}
                     >
                       <img
@@ -176,38 +149,30 @@ const ProductList = () => {
           </div>
         )}
       </div>
-      <div className="flex justify-between items-center w-full mt-5 max-md:mt-4 max-sm:mt-2 ">
+      <div className="flex  justify-between items-center w-full mt-5 max-md:mt-4 max-sm:mt-2 ">
         <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
+          <PaginationContent className=" w-full flex gap-4 items-center justify-center">
+            <PaginationItem className=" flex items-center">
+            <Button
+                className="bg-transparent py-2"
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
-              />
+              >
+                <ChevronLeftIcon className="h-5"/>
+              </Button>
             </PaginationItem>
-            {renderPageNumbers().map((page, index) => (
-              <PaginationItem key={index}>
-                {page === "..." ? (
-                  <PaginationEllipsis />
-                ) : (
-                  <PaginationLink
-                    onClick={() => setCurrentPage(page)}
-                    className={
-                      page === currentPage
-                        ? "font-extrabold bg-white text-dark-2"
-                        : " "
-                    }
-                  >
-                    {page}
-                  </PaginationLink>
-                )}
+            
+              <PaginationItem className="" >
+                {currentPage}
               </PaginationItem>
-            ))}
-            <PaginationItem>
-              <PaginationNext
+            <PaginationItem className="flex items-center">
+              <Button
+                className="bg-transparent py-2"
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
-              />
+              >
+                <ChevronRightIcon className="h-5"/>
+              </Button>
             </PaginationItem>
           </PaginationContent>
         </Pagination>

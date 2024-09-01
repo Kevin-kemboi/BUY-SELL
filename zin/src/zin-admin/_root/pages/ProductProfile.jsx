@@ -11,6 +11,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import ProductCard from "@/zin-admin/components/ProductCard";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const ProductProfile = () => {
   const [products, setProducts] = useState([]);
@@ -44,37 +46,6 @@ const ProductProfile = () => {
     }
   };
 
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    const pageWindow = 0;
-
-    if (currentPage >= 1) {
-      pageNumbers.push(1);
-    }
-
-    if (currentPage > pageWindow + 2) {
-      pageNumbers.push("...");
-    }
-
-    for (
-      let i = Math.max(2, currentPage - pageWindow);
-      i <= Math.min(totalPages - 1, currentPage + pageWindow);
-      i++
-    ) {
-      pageNumbers.push(i);
-    }
-
-    if (currentPage < totalPages - pageWindow - 1) {
-      pageNumbers.push("...");
-    }
-
-    if (totalPages > 1) {
-      pageNumbers.push(totalPages);
-    }
-
-    return pageNumbers;
-  };
-
   return (
     <div className="absolute inset-0 p-5 max-sm:p-2 min-h-full">
       <h2 className="text-5xl m-5 font-bold pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-pink-200 to-dark-4 bg-clip-text leading-none text-transparent max-sm:text-3xl max-sm:text-center">
@@ -86,43 +57,35 @@ const ProductProfile = () => {
             <ProductCard key={product._id} product={product} />
           ))
         ) : (
-          <div className="text-3xl w-full font-bold flex items-center justify-center col-start-1 text-pink-200 col-end-3">
+          <div className="text-3xl w-full font-bold flex items-center justify-center col-start-1 col-end-3">
             <p>No products available</p>
           </div>
         )}
       </div>
-      <div className="flex justify-between items-center w-full mt-5 max-md:mt-4 max-sm:mt-2 ">
+      <div className="flex  justify-between items-center w-full mt-5 max-md:mt-4 max-sm:mt-2 ">
         <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
+          <PaginationContent className=" w-full flex gap-4 items-center justify-center">
+            <PaginationItem className=" flex items-center">
+            <Button
+                className="bg-transparent py-2"
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
-              />
+              >
+                <ChevronLeftIcon className="h-5"/>
+              </Button>
             </PaginationItem>
-            {renderPageNumbers().map((page, index) => (
-              <PaginationItem key={index}>
-                {page === "..." ? (
-                  <PaginationEllipsis />
-                ) : (
-                  <PaginationLink
-                    onClick={() => setCurrentPage(page)}
-                    className={
-                      page === currentPage
-                        ? "font-extrabold bg-white text-dark-2"
-                        : " "
-                    }
-                  >
-                    {page}
-                  </PaginationLink>
-                )}
+            
+              <PaginationItem className="" >
+                {currentPage}
               </PaginationItem>
-            ))}
-            <PaginationItem>
-              <PaginationNext
+            <PaginationItem className="flex items-center">
+              <Button
+                className="bg-transparent py-2"
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
-              />
+              >
+                <ChevronRightIcon className="h-5"/>
+              </Button>
             </PaginationItem>
           </PaginationContent>
         </Pagination>

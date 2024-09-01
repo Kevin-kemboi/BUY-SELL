@@ -112,7 +112,7 @@ const AddProducts = () => {
 
       const data = await response.json();
       console.log("Uploaded file:", data);
-      const imageUrl = `http://localhost:5000/uploads/${data.filename}`; // Construct the image URL
+      const imageUrl = `http://localhost:5173/uploads/${data.filename}`; // Construct the image URL
       console.log(URL.createObjectURL(file))
       setUploadedImageUrl(imageUrl); // Store the uploaded image URL
       // You can now use data.filename or whatever the server returns
@@ -144,7 +144,7 @@ const AddProducts = () => {
                 <Input
                   placeholder="Enter product name"
                   {...field}
-                  className="bg-dark-3 border-none h-12 "
+                  className="bg-dark-3 border border-white/20 h-12 "
                 />
               </FormControl>
               <FormMessage />
@@ -161,7 +161,7 @@ const AddProducts = () => {
                 <Input
                   placeholder="Enter product description"
                   {...field}
-                  className="bg-dark-3 border-none h-12"
+                  className="bg-dark-3 border border-white/20 h-12"
                 />
               </FormControl>
               <FormMessage />
@@ -178,7 +178,7 @@ const AddProducts = () => {
                 <Input
                   placeholder="Enter product price"
                   {...field}
-                  className="bg-dark-3 border-none h-12"
+                  className="bg-dark-3 border border-white/20 h-12"
                 />
               </FormControl>
               <FormMessage />
@@ -195,7 +195,7 @@ const AddProducts = () => {
                 <Input
                   placeholder="Enter product category"
                   {...field}
-                  className="bg-dark-3 border-none h-12"
+                  className="bg-dark-3 border border-white/20 h-12"
                 />
               </FormControl>
               <FormMessage />
@@ -212,7 +212,7 @@ const AddProducts = () => {
                 <Input
                   placeholder="Enter stock"
                   {...field}
-                  className="bg-dark-3 border-none h-12"
+                  className="bg-dark-3 border border-white/20 h-12"
                 />
               </FormControl>
               <FormMessage />
@@ -230,13 +230,17 @@ const AddProducts = () => {
                 className="border-dashed border-2 border-gray-500 p-5 rounded-md cursor-pointer h-[300px] flex items-center justify-center max-sm:h-[150px]"
               >
                 <input {...getInputProps()} />
-                <p>Drag & drop an image here, or click to select one</p>
-              </div>
-              {imagePreview && (
+                {!imagePreview &&
+
+                  <p>Drag & drop an image here, or click to select one</p>
+                }
+                {imagePreview && (
                 <div className="mt-2">
                   <img src={imagePreview} alt="Image Preview" className="h-32 object-cover rounded-md" />
                 </div>
               )}
+              </div>
+              
               <FormControl>
                 <Input type="hidden" {...field} />
               </FormControl>
@@ -244,8 +248,8 @@ const AddProducts = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="col-start-1 col-end-3">
-          Submit
+        <Button type="submit" className="col-start-1 col-end-3 py-2">
+          Add product
         </Button>
       </form>
     </Form>

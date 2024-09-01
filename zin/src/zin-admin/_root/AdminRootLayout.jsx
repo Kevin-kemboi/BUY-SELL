@@ -10,7 +10,7 @@ const AdminRootLayout = () => {
     <div>
       <Navbar />
       <UtilityBar/>
-      <div className="bg-dark-3 rounded-xl p-5 lg:w-[50%] max-lg:w-[70%] mx-auto min-h-[75vh] relative max-sm:w-[95%]">
+      <div className="bg-dark-2 rounded-xl p-5 lg:w-[50%] max-lg:w-[70%] mx-auto min-h-[75vh] relative max-sm:w-[95%]">
         <Outlet /> 
       </div>
       <Footer/>
