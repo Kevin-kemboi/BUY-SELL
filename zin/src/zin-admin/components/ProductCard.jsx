@@ -5,7 +5,7 @@ const ProductCard = ({ product }) => {
     <div className=" bg-dark-4 rounded-lg flex flex-col items-center text-justify justify-center px-7 w-full text-dark-5 max-sm:px-3 overflow-hidden max-h-[280px] transition ease-in-out ">
         {product.imageUrl ? (
           <div className="flex items-center justify-center w-full mb-3 max-sm:hidden ">
-            <img src={product.imageUrl} alt={product.name} className="" />
+            <img src={product.imageUrl} alt={product.name} className="w-[200px] h-[90px] rounded-md object-contain opacity-90" />
           </div>
         ) : (
           <div className="flex items-center justify-center w-full mb-3 max-sm:hidden ">
