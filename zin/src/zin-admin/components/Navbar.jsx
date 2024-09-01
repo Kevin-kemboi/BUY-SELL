@@ -6,9 +6,9 @@ const Navbar = () => {
   const { isAuthenticated, logout, signUp } = useAdminAuth();
 
   return (
-    <nav className="flex items-center max-w-[1100px] mx-auto justify-around border-b border-dark-4 pb-1  ">
+    <nav className="flex items-center max-w-[1100px] mx-auto justify-around border-b border-dark-4 p-2  ">
       <div className="logo">
-        <img src="/icons/navbar.svg" />
+        <img src="/icons/navbar.svg" className="w-11" />
       </div>
       <div className="tabs">
         {isAuthenticated ? (
