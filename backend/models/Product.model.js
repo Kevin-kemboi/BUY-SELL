@@ -25,6 +25,7 @@ const ProductSchema = new Schema({
     },
     imageUrl: {
         type: String,
+        required: true,
     },
     createdAt: {
         type: Date,

@@ -4,11 +4,8 @@ import { useEffect, useState } from "react";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
+  
 } from "@/components/ui/pagination";
 import ProductCard from "@/zin-admin/components/ProductCard";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
@@ -66,25 +63,25 @@ const ProductProfile = () => {
         <Pagination>
           <PaginationContent className=" w-full flex gap-4 items-center justify-center">
             <PaginationItem className=" flex items-center">
-            <Button
+              <Button
                 className="bg-transparent py-2"
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
-                <ChevronLeftIcon className="h-5"/>
+                <ChevronLeftIcon className="h-5" />
               </Button>
             </PaginationItem>
-            
-              <PaginationItem className="" >
-                {currentPage}
-              </PaginationItem>
+
+            <PaginationItem className="bg-white font-bold px-3 py-1 rounded-md text-black">
+              {currentPage}
+            </PaginationItem>
             <PaginationItem className="flex items-center">
               <Button
                 className="bg-transparent py-2"
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >
-                <ChevronRightIcon className="h-5"/>
+                <ChevronRightIcon className="h-5" />
               </Button>
             </PaginationItem>
           </PaginationContent>

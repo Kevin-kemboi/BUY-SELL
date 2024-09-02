@@ -4,11 +4,7 @@ import { useEffect, useState } from "react";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
+  PaginationItem, 
 } from "@/components/ui/pagination";
 import { useLocation } from "react-router-dom";
 import UpdateModal from "./UpdateModal";
@@ -162,7 +158,7 @@ const ProductList = () => {
               </Button>
             </PaginationItem>
             
-              <PaginationItem className="" >
+              <PaginationItem className="bg-white font-bold px-3 py-1 rounded-md text-black" >
                 {currentPage}
               </PaginationItem>
             <PaginationItem className="flex items-center">

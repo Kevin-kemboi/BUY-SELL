@@ -37,7 +37,7 @@ const formSchema = z.object({
   stock: z
     .string()
     .min(1, { message: "Stock must be at least 1 character long" }),
-  imageUrl: z.string().optional(),
+  imageUrl: z.string(),
   
 });
 
