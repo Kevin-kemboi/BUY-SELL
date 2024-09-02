@@ -64,6 +64,7 @@ const Home = () => {
             _id={item._id}
             name={item.name}
             price={item.price}
+            {...item}
             className={` ${
               item.className
             }`}
