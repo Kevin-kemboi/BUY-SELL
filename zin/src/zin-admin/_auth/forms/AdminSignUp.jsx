@@ -64,14 +64,13 @@ const AdminSignUp = () => {
   }
 
   return (
-    <div className="bg-dark-3 min-h-[670px] w-[530px] rounded-md flex items-center justify-start flex-col mt-[50px] py-14 max-sm:w-[310px] ">
-      <img src="/icons/login.svg" />
+    <div className=" md:min-h-[80vh] min-h-[75vh] w-[530px] rounded-md flex items-center justify-start flex-col mt-[50px] py-14  max-sm:w-full ">
 
-      <h2 className="text-3xl font-bold text-pink-200 m-5">Admin Sign-Up</h2>
+      <h2 className="text-3xl font-bold  m-5">Admin Sign-Up</h2>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-5 bg-dark-2 p-7 rounded-xl w-[450px] flex flex-col text-pink-200 max-sm:w-[280px] "
+          className="space-y-5 bg-dark-2 p-7 rounded-md w-[450px] flex flex-col  max-sm:w-[93%] "
         >
           <FormField
             control={form.control}
@@ -157,9 +156,9 @@ const AdminSignUp = () => {
           />
           <Button
             type="submit"
-            className="w-1/4 mx-auto hover:bg-zinc-700 text-pink-200"
+            className="w-1/4 mx-auto py-2 hover:bg-zinc-700 "
           >
-            Submit
+            SignUp
           </Button>
         </form>
       </Form>
