@@ -23,15 +23,15 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div className="flex bg-dark-2 w-[95%] xl:w-[75%] h-[85vh]  mx-auto mt-5 rounded-md">
-        <div className="w-[75%] flex items-center justify-center ">
+      <div className="flex bg-dark-2 w-[95%] xl:w-[75%] h-[85vh]  mx-auto mt-5 rounded-md px-5">
+        <div className="w-[70%] flex items-center justify-center ">
           <img src={product.imageUrl} alt={product.name} className="w-[70%]" />
         </div>
-        <div className="w-1/2  bg-green-400 py-16">
-          <div className=" bg-red flex flex-col ">
+        <div className="w-1/2 py-16">
+          <div className="mx-3 py-6 flex flex-col gap-3  border-b border-dark-5/30">
             <h1 className="text-5xl font-bold text-wrap"> {product.name}</h1>
-            <p>{product.description}</p>
-            <p>Price: ₹{product.price}</p>
+            <p className="text-xl">{product.description}</p>
+            <span className="bg-blue-500 w-max font-bold p-2 rounded-full text-xl">₹{product.price}</span>
             {/* Add more product details as needed */}
           </div>
         </div>
