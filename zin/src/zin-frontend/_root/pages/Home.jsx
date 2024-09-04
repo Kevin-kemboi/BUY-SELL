@@ -6,27 +6,7 @@ import { getProductsFrontend } from "@/lib/api/api";
 import { Clock } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const items = [
-  {
-    title: "The Dawn of Innovation",
-    description: "Explore the birth of groundbreaking ideas and inventions.",
-    header: <Skeleton />,
-    icon: <Clock className="h-4 w-4 text-neutral-500" />,
-    className: "md:col-start-1 md:row-start-1 md:col-end-3 md:row-end-3",
-  },
-  {
-    title: "The Digital Revolution",
-    description: "Dive into the transformative power of technology.",
-    header: <Skeleton />,
-    icon: <Clock className="h-4 w-4 text-neutral-500" />,
-  },
-  {
-    title: "The Art of Design",
-    description: "Discover the beauty of thoughtful and functional design.",
-    header: <Skeleton />,
-    icon: <Clock className="h-4 w-4 text-neutral-500" />,
-  },
-];
+
 
 const Home = () => {
   const [products, setProducts] = useState([]);

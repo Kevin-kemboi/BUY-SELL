@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 export const BentoGrid = ({ className, children }) => {
   return (
@@ -15,7 +16,8 @@ export const BentoGrid = ({ className, children }) => {
 
 export const BentoGridItem = ({ className, name, price, _id, imageUrl }) => {
   return (
-    <div
+    <Link
+      to={`/product/${_id}`}
       className={cn(
         "row-span-1 h-[500px] max-sm:h-[400px] md:h-full  relative rounded-md group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-dark-1 border hover:border-blue-500 border-dark-4  flex items-end space-y-4 overflow-hidden ",
         className
@@ -29,6 +31,6 @@ export const BentoGridItem = ({ className, name, price, _id, imageUrl }) => {
         <p className="px-2">{name}</p>
         <p className="bg-blue-500 rounded-full px-2">₹{price}</p>
       </div>
-    </div>
+    </Link>
   );
 };
