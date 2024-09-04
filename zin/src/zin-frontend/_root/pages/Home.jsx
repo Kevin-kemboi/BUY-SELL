@@ -21,7 +21,6 @@ const Home = () => {
       className,
     };
   });
-  console.log(displayProducts);
 
   const fetchProducts = async () => {
     const data = await getProductsFrontend();
