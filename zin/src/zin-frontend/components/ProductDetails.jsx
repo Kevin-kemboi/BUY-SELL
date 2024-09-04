@@ -30,8 +30,8 @@ const ProductDetails = () => {
         <div className="w-1/2 py-16">
           <div className="mx-3 py-6 flex flex-col gap-3  border-b border-dark-5/30">
             <h1 className="text-5xl font-bold text-wrap"> {product.name}</h1>
-            <p className="text-xl">{product.description}</p>
-            <span className="bg-blue-500 w-max font-bold p-2 rounded-full text-xl">₹{product.price}</span>
+            <p className="text-xl line-clamp-3">{product.description}</p>
+            <span className="bg-blue-500 w-max font-semibold p-1 px-3 rounded-full text-xl">₹{product.price}</span>
             {/* Add more product details as needed */}
           </div>
         </div>
