@@ -40,7 +40,7 @@ const ProductDetails = () => {
             <p>COLOR</p>
             <div className="flex gap-3">
               {["red", "black", "gold"].map((item) => (
-                <div key={item} className="bg-dark-4/80 border border-dark-5/20 px-2 rounded-full text-sm font-normal">
+                <div key={item} className="bg-dark-4/80 border border-dark-5/20 px-2 rounded-full text-sm font-normal cursor-pointer hover:border-blue-600">
                   {item}
                 </div>
               ))}
