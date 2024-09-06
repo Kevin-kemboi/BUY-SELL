@@ -1,9 +1,13 @@
-import React from 'react'
+import LeftSidebar from "@/zin-frontend/components/LeftSidebar";
+import React from "react";
 
 const AllProducts = () => {
   return (
-    <div>AllProducts</div>
-  )
-}
+    <div className=" max-w-6xl mx-auto">
+      <LeftSidebar />
 
-export default AllProducts
+    </div>
+  );
+};
+
+export default AllProducts;

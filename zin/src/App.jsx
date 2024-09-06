@@ -13,6 +13,7 @@ import Admins from "./zin-admin/_root/pages/Admins";
 import RootLayout from "./zin-frontend/_root/RootLayout";
 import Home from "./zin-frontend/_root/pages/Home";
 import ProductDetails from "./zin-frontend/components/ProductDetails";
+import AllProducts from "./zin-frontend/_root/pages/AllProducts";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route element={<RootLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/allproducts" element={<AllProducts />} />
         </Route>
       </Routes>
     </main>

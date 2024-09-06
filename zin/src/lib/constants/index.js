@@ -99,3 +99,12 @@ export const usersMenu = [
     className: "md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-3",
   },
 ]
+
+export const categories = [
+  'ELectronics',
+  'Mens',
+  'Womens',
+  'Kids',
+  'footwear',
+  'Stickers'
+]
