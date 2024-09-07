@@ -22,10 +22,10 @@ const AllProducts = () => {
   return (
     <div className=" max-w-6xl flex mx-auto">
       <LeftSidebar />
-      <div className="w-full mx-auto h-max px-6 grid grid-cols-3 gap-2">
+      <div className="w-full mx-auto h-max px-6 grid xl:grid-cols-3 md:grid-cols-2  gap-2">
         {products.map((product) => (
           <Link to={`/product/${product._id}`} key={product._id}
-            className="relative p-7  cursor-pointer overflow-hidden rounded-md border  border-dark-4 bg-dark-1 flex justify-center items-center hover:border-blue-500 "
+            className="relative p-7 h-[250px] xl:h-[300px] cursor-pointer overflow-hidden rounded-md border  border-dark-4 bg-dark-1 flex justify-center items-center hover:border-blue-500 "
           >
             <img
               src={product.imageUrl}
