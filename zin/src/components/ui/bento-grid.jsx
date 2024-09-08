@@ -25,7 +25,7 @@ export const BentoGridItem = ({ className, name, price, _id, imageUrl }) => {
     >
       <img
         src={imageUrl}
-        className="absolute top-0 left-0 right-0 bottom-0 m-auto max-h-[70%] max-w-[70%] object-contain group-hover:scale-110 transition-all duration-300"
+        className="absolute top-0 left-0 right-0 bottom-0 m-auto max-h-[90%] max-w-[80%] object-contain group-hover:scale-110 transition-all duration-300"
       />
       <div className="z-10 mx-2 flex gap-2 border border-light-2/30 pl-3 pr-1 py-1 rounded-full bg-dark-1">
         <p className="px-2">{name}</p>

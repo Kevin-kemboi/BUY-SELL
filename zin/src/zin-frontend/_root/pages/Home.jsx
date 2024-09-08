@@ -52,7 +52,7 @@ const Home = () => {
       </BentoGrid>
 
       <div className="mt-3">
-        <Marquee pauseOnHover className="[--duration:30s]">
+        <Marquee  className="[--duration:50s]">
           {products.map((item) => (
             <ProductCard key={item._id} {...item} />
           ))}
