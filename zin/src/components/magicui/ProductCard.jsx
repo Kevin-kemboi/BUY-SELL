@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Clock } from "lucide-react";
 
 export const ProductCard = ({ _id, name, price, imageUrl }) => {
   return (
