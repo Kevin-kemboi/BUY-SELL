@@ -99,13 +99,14 @@ export const usersMenu = [
   },
 ];
 
+
 export const categories = [
-  "ELectronics",
-  "Mens",
-  "Womens",
-  "Kids",
-  "footwear",
-  "Stickers",
+  { name: "Electronics", value: "electronics" },
+  { name: "Mens", value: "mens" },
+  { name: "Womens", value: "womens" },
+  { name: "Kids", value: "kids" },
+  { name: "Footwear", value: "footwear" },
+  { name: "Stickers", value: "stickers" },
 ];
 
 export const sortOptions = [
