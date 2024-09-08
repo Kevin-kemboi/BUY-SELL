@@ -26,7 +26,7 @@ const Home = () => {
     const data = await getProductsFrontend();
     if (data && data.products) {
 
-      setProducts(data.products.slice(0,8));
+      setProducts(data.products.slice(0,10));
     }
   };
 
@@ -53,7 +53,7 @@ const Home = () => {
 
       <div className="mt-3">
         <Marquee  className="[--duration:50s]">
-          {products.map((item) => (
+          {products.slice(3).map((item) => (
             <ProductCard key={item._id} {...item} />
           ))}
         </Marquee>
