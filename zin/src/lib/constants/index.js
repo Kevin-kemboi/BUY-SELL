@@ -101,6 +101,7 @@ export const usersMenu = [
 
 
 export const categories = [
+  { name: "All", value: ""},
   { name: "Electronics", value: "electronics" },
   { name: "Mens", value: "mens" },
   { name: "Womens", value: "womens" },

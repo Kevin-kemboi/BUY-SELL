@@ -8,9 +8,9 @@ const fetchAdminUser = require("../middleware/fetchAdminUser");
 const isAdmin = require("../middleware/AdminVerify");
 const Product = require("../models/Product.model");
 const upload = require("../middleware/storage");
+const { FilterQuery } = require("mongoose");
 
 const secret = process.env.JWT_SECRET;
-console.log(secret)
 // ----------------------------------------
 // Admin auth routes
 // ----------------------------------------
@@ -227,7 +227,6 @@ router.post("/api/upload", (req, res) => {
       filepath: `http://localhost:5173/uploads/${req.file.filename}`,
     });
   });
-  
 });
 
 // add a product
@@ -235,7 +234,7 @@ router.post(
   "/addproduct",
   fetchAdminUser,
   isAdmin,
- // Use upload middleware to handle the file
+  // Use upload middleware to handle the file
   [
     // Validation middleware here...
   ],
@@ -371,18 +370,29 @@ router.delete(
 
 // get products, 4 at a time
 router.get("/productslist", async (req, res) => {
-  const page = req.header("Page");
-  let pageSize;
-  if (page) {
-    pageSize = 4;
-  }
-
   try {
-    const products = await Product.find()
-      .skip((page - 1) * pageSize)
-      .limit(pageSize);
+    const page = req.header("Page");
+    const pageSize = page ? 4 : null;
 
-    const totalCount = await Product.countDocuments({});
+    const filter = req.header("Filter");
+
+    // Define a query object
+    const query = {};
+
+    // Only add filtering logic if a filter is provided
+    if (filter) {
+      query.$or = [
+        { category: { $regex: new RegExp(`^${filter}$`, "i") } }, // Match category
+      ];
+    }
+
+    // Fetch products with optional pagination
+    const products = await Product.find(query)
+      .skip(page ? (page - 1) * pageSize : 0)
+      .limit(pageSize || 0); // No limit if no pageSize is defined
+
+    // Get total count of products (use the same filter query for accurate count)
+    const totalCount = await Product.countDocuments(query);
 
     res.status(200).json({ success: true, products, totalCount });
   } catch (error) {

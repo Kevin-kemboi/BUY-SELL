@@ -118,12 +118,14 @@ export const getProducts = async (currentPage) => {
   }
 };
 
-export const getProductsFrontend = async () => {
+export const getProductsFrontend = async (params) => {
   try {
+    const {filter} = params;
     const response = await fetch(`${host}/admin/productslist`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        ...(filter && { "Filter": filter })
       },
     });
 

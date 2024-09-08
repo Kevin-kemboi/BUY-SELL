@@ -10,22 +10,26 @@ const Filters = ({ filters = [] }) => {
     const paramsFilter = searchParams.get("filter");
 
     const handleUpdateParams = (value) => {
-        const newUrl = formUrlQuery({
+        if(value !== ''){
+            const newUrl = formUrlQuery({
             params: searchParams.toString(),
             key: "filter",
             value,
         });
         navigate(newUrl)
+    }else{
+        navigate(`/allproducts`)
+    }
 
     }
 
 
   return (
-    <RadioGroup defaultValue={paramsFilter} onValueChange={handleUpdateParams}  className="gap-1">
+    <RadioGroup defaultValue={paramsFilter || ''} onValueChange={handleUpdateParams}  className="gap-1">
       {filters.map((filter) => (
-        <div key={filter.value} className="flex items-center space-x-1">
-          <RadioGroupItem value={filter.value} id={filter.name} />
-          <Label className=" text-xs" htmlFor={filter.name}>{filter.name}</Label>
+        <div key={filter.value} className="flex items-center space-x-1 ">
+          <RadioGroupItem value={filter.value} id={filter.name} className="cursor-pointer" />
+          <Label className=" cursor-pointer text-xs hover:underline underline-offset-1 transition-all" htmlFor={filter.name}>{filter.name}</Label>
         </div>
       ))}
     </RadioGroup>
