@@ -111,6 +111,7 @@ export const categories = [
 ];
 
 export const sortOptions = [
+  { name: "None", value: ""},
   { name: "Latest arrivals", value: "latest"},
   { name: "Price: Low to high", value: "low"},
   { name: "Price: High to low", value: "high"},
