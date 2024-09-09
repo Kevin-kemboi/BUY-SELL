@@ -375,6 +375,7 @@ router.get("/productslist", async (req, res) => {
     const pageSize = page ? 4 : null;
 
     const filter = req.header("Filter");
+    const sortBy = req.header("Sort");
 
     // Define a query object
     const query = {};
@@ -386,10 +387,31 @@ router.get("/productslist", async (req, res) => {
       ];
     }
 
+    let sortOptions = {};
+
+    switch (sortBy) {
+      case "latest":
+        sortOptions = { createdAt: -1 };
+        break;
+
+      case "high":
+        sortOptions = { price: -1 };
+        break;
+
+      case "low":
+        sortOptions = { price: 1 };
+        break;
+
+      default:
+        break;
+    }
+
+
     // Fetch products with optional pagination
     const products = await Product.find(query)
       .skip(page ? (page - 1) * pageSize : 0)
-      .limit(pageSize || 0); // No limit if no pageSize is defined
+      .limit(pageSize || 0)
+      .sort(sortOptions || "")
 
     // Get total count of products (use the same filter query for accurate count)
     const totalCount = await Product.countDocuments(query);

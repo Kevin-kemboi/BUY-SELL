@@ -8,10 +8,11 @@ const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [searchParams] = useSearchParams();
 
-  const filter = searchParams.get("filter");
+  const filter = searchParams.get("filter") || "";
+  const sortBy = searchParams.get("sortby") || "";
 
   const fetchProducts = async () => {
-    const response = await getProductsFrontend({ filter });
+    const response = await getProductsFrontend({ filter, sortBy });
     if (response.success) {
       setProducts(response.products);
     }
@@ -19,7 +20,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [filter]);
+  }, [filter, sortBy]);
 
   return (
     <div className=" max-w-6xl flex mx-auto">
