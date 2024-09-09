@@ -1,10 +1,9 @@
-import { clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-import qs from "query-string"
-
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import qs from "query-string";
 
 export function cn(...inputs) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export const formUrlQuery = ({ params, key, value }) => {
@@ -14,8 +13,20 @@ export const formUrlQuery = ({ params, key, value }) => {
   return qs.stringifyUrl(
     {
       url: window.location.pathname,
-      query: currentUrl
+      query: currentUrl,
     },
     { skipNull: true }
   );
+};
+
+
+export const urlQuery = ({ searchParams, key}) => {
+  // When sortby is '', remove the 'sortby' parameter and keep the others
+  const newParams = new URLSearchParams(searchParams);
+
+  // Delete the 'sortby' parameter
+  newParams.delete(`${key}`);
+
+  // Generate the new URL without 'sortby'
+ return `/allproducts?${newParams.toString()}`;
 };
