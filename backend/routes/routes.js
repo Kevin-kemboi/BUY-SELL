@@ -8,8 +8,6 @@ const fetchAdminUser = require("../middleware/fetchAdminUser");
 const isAdmin = require("../middleware/AdminVerify");
 const Product = require("../models/Product.model");
 const upload = require("../middleware/storage");
-const { FilterQuery } = require("mongoose");
-
 const secret = process.env.JWT_SECRET;
 // ----------------------------------------
 // Admin auth routes
@@ -434,38 +432,6 @@ router.post("/getproductbyid", fetchAdminUser, isAdmin, async (req, res) => {
   }
 });
 
-router.post("/search", async (req, res) => {
-  try {
-    const { query } = req.body;
 
-    const regexQuery = { $regex: query, $options: "i" };
-
-    let results = [];
-
-    const modelsAndTypes = [
-      {
-        model: Product,
-        searchFields: ['name', 'description', 'category'], // Multiple fields to search
-        type: 'question',
-      },
-    ];
-
-    for (const { model, searchField } of modelsAndTypes) {
-      const queryResults = await model
-        .find({ [searchField]: regexQuery })
-        .limit(6);
-
-      results.push(
-        ...queryResults.map((item) => ({
-          title: `${item[searchField]} ${query}`,
-        }))
-      );
-    }
-
-    res.status(200).json({results, success: true});
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 module.exports = router;

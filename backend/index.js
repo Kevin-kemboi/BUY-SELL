@@ -13,6 +13,7 @@ app.use(cors());
 
 
 app.use('/admin', require('./routes/routes'));
+app.use('/', require('./routes/routes2'));
 
 
 app.listen(port, () => {

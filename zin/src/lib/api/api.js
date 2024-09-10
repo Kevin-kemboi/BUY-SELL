@@ -233,3 +233,19 @@ export const deleteProduct = async (id) => {
     console.log(error);
   }
 };
+
+
+export const globalSearch = async (params){
+
+  try {
+    const { query } = params;
+
+    const response = await fetch(`${host}/`)
+    
+  } catch (error) {
+    console.log(error)
+  }
+
+
+
+}
