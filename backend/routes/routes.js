@@ -406,12 +406,11 @@ router.get("/productslist", async (req, res) => {
         break;
     }
 
-
     // Fetch products with optional pagination
     const products = await Product.find(query)
       .skip(page ? (page - 1) * pageSize : 0)
       .limit(pageSize || 0)
-      .sort(sortOptions || "")
+      .sort(sortOptions || "");
 
     // Get total count of products (use the same filter query for accurate count)
     const totalCount = await Product.countDocuments(query);
@@ -430,6 +429,40 @@ router.post("/getproductbyid", fetchAdminUser, isAdmin, async (req, res) => {
     const product = await Product.findById(id);
     if (!product) throw new Error();
     res.status(200).json({ success: true, product });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/search", async (req, res) => {
+  try {
+    const { query } = req.body;
+
+    const regexQuery = { $regex: query, $options: "i" };
+
+    let results = [];
+
+    const modelsAndTypes = [
+      {
+        model: Product,
+        searchFields: ['name', 'description', 'category'], // Multiple fields to search
+        type: 'question',
+      },
+    ];
+
+    for (const { model, searchField } of modelsAndTypes) {
+      const queryResults = await model
+        .find({ [searchField]: regexQuery })
+        .limit(6);
+
+      results.push(
+        ...queryResults.map((item) => ({
+          title: `${item[searchField]} ${query}`,
+        }))
+      );
+    }
+
+    res.status(200).json({results, success: true});
   } catch (error) {
     console.log(error);
   }
