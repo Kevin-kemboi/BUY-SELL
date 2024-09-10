@@ -107,7 +107,7 @@ export const categories = [
   { name: "Womens", value: "womens" },
   { name: "Kids", value: "kids" },
   { name: "Footwear", value: "footwear" },
-  { name: "Stickers", value: "stickers" },
+  { name: "Accessories", value: "accessories" },
 ];
 
 export const sortOptions = [

@@ -20,4 +20,4 @@ app.use('/', require('./routes/routes2'));
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-}) 
+})  

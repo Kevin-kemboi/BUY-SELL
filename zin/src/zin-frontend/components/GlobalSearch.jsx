@@ -66,13 +66,14 @@ const GlobalSearch = () => {
   return (
     <div ref={searchContainerRef} className="relative w-full max-w-xl">
       <div
-        className={`relative bg-red flex items-center gap-1 rounded-xl  border-dark-4 `}
+        className={`relative flex items-center gap-1 rounded-xl  border-dark-4 `}
       >
         <label htmlFor="global-search" className="absolute right-5">
           <Search className="cursor-pointer  w-4  text-zinc-600 " />
         </label>
 
         <Input
+          autoComplete="off"
           type="text"
           id="global-search"
           value={search}
@@ -86,7 +87,7 @@ const GlobalSearch = () => {
               setIsModalOpen(false);
             }
           }}
-          className=" h-7 border bg-dark-6   border-dark-4 shadow-none "
+          className=" h-7 border bg-dark-6 rounded-sm  border-dark-4 shadow-none "
         ></Input>
       </div>
       {isModalOpen && <GlobalResult />}
