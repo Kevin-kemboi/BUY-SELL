@@ -20,13 +20,21 @@ export const formUrlQuery = ({ params, key, value }) => {
 };
 
 
-export const urlQuery = ({ searchParams, key}) => {
-  // When sortby is '', remove the 'sortby' parameter and keep the others
-  const newParams = new URLSearchParams(searchParams);
+export const removeKeysFromQuery = ({
+  params,
+  keysToRemove
+}) => {
+  const currentUrl = qs.parse(params);
 
-  // Delete the 'sortby' parameter
-  newParams.delete(`${key}`);
+  keysToRemove.forEach((key) => {
+    delete currentUrl[key];
+  });
 
-  // Generate the new URL without 'sortby'
- return `/allproducts?${newParams.toString()}`;
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl
+    },
+    { skipNull: true }
+  );
 };
