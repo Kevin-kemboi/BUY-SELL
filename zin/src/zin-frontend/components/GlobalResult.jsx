@@ -1,6 +1,5 @@
 import { globalSearch } from "@/lib/api/api";
-import { Arrow } from "@radix-ui/react-dropdown-menu";
-import { ArrowBigRight, ArrowBigRightDash, ArrowUpRight, ChevronRightIcon, Loader, MoveDiagonal } from "lucide-react";
+import { ArrowUpRight, Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
@@ -46,9 +45,9 @@ const GlobalResult = () => {
       <div className="">
 
         {isLoading ? (
-          <div className="flex-center flex-col px-5">
-            <Loader className=" my-2 size-10 animate-spin" />
-            <p className="text-dark200_light800 body-regular">Searching..</p>
+          <div className="flex items-center justify-center gap-2 px-5">
+            <Loader className=" my-2 size-5 animate-spin text-zinc-500" />
+            <p className="text-zinc-500 body-regular">searching...</p>
           </div>
         ) : (
           <div className="flex flex-col">
@@ -59,9 +58,9 @@ const GlobalResult = () => {
                   key={item.type + item.id + index}
                   className="flex border-b border-dark-4 cursor-pointer items-start gap-3 px-5 py-1 hover:bg-dark-2 hover:dark:bg-dark-500/50 max-sm:px-1"
                 >
-                  <ArrowUpRight className="w-4" />
+                  <ArrowUpRight className="w-4 text-zinc-300" />
                   <div className="flex flex-col">
-                    <p className="body-medium text-dark200_light800 line-clamp-1">
+                    <p className="body-medium text-dark200_light800 line-clamp-1 text-zinc-300">
                       {item.title}
                     </p>
                   </div>
@@ -69,7 +68,7 @@ const GlobalResult = () => {
               ))
             ) : (
               <div className="flex-center flex-col px-5">
-                <p className="text-dark200_light800 body-regular px-5 py-2.5">
+                <p className="text-dark200_light800 body-regular px-5 py-2.5 text-zinc-500">
                   Result not found
                 </p>
               </div>

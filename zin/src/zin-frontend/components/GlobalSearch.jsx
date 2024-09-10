@@ -18,7 +18,6 @@ const GlobalSearch = () => {
 
   const [search, setSearch] = useState(query || "");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
 
   // close modal useEffect
   useEffect(() => {
@@ -67,18 +66,17 @@ const GlobalSearch = () => {
   return (
     <div ref={searchContainerRef} className="relative w-full max-w-xl">
       <div
-        className={`relative flex items-center gap-1 rounded-xl border border-dark-4 px-4 ${
-          isFocused ? "border-blue-600" : "border-dark-4"
-        }`}
+        className={`relative bg-red flex items-center gap-1 rounded-xl  border-dark-4 `}
       >
-        <label htmlFor="global-search">
-          <Search className="cursor-pointer" />
+        <label htmlFor="global-search" className="absolute right-5">
+          <Search className="cursor-pointer  w-4  text-zinc-600 " />
         </label>
+
         <Input
           type="text"
           id="global-search"
           value={search}
-          placeholder="search globally"
+          placeholder="search"
           onChange={(e) => {
             setSearch(e.target.value);
             if (!isModalOpen) {
@@ -88,12 +86,10 @@ const GlobalSearch = () => {
               setIsModalOpen(false);
             }
           }}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          className=" h-7 bg-dark-6 my-1  border-dark-6 shadow-none "
-        />
+          className=" h-7 border bg-dark-6   border-dark-4 shadow-none "
+        ></Input>
       </div>
-      {isModalOpen && <GlobalResult search={search} />}
+      {isModalOpen && <GlobalResult />}
     </div>
   );
 };
