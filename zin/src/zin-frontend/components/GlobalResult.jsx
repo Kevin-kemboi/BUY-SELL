@@ -1,4 +1,6 @@
-import { ChevronRightIcon, Loader } from "lucide-react";
+import { globalSearch } from "@/lib/api/api";
+import { Arrow } from "@radix-ui/react-dropdown-menu";
+import { ArrowBigRight, ArrowBigRightDash, ArrowUpRight, ChevronRightIcon, Loader, MoveDiagonal } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
@@ -20,7 +22,8 @@ const GlobalResult = () => {
           query: global,
         });
 
-        setResult(JSON.parse(res));
+        console.log(res.results)
+        setResult(res.results);
       } catch (error) {
         console.log(error);
         throw error;
@@ -39,12 +42,8 @@ const GlobalResult = () => {
   };
 
   return (
-    <div className="background-light850_dark100 absolute top-full z-10 mt-3 w-full rounded-xl py-5 shadow-lg dark:border dark:border-dark-4 dark:shadow-light-100">
-      <div className="my-4 h-px bg-light-700/50 dark:bg-dark-500/50 max-sm:hidden" />
-      <div className="space-y-2.5">
-        <p className=" px-5">
-          Top Matches
-        </p>
+    <div className="bg-dark-6 border border-dark-4 absolute top-full z-10 mt-3 w-full rounded-md shadow-lg dark:border dark:border-dark-4 dark:shadow-light-100">
+      <div className="">
 
         {isLoading ? (
           <div className="flex-center flex-col px-5">
@@ -52,21 +51,18 @@ const GlobalResult = () => {
             <p className="text-dark200_light800 body-regular">Searching..</p>
           </div>
         ) : (
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col">
             {result.length > 0 ? (
               result.map((item, index) => (
                 <Link
                   to={renderLink(item.id)}
                   key={item.type + item.id + index}
-                  className="mx-2 flex w-[97%] cursor-pointer items-start gap-3 rounded-lg px-5 py-2.5 hover:bg-zinc-100/50 hover:dark:bg-dark-500/50 max-sm:px-1"
+                  className="flex border-b border-dark-4 cursor-pointer items-start gap-3 px-5 py-1 hover:bg-dark-2 hover:dark:bg-dark-500/50 max-sm:px-1"
                 >
-                  <ChevronRightIcon className="dark:invert max-sm:min-w-5" />
+                  <ArrowUpRight className="w-4" />
                   <div className="flex flex-col">
                     <p className="body-medium text-dark200_light800 line-clamp-1">
                       {item.title}
-                    </p>
-                    <p className="text-dark200_light800 small-medium mt-1 font-bold capitalize">
-                      {item.type}
                     </p>
                   </div>
                 </Link>

@@ -118,15 +118,15 @@ export const getProducts = async (currentPage) => {
   }
 };
 
-export const getProductsFrontend = async (params = '') => {
+export const getProductsFrontend = async (params = "") => {
   try {
-    const {filter, sortBy} = params;
+    const { filter, sortBy } = params;
     const response = await fetch(`${host}/admin/productslist`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Filter": filter || "",
-        "Sort": sortBy || ""
+        Filter: filter || "",
+        Sort: sortBy || "",
       },
     });
 
@@ -234,18 +234,32 @@ export const deleteProduct = async (id) => {
   }
 };
 
-
-export const globalSearch = async (params){
-
+export const globalSearch = async (params) => {
   try {
     const { query } = params;
 
-    const response = await fetch(`${host}/`)
-    
+    const body = {
+      query: query,
+    };
+
+    const response = await fetch(`${host}/search`, {
+      method: "POST", // Corrected here
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    // Check if the response status is OK
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.log(error)
+    console.error("Global Search Error:", error);
+    throw error; // Optionally rethrow the error for further handling
   }
+};
 
-
-
-}

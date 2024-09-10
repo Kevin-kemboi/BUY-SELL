@@ -8,7 +8,8 @@ import GlobalResult from "./GlobalResult";
 // import GlobalResult from "./GlobalResult";
 
 const GlobalSearch = () => {
-  const pathname = useLocation();
+  const location = useLocation();
+  const pathname = location.pathname;
   const [searchParams] = useSearchParams();
   const searchContainerRef = useRef(null);
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const GlobalSearch = () => {
 
           navigate(newUrl);
         }
+        setIsModalOpen(false); // Close modal when search is cleared
       }
     }, 300);
 
@@ -91,7 +93,7 @@ const GlobalSearch = () => {
           className=" h-7 bg-dark-6 my-1  border-dark-6 shadow-none "
         />
       </div>
-      {isModalOpen && <GlobalResult />}
+      {isModalOpen && <GlobalResult search={search} />}
     </div>
   );
 };
