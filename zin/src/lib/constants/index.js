@@ -102,11 +102,11 @@ export const usersMenu = [
 
 export const categories = [
   { name: "All", value: ""},
-  { name: "Electronics", value: "electronics" },
   { name: "Mens", value: "mens" },
   { name: "Womens", value: "womens" },
   { name: "Kids", value: "kids" },
   { name: "Footwear", value: "footwear" },
+  { name: "Electronics", value: "electronics" },
   { name: "Accessories", value: "accessories" },
 ];
 
@@ -116,3 +116,4 @@ export const sortOptions = [
   { name: "Price: Low to high", value: "low"},
   { name: "Price: High to low", value: "high"},
 ];
+

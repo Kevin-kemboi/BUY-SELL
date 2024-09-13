@@ -1,9 +1,7 @@
 import Marquee from "@/components/magicui/marquee";
 import { ProductCard } from "@/components/magicui/ProductCard";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import { Skeleton } from "@/components/ui/skeleton";
 import { getProductsFrontend } from "@/lib/api/api";
-import { Clock } from "lucide-react";
 import { useEffect, useState } from "react";
 
 
@@ -52,7 +50,7 @@ const Home = () => {
       </BentoGrid>
 
       <div className="mt-3">
-        <Marquee  className="[--duration:50s]">
+        <Marquee  className="[--duration:190s]">
           {products.slice(3).map((item) => (
             <ProductCard key={item._id} {...item} />
           ))}
