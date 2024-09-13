@@ -28,12 +28,12 @@ const RootNavbar = () => {
           ))}
         </div>
       </div>
-      <div className="flex w-full gap-2 ">
+      <div className="flex w-full gap-2 justify-end ">
         <GlobalSearch />
-        <Sheet>
+        <Sheet >
           <SheetTrigger asChild>
-            <Button variant="ghost" className="border border-dark-4">
-              <img src="/icons/cart.svg" alt="" className="w-4 invert " />
+            <Button className="border hover:bg-transparent group border-dark-4 bg-dark-6 ">
+              <img src="/icons/cart.svg" alt="" className="w-4 invert group-hover:scale-105 " />
             </Button>
           </SheetTrigger>
           <SheetContent className="text-white">
