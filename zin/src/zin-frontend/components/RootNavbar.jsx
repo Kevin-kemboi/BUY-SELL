@@ -1,10 +1,12 @@
 import { categories } from "@/lib/constants";
 import GlobalSearch from "./GlobalSearch";
 import { Link } from "react-router-dom";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 const RootNavbar = () => {
   return (
-    <nav className="bg-dark-6  py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
+    <nav className="bg-dark-6 animate-in duration-1000 py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
       <div className="flex w-full items-center  gap-7">
         <Link to={`/`} className="flex  items-center gap-3">
           <img src="/icons/navbar.svg" className="w-11" />
@@ -26,7 +28,20 @@ const RootNavbar = () => {
           ))}
         </div>
       </div>
-      <GlobalSearch />
+      <div className="flex w-full gap-2 ">
+        <GlobalSearch />
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" className="border border-dark-4">
+              <img src="/icons/cart.svg" alt="" className="w-4 invert " />
+            </Button>
+          </SheetTrigger>
+          <SheetContent className="text-white">
+            <h4 className="font-bold text-xl">My Cart</h4>
+            
+          </SheetContent>
+        </Sheet>
+      </div>
     </nav>
   );
 };
