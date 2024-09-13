@@ -1,15 +1,16 @@
 import Marquee from "@/components/magicui/marquee";
 import { ProductCard } from "@/components/magicui/ProductCard";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import { getProductsFrontend } from "@/lib/api/api";
+import { getProductsFrontend, shuffleArray } from "@/lib/api/api";
 import { useEffect, useState } from "react";
-
-
 
 const Home = () => {
   const [products, setProducts] = useState([]);
 
-  const displayProducts = products.slice(0, 3).map((product, index) => {
+  const randomProducts = shuffleArray(products).slice(0, 3);
+
+  // Assign className to the first random product
+  const displayProducts = randomProducts.map((product, index) => {
     let className;
     if (index === 0) {
       className = "md:col-start-1 md:row-start-1 md:col-end-3 md:row-end-3";
@@ -23,8 +24,7 @@ const Home = () => {
   const fetchProducts = async () => {
     const data = await getProductsFrontend();
     if (data && data.products) {
-
-      setProducts(data.products.slice(0,10));
+      setProducts(data.products);
     }
   };
 
@@ -42,16 +42,14 @@ const Home = () => {
             name={item.name}
             price={item.price}
             {...item}
-            className={` ${
-              item.className
-            }`}
+            className={` ${item.className}`}
           />
         ))}
       </BentoGrid>
 
       <div className="mt-3">
-        <Marquee  className="[--duration:190s]">
-          {products.slice(3).map((item) => (
+        <Marquee className="[--duration:190s]">
+          {products.slice(0,10).map((item) => (
             <ProductCard key={item._id} {...item} />
           ))}
         </Marquee>

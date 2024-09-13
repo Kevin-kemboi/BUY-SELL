@@ -144,12 +144,6 @@ export const getProductsFrontend = async (params = "") => {
 
 export const getProductById = async (productId) => {
   try {
-    const token = localStorage.getItem("Cookie");
-    if (!token) {
-      console.log("Token not found");
-      return false;
-    }
-
     const body = {
       id: productId,
     };
@@ -158,7 +152,6 @@ export const getProductById = async (productId) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Token: token,
       },
       body: JSON.stringify(body),
     });
@@ -263,3 +256,10 @@ export const globalSearch = async (params) => {
   }
 };
 
+
+export const shuffleArray = (arr) => {
+  return arr
+    .map((item) => ({ item, sortKey: Math.random() })) // Create an array of objects with random sort keys
+    .sort((a, b) => a.sortKey - b.sortKey) // Sort based on random keys
+    .map(({ item }) => item); // Extract the original items after sorting
+};

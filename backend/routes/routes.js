@@ -401,6 +401,7 @@ router.get("/productslist", async (req, res) => {
         break;
 
       default:
+        sortOptions = {createdAt: 1 }
         break;
     }
 
@@ -408,7 +409,7 @@ router.get("/productslist", async (req, res) => {
     const products = await Product.find(query)
       .skip(page ? (page - 1) * pageSize : 0)
       .limit(pageSize || 0)
-      .sort(sortOptions || "");
+      .sort(sortOptions || {});
 
     // Get total count of products (use the same filter query for accurate count)
     const totalCount = await Product.countDocuments(query);
@@ -421,7 +422,7 @@ router.get("/productslist", async (req, res) => {
 });
 
 // get a product by id
-router.post("/getproductbyid", fetchAdminUser, isAdmin, async (req, res) => {
+router.post("/getproductbyid", async (req, res) => {
   const { id } = req.body;
   try {
     const product = await Product.findById(id);
