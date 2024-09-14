@@ -13,7 +13,11 @@ const Home = () => {
   const displayProducts = randomProducts.map((product, index) => {
     let className;
     if (index === 0) {
-      className = "md:col-start-1 md:row-start-1 md:col-end-3 md:row-end-3";
+      className = "md:col-start-1 md:row-start-1 md:col-end-3 animate-slideRight duration-1000 md:row-end-3";
+    } else if( index === 1){
+      className = "animate-slideLeft duration-1000"
+    } else if( index === 2){
+      className = "animate-slideUp duration-1000"
     }
     return {
       ...product,

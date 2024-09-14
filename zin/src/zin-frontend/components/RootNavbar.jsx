@@ -1,7 +1,7 @@
 import { categories } from "@/lib/constants";
 import GlobalSearch from "./GlobalSearch";
 import { Link } from "react-router-dom";
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
 const RootNavbar = () => {

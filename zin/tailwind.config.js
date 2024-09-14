@@ -76,9 +76,17 @@ export default {
         inter: ["Inter", "sans-serif"],
       },
       keyframes: {
-        "slide-right": {
-          from: { transform: "translateX(0)" },
-          to: { transform: "translateX(100%)" }, // Moves 100% to the right
+        "slideRight": {
+          '0%': { transform: 'translateX(-30%)', opacity: 0 },
+          '100%': { transform: 'translateX(0)', opacity: 1 },
+        },
+        "slideLeft": {
+          '0%': { transform: 'translateX(50%)', opacity: 0 },
+          '100%': { transform: 'translateX(0)', opacity: 1 },
+        },
+        "slideUp": {
+          '0%': { transform: 'translateY(50%)', opacity: 0 },
+          '100%': { transform: 'translateY(0)', opacity: 1 },
         },
         "border-beam": {
           "100%": {
@@ -108,7 +116,9 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "marquee": "marquee var(--duration) linear infinite",
         "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
-        "slide-right": "slide-right var(--duration) linear ", // Infinite slide
+        "slideRight": 'slideRight ease-in-out ',      
+        "slideLeft": 'slideLeft ease-in-out ',      
+        "slideUp": 'slideUp ease-in-out ',      
       },
     },
   },
