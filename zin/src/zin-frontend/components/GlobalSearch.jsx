@@ -58,9 +58,10 @@ const GlobalSearch = () => {
         }
         setIsModalOpen(false); // Close modal when search is cleared
       }
-    }, 180);
+    }, 300);
 
     return () => clearTimeout(delayDebounceFn);
+
   }, [query, search, pathname, searchParams]);
 
   return (
