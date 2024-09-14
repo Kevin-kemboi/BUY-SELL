@@ -77,15 +77,15 @@ export default {
       },
       keyframes: {
         "slideRight": {
-          '0%': { transform: 'translateX(-30%)', opacity: 0 },
+          '0%': { transform: 'translateX(-10%)', opacity: 0 },
           '100%': { transform: 'translateX(0)', opacity: 1 },
         },
         "slideLeft": {
-          '0%': { transform: 'translateX(50%)', opacity: 0 },
+          '0%': { transform: 'translateX(20%)', opacity: 0 },
           '100%': { transform: 'translateX(0)', opacity: 1 },
         },
         "slideUp": {
-          '0%': { transform: 'translateY(50%)', opacity: 0 },
+          '0%': { transform: 'translateY(20%)', opacity: 0 },
           '100%': { transform: 'translateY(0)', opacity: 1 },
         },
         "border-beam": {
