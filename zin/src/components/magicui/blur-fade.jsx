@@ -6,7 +6,7 @@ export default function BlurFade({
   children,
   className,
   variant,
-  duration = 0.4,
+  duration = 0.5,
   delay = 0,
   yOffset = 6,
   inView = false,
