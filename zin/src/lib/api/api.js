@@ -263,3 +263,28 @@ export const shuffleArray = (arr) => {
     .sort((a, b) => a.sortKey - b.sortKey) // Sort based on random keys
     .map(({ item }) => item); // Extract the original items after sorting
 };
+
+
+export const confirmUser = async (token) => {
+  try {
+    if (!token) {
+      return false;
+    }
+    const data = await fetch(`${host}/user/userinfo`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Token: token,
+      },
+    });
+
+    const response = await data.json();
+    if (!response.role === "admin") {
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
