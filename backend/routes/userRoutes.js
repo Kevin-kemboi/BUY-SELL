@@ -4,6 +4,7 @@ const { body, validationResult } = require("express-validator");
 const StoreUser = require("../models/StoreUser.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const fetchStoreUser = require("../middleware/fetchStoreUser");
 
 const secret = process.env.JWT_SECRET;
 
@@ -71,8 +72,6 @@ router.post(
   }
 );
 
-
-
 router.post(
   "/login",
   [body("email").isEmail(), body("password").notEmpty()],
@@ -84,7 +83,7 @@ router.post(
 
     try {
       const user = await StoreUser.findOne({
-        email: req.body.email
+        email: req.body.email,
       });
       if (!user) {
         return res.status(400).json({ error: "User does not exist." });
@@ -114,5 +113,15 @@ router.post(
     }
   }
 );
+
+router.get("/userinfo", fetchStoreUser,  async (req, res) => {
+  try {
+    const user = req.user;
+    res.send(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "internal server error" });
+  }
+});
 
 module.exports = router;
