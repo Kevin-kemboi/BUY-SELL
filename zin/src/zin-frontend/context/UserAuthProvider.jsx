@@ -18,7 +18,7 @@ const UserAuthProvider = ({ children }) => {
   };
 
   const userLogout = () => {
-    localStorage.removeItem("Cookie");
+    localStorage.removeItem("UserCookie");
     setIsUserAuthenticated(false);
   };
 

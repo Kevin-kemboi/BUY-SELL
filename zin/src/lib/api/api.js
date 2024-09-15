@@ -288,3 +288,19 @@ export const confirmUser = async (token) => {
     console.log(error);
   }
 };
+
+
+export const loginUser = async (params) => {
+  const { email, password } = params;
+
+  const response = await fetch(`${host}/user/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const data = await response.json();
+  return data;
+};

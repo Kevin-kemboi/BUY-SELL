@@ -13,19 +13,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "@/zin-admin/context/AdminAuthProvider";
-import { loginAdmin } from "@/lib/api/api";
+import { loginAdmin, loginUser } from "@/lib/api/api";
 import { useToast } from "@/components/ui/use-toast";
+import { useUserAuth } from "@/zin-frontend/context/UserAuthProvider";
 
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 });
 
-const AdminLogin = () => {
+const UserLogin = () => {
   const { toast } = useToast();
 
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useAdminAuth();
+  const { setIsUserAuthenticated } = useUserAuth();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -36,16 +37,16 @@ const AdminLogin = () => {
   });
 
   async function onSubmit(values) {
-    const data = await loginAdmin(values);
+    const data = await loginUser(values);
     if (data.success) {
-      localStorage.setItem("Cookie", data.authToken);
-      navigate("/admin");
+      localStorage.setItem("UserCookie", data.authToken);
+      navigate("/");
       toast({
         variant: "",
         title: "Log-in Successful!!",
       });
       form.reset();
-      setIsAuthenticated(true);
+      setIsUserAuthenticated(true);
     } else {
       toast({
         title: data.error,
@@ -108,4 +109,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default UserLogin;
