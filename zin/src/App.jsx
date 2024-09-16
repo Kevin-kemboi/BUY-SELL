@@ -17,7 +17,8 @@ import AllProducts from "./zin-frontend/_root/pages/AllProducts";
 import AdminAuthProvider from "./zin-admin/context/AdminAuthProvider";
 import UserAuthProvider from "./zin-frontend/context/UserAuthProvider";
 import UserAuthLayout from "./zin-frontend/_auth/UserAuthLayout";
-import UserLogin from "./zin-frontend/_auth/forms/userLogin";
+import UserLogin from "./zin-frontend/_auth/forms/UserLogin";
+import UserSignup from "./zin-frontend/_auth/forms/UserSignup";
 
 function App() {
   return (
@@ -44,7 +45,7 @@ function App() {
           }
         >
           <Route path="/login" element={<UserLogin />} />
-          <Route path="/signup" element={<AdminSignUp />} />
+          <Route path="/signup" element={<UserSignup />} />
         </Route>
 
 

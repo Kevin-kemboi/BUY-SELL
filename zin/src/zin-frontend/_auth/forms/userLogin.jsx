@@ -12,10 +12,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
-import { useAdminAuth } from "@/zin-admin/context/AdminAuthProvider";
-import { loginAdmin, loginUser } from "@/lib/api/api";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserAuth } from "@/zin-frontend/context/UserAuthProvider";
+import { loginUser } from "@/lib/api/api";
 
 const formSchema = z.object({
   email: z.string().email(),

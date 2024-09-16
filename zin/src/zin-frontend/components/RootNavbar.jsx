@@ -3,6 +3,14 @@ import GlobalSearch from "./GlobalSearch";
 import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
 
 const RootNavbar = () => {
   return (
@@ -28,17 +36,37 @@ const RootNavbar = () => {
           ))}
         </div>
       </div>
-      <div className="flex w-full gap-2 justify-end ">
+      <div className="flex w-full h-7  gap-2 justify-end ">
         <GlobalSearch />
-        <Sheet >
-          <SheetTrigger asChild>
-            <Button className="border hover:bg-transparent group border-dark-4 bg-dark-6 ">
-              <img src="/icons/cart.svg" alt="" className="w-4 invert group-hover:scale-105 " />
+        <Menubar>
+          <MenubarMenu className="bg-dark-6">
+            <MenubarTrigger className="bg-dark-6 px-2 py-1 h-full border border-dark-4">
+              <img src="/icons/sign-up.svg" className="max-w-4" />
+            </MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                <Link to="/signup">Sign-up</Link>
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>
+                <Link to="/login">Log-in</Link>
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        </Menubar>
+
+        <Sheet>
+          <SheetTrigger className="h-full" asChild>
+            <Button className="border hover:bg-transparent group h-full border-dark-4 bg-dark-6 ">
+              <img
+                src="/icons/cart.svg"
+                alt=""
+                className="w-4 invert group-hover:scale-105 "
+              />
             </Button>
           </SheetTrigger>
           <SheetContent className="text-white">
             <h4 className="font-bold text-xl">My Cart</h4>
-            
           </SheetContent>
         </Sheet>
       </div>
