@@ -45,11 +45,11 @@ const RootNavbar = () => {
             </MenubarTrigger>
             <MenubarContent>
               <MenubarItem>
-                <Link to="/signup">Sign-up</Link>
+                <Link to="/signup" className="w-full px-2 py-1" >Sign-up</Link>
               </MenubarItem>
               <MenubarSeparator />
               <MenubarItem>
-                <Link to="/login">Log-in</Link>
+                <Link to="/login" className="w-full px-2 py-1" >Log-in</Link>
               </MenubarItem>
             </MenubarContent>
           </MenubarMenu>
@@ -57,7 +57,7 @@ const RootNavbar = () => {
 
         <Sheet>
           <SheetTrigger className="h-full" asChild>
-            <Button className="border hover:bg-transparent group h-full border-dark-4 bg-dark-6 ">
+            <Button className="border hover:bg-transparent group h-full border-dark-4 bg-dark-6 px-2 ">
               <img
                 src="/icons/cart.svg"
                 alt=""

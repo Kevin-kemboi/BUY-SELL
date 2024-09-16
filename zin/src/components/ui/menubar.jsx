@@ -87,7 +87,7 @@ const MenubarItem = React.forwardRef(({ className, inset, ...props }, ref) => (
   <MenubarPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex hover:bg-dark-4 select-none items-center text-white cursor-pointer  rounded-sm px-2 py-1.5 text-sm outline-none  data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex hover:bg-dark-4 select-none items-center text-white cursor-pointer  rounded-sm  text-sm outline-none  data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       inset && "pl-8",
       className
     )}

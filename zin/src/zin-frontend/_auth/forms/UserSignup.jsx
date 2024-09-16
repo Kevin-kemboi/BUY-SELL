@@ -68,8 +68,8 @@ const UserSignup = () => {
   }
 
   return (
-    <div className=" md:min-h-[80vh] min-h-[75vh] w-[530px] rounded-md flex items-center justify-start flex-col mt-[50px] py-14 max-sm:w-full ">
-      <h2 className="text-3xl font-bold  m-5">Admin Sign-Up</h2>
+    <div className=" md:min-h-[80vh] min-h-[75vh] w-[530px] rounded-md flex items-center justify-start flex-col py-6 max-sm:w-full ">
+      <h2 className="text-3xl font-bold  m-5">Sign-Up</h2>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
