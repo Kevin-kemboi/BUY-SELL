@@ -11,8 +11,13 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { useUserAuth } from "../context/UserAuthProvider";
+import { LogIn, LogOut, ShoppingCart } from "lucide-react";
 
 const RootNavbar = () => {
+  const { isUserAuthenticated, userLogout, setIsUserAuthenticated } =
+    useUserAuth();
+
   return (
     <nav className="bg-dark-6 animate-in duration-1000 py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
       <div className="flex w-full items-center  gap-7">
@@ -41,16 +46,34 @@ const RootNavbar = () => {
         <Menubar>
           <MenubarMenu className="bg-dark-6">
             <MenubarTrigger className="bg-dark-6 px-2 py-1 h-full border border-dark-4">
-              <img src="/icons/sign-up.svg" className="max-w-4" />
+              {!isUserAuthenticated ? (
+                <LogIn className="max-w-4" />
+              ) : (
+                <LogOut className="max-w-4" />
+              )}
             </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem>
-                <Link to="/signup" className="w-full px-2 py-1" >Sign-up</Link>
-              </MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>
-                <Link to="/login" className="w-full px-2 py-1" >Log-in</Link>
-              </MenubarItem>
+              {!isUserAuthenticated ? (
+                <>
+                  <MenubarItem>
+                    <Link to="/signup" className="w-full px-2 py-1">
+                      Sign-up
+                    </Link>
+                  </MenubarItem>
+                  <MenubarSeparator />
+                  <MenubarItem>
+                    <Link to="/login" className="w-full px-2 py-1">
+                      Log-in
+                    </Link>
+                  </MenubarItem>
+                </>
+              ) : (
+                <MenubarItem>
+                  <Button onClick={userLogout} className="w-full px-2 py-1 bg-dark-6">
+                    Log-out
+                  </Button>
+                </MenubarItem>
+              )}
             </MenubarContent>
           </MenubarMenu>
         </Menubar>
@@ -58,11 +81,7 @@ const RootNavbar = () => {
         <Sheet>
           <SheetTrigger className="h-full" asChild>
             <Button className="border hover:bg-transparent group h-full border-dark-4 bg-dark-6 px-2 ">
-              <img
-                src="/icons/cart.svg"
-                alt=""
-                className="w-4 invert group-hover:scale-105 "
-              />
+              <ShoppingCart className="max-w-4" />
             </Button>
           </SheetTrigger>
           <SheetContent className="text-white">

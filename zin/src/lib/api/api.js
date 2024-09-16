@@ -279,7 +279,7 @@ export const confirmUser = async (token) => {
     });
 
     const response = await data.json();
-    if (!response.role === "admin") {
+    if (!response.success) {
       return false;
     }
 

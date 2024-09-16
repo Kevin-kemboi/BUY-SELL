@@ -117,7 +117,7 @@ router.post(
 router.get("/userinfo", fetchStoreUser,  async (req, res) => {
   try {
     const user = req.user;
-    res.send(user);
+    res.json({user, success: true});
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "internal server error" });
