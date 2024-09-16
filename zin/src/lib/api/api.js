@@ -307,13 +307,13 @@ export const loginUser = async (params) => {
 
 
 export const createUser = async (params) => {
-  const { name, addresss, appartment, city, state, ZIP, phNo, email, password } = params;
-  const response = await fetch(`${host}/admin/signup`, {
+  const { name, address, appartment, city, state, ZIP, phNo, email, password } = params;
+  const response = await fetch(`${host}/user/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, addresss, appartment, city, state, ZIP, phNo, email, password }),
+    body: JSON.stringify({ name, address, appartment, city, state, ZIP, phNo, email, password }),
   });
   const data = await response.json();
   return data;

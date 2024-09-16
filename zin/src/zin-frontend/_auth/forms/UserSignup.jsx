@@ -37,14 +37,20 @@ const UserSignup = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      name: "",
+      address: "",
+      appartment: "",
+      city: "",
+      state: "",
+      ZIP: "",
+      phNo: "",
       email: "",
       password: "",
-      role: "",
     },
   });
 
   async function onSubmit(values) {
+    console.log(values);
     const data = await createUser(values);
     if (data.success) {
       localStorage.setItem("UserCookie", data.authToken);
@@ -62,23 +68,124 @@ const UserSignup = () => {
   }
 
   return (
-    <div className=" md:min-h-[80vh] min-h-[75vh] w-[530px] rounded-md flex items-center justify-start flex-col mt-[50px] py-14  max-sm:w-full ">
-
+    <div className=" md:min-h-[80vh] min-h-[75vh] w-[530px] rounded-md flex items-center justify-start flex-col mt-[50px] py-14 max-sm:w-full ">
       <h2 className="text-3xl font-bold  m-5">Admin Sign-Up</h2>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-5 bg-dark-2 p-7 rounded-md w-[450px] flex flex-col  max-sm:w-[93%] "
+          className=" bg-dark-2 p-7 rounded-md w-[600px] gap-5  max-sm:flex  max-sm:flex-col max-sm:p-7 max-sm:w-[93%] grid grid-cols-2"
         >
           <FormField
             control={form.control}
-            name="username"
+            name="name"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
+              <FormItem className=" col-start-1 col-end-3">
+                <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Enter your username"
+                    placeholder="Enter your Name"
+                    className="bg-dark-3 text-light-2 border border-dark-4 "
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem className=" col-start-1 col-end-3">
+                <FormLabel>Address</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your Address"
+                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="appartment"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Appartment</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your Appartment"
+                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your City"
+                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="state"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>State</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your State"
+                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="ZIP"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>ZIP</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your ZIP"
+                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phNo"
+            render={({ field }) => (
+              <FormItem className=" col-start-1 col-end-3">
+                <FormLabel>phNo</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your phNo"
                     className="bg-dark-3 text-light-2 border border-dark-4  "
                     {...field}
                   />
@@ -91,11 +198,11 @@ const UserSignup = () => {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className=" col-start-1 col-end-3">
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Enter your email"
+                    placeholder="Enter your Email"
                     className="bg-dark-3 text-light-2 border border-dark-4  "
                     {...field}
                   />
@@ -108,7 +215,7 @@ const UserSignup = () => {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className=" col-start-1 col-end-3">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
@@ -121,112 +228,10 @@ const UserSignup = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your password"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your password"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your password"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your password"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your password"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your password"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-         
+
           <Button
             type="submit"
-            className="w-1/4 mx-auto py-2 hover:bg-zinc-700 "
+            className="w-1/4 mx-auto py-2 hover:bg-zinc-700  col-start-1 col-end-3"
           >
             SignUp
           </Button>
