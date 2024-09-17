@@ -46,20 +46,29 @@ router.post("/add", fetchStoreUser, async (req, res) => {
           new: true,
         }
       ).populate("items.products");
+      // Calculate total price
+      const totalPrice = updatedCart.items.reduce((acc, item) => {
+        return acc + item.products.price * item.quantity;
+      }, 0);
 
-      return res.status(200).json({ success: true, cart: updatedCart });
+      return res.status(200).json({ success: true, cart: updatedCart, totalPrice });
     }
 
     // Return the updated cart with the incremented quantity
     const populatedCart = await Cart.findOne({ user: userId }).populate(
       "items.products"
     );
-    res
-      .status(200)
-      .json({
-        message: "Item added to cart successfully",
-        cart: populatedCart,
-      });
+
+     // Calculate total price
+     const totalPrice = populatedCart.items.reduce((acc, item) => {
+      return acc + item.products.price * item.quantity;
+    }, 0);
+
+    res.status(200).json({
+      message: "Item added to cart successfully",
+      cart: populatedCart,
+      totalPrice
+    });
   } catch (error) {
     console.error("Error adding item to cart:", error);
     res
@@ -100,10 +109,16 @@ router.post("/remove", fetchStoreUser, async (req, res) => {
         { new: true }
       ).populate("items.products");
 
+      // Calculate total price
+      const totalPrice = updatedCart.items.reduce((acc, item) => {
+        return acc + item.products.price * item.quantity;
+      }, 0);
+
       return res.status(200).json({
         success: true,
         message: "Item removed from cart",
         cart: updatedCart,
+        totalPrice
       });
     } else {
       // Decrease the quantity
@@ -118,10 +133,16 @@ router.post("/remove", fetchStoreUser, async (req, res) => {
         { new: true }
       ).populate("items.products");
 
+      // Calculate total price
+      const totalPrice = updatedCart.items.reduce((acc, item) => {
+        return acc + item.products.price * item.quantity;
+      }, 0);
+
       return res.status(200).json({
         success: true,
         message: "Item quantity updated",
         cart: updatedCart,
+        totalPrice
       });
     }
   } catch (error) {
@@ -150,9 +171,7 @@ router.delete("/clearcart/:productId", fetchStoreUser, async (req, res) => {
       return res.status(404).json({ message: "Cart not found" });
     }
 
-    res
-      .status(200)
-      .json({ success: true, cart });
+    res.status(200).json({ success: true, cart });
   } catch (error) {
     console.error("Error removing item from cart:", error);
     res
@@ -160,7 +179,6 @@ router.delete("/clearcart/:productId", fetchStoreUser, async (req, res) => {
       .json({ message: "Error removing item from cart", error: error.message });
   }
 });
-
 
 // Get current cart contents
 router.get("/cart", fetchStoreUser, async (req, res) => {
