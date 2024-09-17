@@ -14,6 +14,7 @@ app.use(cors());
 app.use('/admin', require('./routes/routes'));
 app.use('/', require('./routes/routes2'));
 app.use('/user', require('./routes/userRoutes'));
+app.use('/cart', require('./routes/cartRoutes'));
 
 
 app.listen(port, () => {
