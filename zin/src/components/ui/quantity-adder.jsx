@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Minus, Plus } from 'lucide-react'
 
-export default function Quantity() {
-  const [quantity, setQuantity] = useState(1)
+export default function Quantity({itemQuantity}) {
+  const [quantity, setQuantity] = useState(itemQuantity)
 
   const decrease = () => {
     setQuantity(prev => Math.max(0, prev - 1))

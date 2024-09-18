@@ -181,7 +181,7 @@ router.delete("/clearcart/:productId", fetchStoreUser, async (req, res) => {
 });
 
 // Get current cart contents
-router.get("/cart", fetchStoreUser, async (req, res) => {
+router.get("/getcart", fetchStoreUser, async (req, res) => {
   try {
     const userId = req.user._id;
 
@@ -221,10 +221,10 @@ router.get("/cart", fetchStoreUser, async (req, res) => {
     ]);
 
     if (!cart.length) {
-      return res.status(404).json({ message: "Cart not found" });
+      return res.status(404).json({ message: "Cart Empty" });
     }
 
-    res.status(200).json({ cart: cart[0] });
+    res.status(200).json({success: true, cart: cart[0] });
   } catch (error) {
     console.error("Error fetching cart:", error);
     res

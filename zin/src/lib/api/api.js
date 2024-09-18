@@ -326,3 +326,31 @@ export const createUser = async (params) => {
   const data = await response.json();
   return data;
 };
+
+
+export const getCart = async () => {
+  try {
+    const token = localStorage.getItem("UserCookie");
+    if (!token) {
+      console.log("Token not found");
+      return false;
+    }
+    const data = await fetch(`${host}/cart/getcart`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Token: token,
+      },
+    });
+
+    const response = await data.json();
+    if (!response.success) {
+      return false;
+    }
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
