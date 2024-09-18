@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import CartItemCard from "./CartItemCard";
 import { getCart } from "@/lib/api/api";
 
-const Cart = ({user}) => {
+const Cart = ({}) => {
 
   const [cartItems, setCartItems] = useState([])
 

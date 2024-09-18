@@ -16,7 +16,7 @@ import { LogIn, LogOut, ShoppingCart } from "lucide-react";
 import Cart from "./Cart";
 
 const RootNavbar = () => {
-  const { isUserAuthenticated, userLogout, user } = useUserAuth();
+  const { isUserAuthenticated, userLogout } = useUserAuth();
 
   return (
     <nav className="bg-dark-6 animate-in duration-1000 py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
@@ -88,7 +88,7 @@ const RootNavbar = () => {
             </Button>
           </SheetTrigger>
           <SheetContent className="text-white">
-            <Cart user={user} />
+            <Cart />
           </SheetContent>
         </Sheet>
       </div>
