@@ -18,20 +18,19 @@ router.post("/add", fetchStoreUser, async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    // Use findOneAndUpdate with upsert to create or update the cart
-    // This eliminates the need for a separate getOrCreateCart function
-    // Update the cart by finding if the product already exists in the cart
+    // Try to find the cart and check if the product exists in the cart
     const cart = await Cart.findOneAndUpdate(
       {
         user: userId,
-        "items.products": productId, // Check if the product already exists
+        "items.products": productId, // Check if the product already exists in the cart
       },
       {
         $inc: { "items.$.quantity": quantity }, // Increment the quantity of the existing product
       },
-      { new: true } // Return the updated cart
+      { new: true }
     );
 
+    let updatedItem;
     if (!cart) {
       // If the product doesn't exist, push it as a new item
       const updatedCart = await Cart.findOneAndUpdate(
@@ -45,29 +44,26 @@ router.post("/add", fetchStoreUser, async (req, res) => {
           upsert: true, // Create the cart if it doesn't exist
           new: true,
         }
-      ).populate("items.products");
-      // Calculate total price
-      const totalPrice = updatedCart.items.reduce((acc, item) => {
-        return acc + item.products.price * item.quantity;
-      }, 0);
+      );
 
-      return res.status(200).json({ success: true, cart: updatedCart, totalPrice });
+      // Find the updated item in the cart
+      updatedItem = updatedCart.items.find((item) =>
+        item.products.equals(productId)
+      );
+    } else {
+      // Find the updated item in the existing cart
+      updatedItem = cart.items.find((item) => item.products.equals(productId));
     }
 
-    // Return the updated cart with the incremented quantity
-    const populatedCart = await Cart.findOne({ user: userId }).populate(
-      "items.products"
-    );
+    // Calculate the total price for the specific product
+    const totalPrice = product.price * updatedItem.quantity;
 
-     // Calculate total price
-     const totalPrice = populatedCart.items.reduce((acc, item) => {
-      return acc + item.products.price * item.quantity;
-    }, 0);
-
-    res.status(200).json({
-      message: "Item added to cart successfully",
-      cart: populatedCart,
-      totalPrice
+    // Return the quantity and total price of the added/updated product
+    return res.status(200).json({
+      success: true,
+      productId: productId,
+      quantity: updatedItem.quantity,
+      totalPrice,
     });
   } catch (error) {
     console.error("Error adding item to cart:", error);
@@ -79,10 +75,10 @@ router.post("/add", fetchStoreUser, async (req, res) => {
 
 router.post("/remove", fetchStoreUser, async (req, res) => {
   try {
-    const { productId, quantity } = req.body;
-    const userId = req.user._id;
+    const { productId, quantity } = req.body; // Get product ID and quantity from the request body
+    const userId = req.user._id; // Get the user ID from the authenticated user
 
-    // Validate product exists in the database
+    // Validate if the product exists in the database
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
@@ -98,30 +94,29 @@ router.post("/remove", fetchStoreUser, async (req, res) => {
       return res.status(404).json({ message: "Product not found in cart" });
     }
 
-    // Find the item in the cart
+    // Find the specific item in the cart
     const cartItem = cart.items.find((item) => item.products.equals(productId));
 
-    if (!cartItem || cartItem.quantity <= quantity) {
-      // If the quantity to remove is greater or equal to the current quantity, remove the item entirely
-      const updatedCart = await Cart.findOneAndUpdate(
-        { user: userId },
-        { $pull: { items: { products: productId } } }, // Remove the item from the cart
-        { new: true }
-      ).populate("items.products");
+    if (!cartItem) {
+      return res.status(404).json({ message: "Product not found in cart" });
+    }
 
-      // Calculate total price
-      const totalPrice = updatedCart.items.reduce((acc, item) => {
-        return acc + item.products.price * item.quantity;
-      }, 0);
+    // If the quantity to remove is greater than or equal to the current quantity, remove the item entirely
+    if (cartItem.quantity <= quantity) {
+      await Cart.findOneAndUpdate(
+        { user: userId },
+        { $pull: { items: { products: productId } } } // Remove the item from the cart
+      );
 
       return res.status(200).json({
         success: true,
         message: "Item removed from cart",
-        cart: updatedCart,
-        totalPrice
+        productId: productId,
+        quantity: 0, // Quantity is 0 since the item is completely removed
+        totalPrice: 0, // Total price is 0 since the item is completely removed
       });
     } else {
-      // Decrease the quantity
+      // Decrease the quantity of the product in the cart
       const updatedCart = await Cart.findOneAndUpdate(
         {
           user: userId,
@@ -131,18 +126,22 @@ router.post("/remove", fetchStoreUser, async (req, res) => {
           $inc: { "items.$.quantity": -quantity }, // Decrease the quantity
         },
         { new: true }
-      ).populate("items.products");
+      );
 
-      // Calculate total price
-      const totalPrice = updatedCart.items.reduce((acc, item) => {
-        return acc + item.products.price * item.quantity;
-      }, 0);
+      // Find the updated item again to get its new quantity
+      const updatedItem = updatedCart.items.find((item) =>
+        item.products.equals(productId)
+      );
+
+      // Calculate the total price for the updated product
+      const itemTotalPrice = updatedItem.quantity * product.price;
 
       return res.status(200).json({
         success: true,
         message: "Item quantity updated",
-        cart: updatedCart,
-        totalPrice
+        productId: productId,
+        quantity: updatedItem.quantity, // Return the updated quantity
+        totalPrice: itemTotalPrice, // Return the updated total price for this specific product
       });
     }
   } catch (error) {
@@ -153,6 +152,7 @@ router.post("/remove", fetchStoreUser, async (req, res) => {
     });
   }
 });
+
 
 // Remove item from cart
 router.delete("/clearcart/:productId", fetchStoreUser, async (req, res) => {
@@ -183,55 +183,63 @@ router.delete("/clearcart/:productId", fetchStoreUser, async (req, res) => {
 // Get current cart contents
 router.get("/getcart", fetchStoreUser, async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user._id; // Get the user ID from the request
 
-    // Use aggregation pipeline to get cart with product details and total price
+    // Use aggregation pipeline to get cart with product details, total price, and item total
     const cart = await Cart.aggregate([
-      { $match: { user: new mongoose.Types.ObjectId(userId) } }, // Find cart for user
-      { $unwind: "$items" }, // Deconstruct items array
+      { $match: { user: new mongoose.Types.ObjectId(userId) } }, // Match the cart to the user
+      { $unwind: "$items" }, // Unwind the items array to process each item separately
       {
         $lookup: {
-          // Join with products collection
+          // Lookup products from the 'products' collection
           from: "products",
-          localField: "items.products",
-          foreignField: "_id",
-          as: "items.productDetails",
+          localField: "items.products", // Local field is the product ID in the cart
+          foreignField: "_id", // Foreign field is the product ID in the 'products' collection
+          as: "items.productDetails", // The matched product details will be in this field
         },
       },
-      { $unwind: "$items.productDetails" }, // Deconstruct productDetails array
+      { $unwind: "$items.productDetails" }, // Unwind the productDetails array to get individual product objects
+      {
+        $addFields: {
+          // Add a field 'itemTotal' which calculates total price for each product
+          "items.itemTotal": {
+            $multiply: ["$items.quantity", "$items.productDetails.price"],
+          },
+        },
+      },
       {
         $group: {
-          // Reconstruct cart with additional info
-          _id: "$_id",
-          user: { $first: "$user" },
+          // Group back the results to the cart level
+          _id: "$_id", // Keep the original cart ID
+          user: { $first: "$user" }, // Keep the user ID
           items: {
             $push: {
-              products: "$items.productDetails",
-              quantity: "$items.quantity",
+              products: "$items.productDetails", // The product details
+              quantity: "$items.quantity", // The quantity of the product in the cart
+              itemTotal: "$items.itemTotal", // The total price for the product (price * quantity)
             },
           },
           totalPrice: {
-            // Calculate total price
-            $sum: {
-              $multiply: ["$items.quantity", "$items.productDetails.price"],
-            },
+            // Calculate the total price for the cart
+            $sum: "$items.itemTotal", // Sum of all item totals
           },
         },
       },
     ]);
 
     if (!cart.length) {
+      // If no cart found, return a 404 response
       return res.status(404).json({ message: "Cart Empty" });
     }
 
-    res.status(200).json({success: true, cart: cart[0] });
+    // Return the cart and total price
+    res.status(200).json({ success: true, cart: cart[0] });
   } catch (error) {
     console.error("Error fetching cart:", error);
-    res
-      .status(500)
-      .json({ message: "Error fetching cart", error: error.message });
+    res.status(500).json({ message: "Error fetching cart", error: error.message });
   }
 });
+
 
 module.exports = router;
 

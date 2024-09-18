@@ -327,7 +327,6 @@ export const createUser = async (params) => {
   return data;
 };
 
-
 export const getCart = async () => {
   try {
     const token = localStorage.getItem("UserCookie");
@@ -353,4 +352,73 @@ export const getCart = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+export const addItemToCart = async (productId) => {
+  try {
+    const token = localStorage.getItem("UserCookie");
+    if (!token) {
+      console.log("Token not found");
+      return false;
+    }
+
+    const body = {
+      productId: productId,
+      quantity: 1
+    }
+
+    const data = await fetch(`${host}/cart/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Token: token,
+      },
+      body: JSON.stringify(body)
+    });
+
+    const response = await data.json();
+    if (!response.success) {
+      return false;
+    }
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export const removeItemFromCart = async (productId) => {
+  try {
+    const token = localStorage.getItem("UserCookie");
+    if (!token) {
+      console.log("Token not found");
+      return false;
+    }
+
+    const body = {
+      productId: productId,
+      quantity: 1
+    }
+
+    const data = await fetch(`${host}/cart/remove`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Token: token,
+      },
+      body: JSON.stringify(body)
+    });
+
+    const response = await data.json();
+    if (!response.success) {
+      return false;
+    }
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};

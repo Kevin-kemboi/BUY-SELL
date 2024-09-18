@@ -25,7 +25,7 @@ const Cart = ({user}) => {
         {cartItems.length > 0
         ? cartItems.map((product)=>(
 
-          <CartItemCard {...product.products} quantity={product.quantity}  key={product.products._id} />
+          <CartItemCard {...product.products} quantity={product.quantity} itemTotal={product.itemTotal}  key={product.products._id} />
         )) 
         : (
           <>No items</>
