@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 
 const CartItemCard = ({name, price, quantity, imageUrl}) => {
   return (
-    <div className="border-b min-h-[80px] h-[83px] overflow-hidden mt-1 border-dark-5/30 flex items-start justify-between  w-full p-2 ">
+    <div className="border-b min-h-[80px] h-[83px] overflow-hidden mt-1 border-dark-4 flex items-start justify-between  w-full p-2 px-1 ">
       <div className="relative max-w-[4rem]  w-[6rem]  h-full flex items-center justify-center ">
         <img
           src={imageUrl}

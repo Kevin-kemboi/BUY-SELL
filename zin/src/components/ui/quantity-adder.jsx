@@ -14,7 +14,7 @@ export default function Quantity({itemQuantity}) {
   }
 
   return (
-    <div className="flex items-center justify-center px-1 h-8  rounded-full border border-dark-4 overflow-hidden">
+    <div className="flex items-center justify-center h-7 w-max  rounded-md border border-dark-4 overflow-hidden">
       <Button 
         className="h-full p-2 bg-transparent text-dark-5/70 hover:text-white  rounded-full " 
         onClick={decrease}
