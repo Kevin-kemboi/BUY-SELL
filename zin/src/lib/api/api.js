@@ -256,14 +256,12 @@ export const globalSearch = async (params) => {
   }
 };
 
-
 export const shuffleArray = (arr) => {
   return arr
     .map((item) => ({ item, sortKey: Math.random() })) // Create an array of objects with random sort keys
     .sort((a, b) => a.sortKey - b.sortKey) // Sort based on random keys
     .map(({ item }) => item); // Extract the original items after sorting
 };
-
 
 export const confirmUser = async (token) => {
   try {
@@ -283,12 +281,12 @@ export const confirmUser = async (token) => {
       return false;
     }
 
-    return true;
+    console.log(response);
+    return response;
   } catch (error) {
     console.log(error);
   }
 };
-
 
 export const loginUser = async (params) => {
   const { email, password } = params;
@@ -305,15 +303,25 @@ export const loginUser = async (params) => {
   return data;
 };
 
-
 export const createUser = async (params) => {
-  const { name, address, appartment, city, state, ZIP, phNo, email, password } = params;
+  const { name, address, appartment, city, state, ZIP, phNo, email, password } =
+    params;
   const response = await fetch(`${host}/user/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, address, appartment, city, state, ZIP, phNo, email, password }),
+    body: JSON.stringify({
+      name,
+      address,
+      appartment,
+      city,
+      state,
+      ZIP,
+      phNo,
+      email,
+      password,
+    }),
   });
   const data = await response.json();
   return data;

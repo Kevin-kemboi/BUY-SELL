@@ -6,12 +6,15 @@ const UserAuthContext = createContext();
 
 const UserAuthProvider = ({ children }) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
 
   const confirmAuth = async () => {
     const token = localStorage.getItem("UserCookie");
     const value = await confirmUser(token);
-    if (value) {
+    if (value.success) {
       setIsUserAuthenticated(true);
+      setUser(value.user._id)
+
       return true;
     }
     setIsUserAuthenticated(false);
@@ -27,6 +30,7 @@ const UserAuthProvider = ({ children }) => {
   }, []);
 
   const value = {
+    user,
     isUserAuthenticated,
     setIsUserAuthenticated,
     confirmAuth,

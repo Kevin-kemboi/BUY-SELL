@@ -12,12 +12,11 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { useUserAuth } from "../context/UserAuthProvider";
-import { LogIn, LogOut, ShoppingCart, X } from "lucide-react";
-import CartItemCard from "./CartItemCard";
+import { LogIn, LogOut, ShoppingCart } from "lucide-react";
+import Cart from "./Cart";
 
 const RootNavbar = () => {
-  const { isUserAuthenticated, userLogout, setIsUserAuthenticated } =
-    useUserAuth();
+  const { isUserAuthenticated, userLogout, user } = useUserAuth();
 
   return (
     <nav className="bg-dark-6 animate-in duration-1000 py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
@@ -82,17 +81,14 @@ const RootNavbar = () => {
           </MenubarMenu>
         </Menubar>
 
-        <Sheet >
+        <Sheet>
           <SheetTrigger className="h-full" asChild>
             <Button className="border hover:bg-transparent group h-full border-dark-4 bg-dark-6 px-2 ">
               <ShoppingCart className="max-w-4" />
             </Button>
           </SheetTrigger>
           <SheetContent className="text-white">
-            <h4 className="font-bold text-xl">My Cart</h4>
-            <div className="h-full mt-5">
-              <CartItemCard/>
-            </div>
+            <Cart user={user} />
           </SheetContent>
         </Sheet>
       </div>
