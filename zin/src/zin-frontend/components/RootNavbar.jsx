@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/menubar";
 import { useUserAuth } from "../context/UserAuthProvider";
 import { LogIn, LogOut, ShoppingCart, X } from "lucide-react";
+import CartItemCard from "./CartItemCard";
 
 const RootNavbar = () => {
   const { isUserAuthenticated, userLogout, setIsUserAuthenticated } =
@@ -81,7 +82,7 @@ const RootNavbar = () => {
           </MenubarMenu>
         </Menubar>
 
-        <Sheet>
+        <Sheet >
           <SheetTrigger className="h-full" asChild>
             <Button className="border hover:bg-transparent group h-full border-dark-4 bg-dark-6 px-2 ">
               <ShoppingCart className="max-w-4" />
@@ -90,25 +91,7 @@ const RootNavbar = () => {
           <SheetContent className="text-white">
             <h4 className="font-bold text-xl">My Cart</h4>
             <div className="h-full mt-5">
-              <div className="border-b min-h-[100px] h-[100px] border-dark-4 flex items-start justify-between  w-full p-2">
-                <div className="relative w-full h-full">
-                  <img
-                    src="/uploads/file-1725988908216.png"
-                    alt=""
-                    className="w-24"
-                  />
-                  <X className="absolute top-0 left-1 text-dark-5/70 bg-zinc-400/30 rounded-full p-1" />
-                </div>
-                <div className="h-full w-full capitalize text-sm font-bold mt-1 ">cap</div>
-                <div className="w-full h-[90%] flex flex-col items-center mt-1 justify-between">
-                  <div className=" w-full flex items-center justify-center text-sm font-bold">
-                    $100
-                  </div>
-                  <div className=" w-full flex border rounded-full items-center justify-center">
-                    
-                  </div>
-                </div>
-              </div>
+              <CartItemCard/>
             </div>
           </SheetContent>
         </Sheet>
