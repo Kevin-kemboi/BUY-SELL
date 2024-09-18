@@ -1,10 +1,18 @@
-import { getProductById } from "@/lib/api/api";
+import { Button } from "@/components/ui/button";
+import { addItemToCart, getProductById } from "@/lib/api/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+
+  const addItem = async() => {
+    const item = addItemToCart(id)
+    if(item.success){
+      console.log("added")
+    }
+  }
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -36,7 +44,7 @@ const ProductDetails = () => {
             </span>
             {/* Add more product details as needed */}
           </div>
-          <div className=" mx-3 py-6 text-sm font-bold flex flex-col gap-3">
+          <div className=" mx-3 py-6 text-sm font-bold flex flex-col justify-between gap-3">
             <p>COLOR</p>
             <div className="flex gap-3">
               {["red", "black", "gold"].map((item) => (
@@ -45,6 +53,9 @@ const ProductDetails = () => {
                 </div>
               ))}
             </div>
+            <Button onClick={addItem} className="bg-blue-500 p-2 font-bold m-5 hover:bg-blue-500/80">
+              Add to Cart
+            </Button>
           </div>
         </div>
       </div>
