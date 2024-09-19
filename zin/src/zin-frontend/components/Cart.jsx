@@ -1,17 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import CartItemCard from "./CartItemCard";
-import { getCart } from "@/lib/api/api";
+import { useCart } from "../context/CartContext";
 
-const Cart = ({}) => {
+const Cart = () => {
 
-  const [cartItems, setCartItems] = useState([])
-
-  const fetchCart = async() => {
-    const cartItems = await getCart();
-    if(cartItems. success){
-      setCartItems(cartItems.cart.items);
-    }
-  }
+  const { cartItems, fetchCart } = useCart()
 
   useEffect(() => {
     fetchCart()

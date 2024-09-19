@@ -19,6 +19,7 @@ import UserAuthProvider from "./zin-frontend/context/UserAuthProvider";
 import UserAuthLayout from "./zin-frontend/_auth/UserAuthLayout";
 import UserLogin from "./zin-frontend/_auth/forms/UserLogin";
 import UserSignup from "./zin-frontend/_auth/forms/UserSignup";
+import CartProvider from "./zin-frontend/context/CartContext";
 
 function App() {
   return (
@@ -28,7 +29,9 @@ function App() {
         <Route
           element={
             <UserAuthProvider>
-              <RootLayout />
+              <CartProvider>
+                <RootLayout />
+              </CartProvider>
             </UserAuthProvider>
           }
         >
@@ -47,11 +50,6 @@ function App() {
           <Route path="/login" element={<UserLogin />} />
           <Route path="/signup" element={<UserSignup />} />
         </Route>
-
-
-
-
-
 
         {/* Admin Routes wrapped with AdminAuthProvider */}
         <Route

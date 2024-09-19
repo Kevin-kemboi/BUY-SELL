@@ -2,6 +2,7 @@ import Quantity from "@/components/ui/quantity-adder";
 import { X } from "lucide-react";
 
 const CartItemCard = ({ name, itemTotal, quantity, imageUrl, _id }) => {
+  
   return (
     <div className="border-b min-h-[80px] h-[83px] overflow-hidden mt-1 border-dark-4 flex items-start justify-between  w-full p-2 px-1 ">
       <div className="overflow-hidden relative max-w-[4.5rem]  w-[4.5rem]  h-full flex items-center justify-center ">
