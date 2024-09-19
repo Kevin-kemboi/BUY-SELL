@@ -51,7 +51,7 @@ const GlobalSearch = () => {
         if (query) {
           const newUrl = removeKeysFromQuery({
             params: searchParams.toString(),
-            keysToRemove: ["global", "type"],
+            keysToRemove: ["global"],
           });
 
           navigate(newUrl);
