@@ -75,6 +75,7 @@
 body{
   font-family: 'Quicksand', monospace;
   min-height: 100vh;
+  background-color: #09090A;
 }
 
 /* Hide default scrollbar */

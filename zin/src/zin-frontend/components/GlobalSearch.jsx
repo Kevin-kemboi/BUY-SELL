@@ -65,11 +65,11 @@ const GlobalSearch = () => {
   }, [query, search, pathname, searchParams]);
 
   return (
-    <div ref={searchContainerRef} className="relative w-full max-w-lg">
+    <div ref={searchContainerRef} className="relative w-full max-w-lg ">
       <div
         className={`relative flex items-center gap-1 rounded-xl  border-dark-4 `}
       >
-        <label htmlFor="global-search" className="absolute right-5">
+        <label htmlFor="global-search" className="  absolute right-5">
           <Search className="cursor-pointer  w-4  text-zinc-600 " />
         </label>
 

@@ -26,7 +26,10 @@ const AllProducts = () => {
   return (
     <div className=" max-w-6xl flex mx-auto">
       <LeftSidebar />
-      <BlurFade className="w-full mx-auto h-max px-6 grid md:grid-cols-3 grid-cols-2  gap-2 duration-200">
+      <div className="">
+        
+      </div>
+      <BlurFade className="w-full max-sm:px-1 mx-auto h-max px-6 grid md:grid-cols-3 grid-cols-2  gap-2 duration-200">
         {products.length > 0 ? (
           products.map((product) => (
             <Link

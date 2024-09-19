@@ -12,20 +12,20 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { useUserAuth } from "../context/UserAuthProvider";
-import { LogIn, LogOut, ShoppingCart } from "lucide-react";
+import { LogIn, LogOut, Menu, ShoppingCart } from "lucide-react";
 import Cart from "./Cart";
 
 const RootNavbar = () => {
   const { isUserAuthenticated, userLogout } = useUserAuth();
 
   return (
-    <nav className="bg-dark-6 animate-in duration-1000 py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
-      <div className="flex w-full items-center  gap-7">
+    <nav className="bg-dark-6 max-sm:gap-1 animate-in duration-1000 py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
+      <div className="flex w-full max-sm:w-max items-center  gap-7">
         <Link to={`/`} className="flex  items-center gap-3">
           <img src="/icons/navbar.svg" className="w-11" />
-          <h2 className="font-bold line-clamp-1">ZIN STORE</h2>
+          <h2 className="font-bold line-clamp-1 max-sm:hidden">ZIN STORE</h2>
         </Link>
-        <div className=" flex items-center gap-3">
+        <div className=" flex max-sm:hidden items-center gap-3">
           {categories.slice(0, 3).map((item) => (
             <Link
               key={item.value}
@@ -41,7 +41,7 @@ const RootNavbar = () => {
           ))}
         </div>
       </div>
-      <div className="flex w-full h-7  gap-2 justify-end ">
+      <div className="flex  w-full h-7 gap-2 max-sm:gap-1  px-1 justify-end ">
         <GlobalSearch />
         <Menubar>
           <MenubarMenu className="bg-dark-6">
@@ -91,6 +91,20 @@ const RootNavbar = () => {
             <Cart />
           </SheetContent>
         </Sheet>
+
+
+        <Sheet  >
+          <SheetTrigger className="h-full sm:hidden" asChild>
+            <Button className="border hover:bg-transparent group h-full border-dark-4 bg-dark-6 px-2 ">
+              <Menu className="max-w-4" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="text-white">
+            
+          </SheetContent>
+        </Sheet>
+
+
       </div>
     </nav>
   );
