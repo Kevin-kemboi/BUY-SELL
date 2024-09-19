@@ -12,7 +12,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { useUserAuth } from "../context/UserAuthProvider";
-import { LogIn, LogOut, Menu, ShoppingCart } from "lucide-react";
+import { LogIn, LogOut, ShoppingCart } from "lucide-react";
 import Cart from "./Cart";
 import MobileNav from "./MobileNav";
 
