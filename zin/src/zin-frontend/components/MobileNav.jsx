@@ -6,6 +6,7 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const MobileNav = () => {
+    
   return (
     <>
       <Sheet>

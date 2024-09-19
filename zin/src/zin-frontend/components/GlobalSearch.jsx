@@ -5,9 +5,10 @@ import { Input } from "@/components/ui/input";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { Search } from "lucide-react";
 import GlobalResult from "./GlobalResult";
-// import GlobalResult from "./GlobalResult";
 
 const GlobalSearch = () => {
+  
+
   const location = useLocation();
   const pathname = location.pathname;
   const [searchParams] = useSearchParams();
@@ -78,6 +79,7 @@ const GlobalSearch = () => {
           type="text"
           id="global-search"
           value={search}
+          tabIndex={-1}  // Prevents focus
           placeholder="search"
           onChange={(e) => {
             setSearch(e.target.value);
