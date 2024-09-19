@@ -422,3 +422,5 @@ export const removeItemFromCart = async (productId) => {
     console.log(error);
   }
 };
+
+

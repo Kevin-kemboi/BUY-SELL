@@ -155,7 +155,7 @@ router.post("/remove", fetchStoreUser, async (req, res) => {
 
 
 // Remove item from cart
-router.delete("/clearcart/:productId", fetchStoreUser, async (req, res) => {
+router.delete("/clearitem/:productId", fetchStoreUser, async (req, res) => {
   try {
     const { productId } = req.params;
     const userId = req.user._id;
