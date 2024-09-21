@@ -49,7 +49,14 @@ const GlobalSearch = () => {
         });
         navigate(newUrl);
       } else {
-        history.replaceState({}, "", pathname);
+        if (query) {
+          const newUrl = removeKeysFromQuery({
+            params: searchParams.toString(),
+            keysToRemove: ["global"],
+          });
+
+          navigate(newUrl);
+        }
         setIsModalOpen(false); // Close modal when search is cleared
       }
     }, 300);

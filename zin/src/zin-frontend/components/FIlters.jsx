@@ -8,7 +8,7 @@ const Filters = ({ filters = [] }) => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const paramsFilter = searchParams.get("filter") || "";
+  const paramsFilter = searchParams.get("filter");
   const handleUpdateParams = (value) => {
     if (value !== "") {
       const newUrl = formUrlQuery({
