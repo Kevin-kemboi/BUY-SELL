@@ -11,4 +11,4 @@ const VariationSchema = new Schema({
   },
 });
 
-module.exports = models.Variation || model("Variation", VariationSchema);
+module.exports = models.Variations || model("Variations", VariationSchema);
