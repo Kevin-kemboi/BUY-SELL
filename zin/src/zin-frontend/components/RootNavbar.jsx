@@ -27,7 +27,7 @@ const RootNavbar = () => {
       <div className="flex w-full max-sm:w-max  items-center  gap-7">
         <Link to={`/`} className="flex  items-center gap-3 max-sm:gap-1">
           <img src="/icons/navbar.svg" className="w-11" />
-          <h2 className="font-bold line-clamp-1">ZIN STORE</h2>
+          <h2 className="font-bold line-clamp-1 max-md:hidden max-sm:block">ZIN STORE</h2>
         </Link>
         <div className=" flex max-sm:hidden items-center gap-3">
           {categories.slice(0, 3).map((item) => (
