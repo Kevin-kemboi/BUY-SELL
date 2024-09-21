@@ -1,6 +1,3 @@
-// ----------------------------------------
-// Admin auth routes
-// ----------------------------------------
 const AdminUser = require("../models/AdminUser.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");

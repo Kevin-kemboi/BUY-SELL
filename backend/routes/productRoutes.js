@@ -5,11 +5,7 @@ const fetchAdminUser = require("../middleware/fetchAdminUser");
 const isAdmin = require("../middleware/AdminVerify");
 const Product = require("../models/Product.model");
 const upload = require("../middleware/storage");
-
-
-// --------------------------------------------
-// Product Routes
-// --------------------------------------------
+const Variation = require("../models/Variation.model");
 
 router.post("/api/upload", (req, res) => {
   upload(req, res, (err) => {
@@ -50,15 +46,25 @@ router.post(
         return res.status(400).json({ error: "Product name already exists" });
       }
 
-      // Save the product with the image URL (filename stored in GridFS)
-      product = await Product.create({
+      const body = {
         name: req.body.name,
         description: req.body.description,
         price: req.body.price,
         category: req.body.category,
         stock: req.body.stock,
         imageUrl: req.body.imageUrl, // Store the image filename as imageUrl in the database
+      };
+
+      const variations = await Variation.find({
+        type: { $in: req.body.variations },
       });
+      if (variations.length <= 0) {
+        return res.status(400).json({ error: errors.array() });
+      }
+      body.variations = variations;
+
+      // Save the product with the image URL (filename stored in GridFS)
+      product = await Product.create(body);
 
       res.status(200).json({ success: true, product });
     } catch (error) {
@@ -112,25 +118,32 @@ router.put(
     }
 
     const { id } = req.params;
-    const { name, description, price, category, stock, imageUrl } = req.body;
+    const { name, description, price, category, stock, imageUrl, variations } = req.body;
 
     try {
       let product = await Product.findById(id);
       if (!product) {
         return res.status(404).json({ error: "Product not found." });
       }
-      product = await Product.findByIdAndUpdate(
-        id,
-        {
-          name,
-          description,
-          price,
-          category,
-          stock,
-          imageUrl,
-        },
-        { new: true }
-      );
+
+      const body = {
+        name,
+        description,
+        price,
+        category,
+        stock,
+        imageUrl,
+      };
+
+      const updatedVariations = await Variation.find({
+        type: { $in: variations },
+      });
+      if (updatedVariations.length <= 0) {
+        return res.status(400).json({ error: errors.array() });
+      }
+      body.variations = updatedVariations;
+
+      product = await Product.findByIdAndUpdate(id, body, { new: true });
 
       res.status(200).json({ success: true, product });
     } catch (error) {
@@ -203,7 +216,7 @@ router.get("/productslist", async (req, res) => {
         break;
 
       default:
-        sortOptions = {createdAt: 1 }
+        sortOptions = { createdAt: 1 };
         break;
     }
 
@@ -227,14 +240,12 @@ router.get("/productslist", async (req, res) => {
 router.post("/getproductbyid", async (req, res) => {
   const { id } = req.body;
   try {
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate('variations')
     if (!product) throw new Error();
     res.status(200).json({ success: true, product });
   } catch (error) {
     console.log(error);
   }
 });
-
-
 
 module.exports = router;

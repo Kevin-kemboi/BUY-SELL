@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/Product.model");
+const VariationModel = require("../models/Variation.model");
 
 router.post("/search", async (req, res) => {
   try {
@@ -37,5 +38,20 @@ router.post("/search", async (req, res) => {
     console.log(error);
   }
 });
+
+router.get('/search', async (req, res) => {
+  try {
+    const inputArray = ["SIZE", "bg"];
+
+    const variations = await VariationModel.find({
+      type: { $in: inputArray}
+    })
+
+    res.json({variations})
+  } catch (error) {
+    console.log(error);
+  }
+}); 
+
 
 module.exports = router;
