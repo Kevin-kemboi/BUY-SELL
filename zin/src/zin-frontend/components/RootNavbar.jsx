@@ -15,9 +15,12 @@ import { useUserAuth } from "../context/UserAuthProvider";
 import { LogIn, LogOut, ShoppingCart } from "lucide-react";
 import Cart from "./Cart";
 import MobileNav from "./MobileNav";
+import { useDeviceWidth } from "../hooks/useDeviceWidth";
 
 const RootNavbar = () => {
   const { isUserAuthenticated, userLogout } = useUserAuth();
+  const isMobile = useDeviceWidth();
+
 
   return (
     <nav className="bg-dark-6 max-sm:fixed z-20 top-0 max-sm:gap-1 animate-in duration-1000 py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
@@ -46,9 +49,9 @@ const RootNavbar = () => {
         </div>
       </div>
       <div className="flex  sm:w-full h-7 gap-2 max-sm:gap-1  px-1 justify-end ">
-        <div className="w-full max-sm:hidden  flex justify-end">
+        {!isMobile && <div className="w-full max-sm:hidden  flex justify-end">
           <GlobalSearch />
-        </div>
+        </div>}
         <Menubar>
           <MenubarMenu className="bg-dark-6">
             <MenubarTrigger className="bg-dark-6 px-2 py-1 h-full sm:border border-dark-4">

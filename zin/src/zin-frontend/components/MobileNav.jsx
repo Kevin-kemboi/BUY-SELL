@@ -1,11 +1,19 @@
 import { categories } from "@/lib/constants";
 import { Link } from "react-router-dom";
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import GlobalSearch from "./GlobalSearch";
+import { useDeviceWidth } from "../hooks/useDeviceWidth";
 
 const MobileNav = () => {
-    
+  const isMobile = useDeviceWidth();
+
   return (
     <>
       <Sheet>
@@ -21,6 +29,11 @@ const MobileNav = () => {
               <h2 className="font-bold line-clamp-1">ZIN STORE</h2>
             </Link>
           </div>
+          {isMobile && (
+            <div className=" max-sm:block hidden  my-1.5 w-full">
+              <GlobalSearch isSheet={true} />
+            </div>
+          )}
           <div className=" flex flex-col px-1  gap-3">
             {categories.map((item) => (
               <SheetClose key={item.value} asChild>

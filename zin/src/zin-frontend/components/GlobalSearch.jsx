@@ -6,7 +6,7 @@ import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { Search } from "lucide-react";
 import GlobalResult from "./GlobalResult";
 
-const GlobalSearch = () => {
+const GlobalSearch = ({isSheet}) => {
   
 
   const location = useLocation();
@@ -93,7 +93,13 @@ const GlobalSearch = () => {
           className=" h-7 border bg-dark-6 rounded-sm  border-dark-4 shadow-none "
         ></Input>
       </div>
-      {isModalOpen && <GlobalResult />}
+      {isSheet 
+        ? (
+          isModalOpen && <GlobalResult isSheet={true} />
+        ) : (
+          isModalOpen && <GlobalResult />
+        )
+      }
     </div>
   );
 };
