@@ -20,6 +20,8 @@ import UserAuthLayout from "./zin-frontend/_auth/UserAuthLayout";
 import UserLogin from "./zin-frontend/_auth/forms/UserLogin";
 import UserSignup from "./zin-frontend/_auth/forms/UserSignup";
 import CartProvider from "./zin-frontend/context/CartContext";
+import Configs from "./zin-admin/_root/pages/Configs";
+import AddVariant from "./zin-admin/_root/pages/AddVariant";
 
 function App() {
   return (
@@ -78,6 +80,8 @@ function App() {
           <Route path="/admin/productslist" element={<ProductProfile />} />
           <Route path="/admin/users" element={<Users />} />
           <Route path="/admin/admin-users" element={<Admins />} />
+          <Route path="/admin/configs" element={<Configs />} />
+          <Route path="/admin/addvariant" element={<AddVariant />} />
         </Route>
       </Routes>
     </main>

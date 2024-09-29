@@ -7,11 +7,16 @@ const UtilityBar = () => {
     "/admin/addproducts", 
     "/admin/productslist",
     "/admin/deleteproducts",
-    "/admin/updateproducts"
+    "/admin/updateproducts",
   ].includes(pathname);
   const isManageUsersPage = [
     "/admin/users",
     "/admin/admin-users", 
+  ].includes(pathname);
+
+  const isManageConfigsPage = [
+    "/admin/configs",
+    "/admin/addvariant", 
   ].includes(pathname);
 
   return (
@@ -46,10 +51,10 @@ const UtilityBar = () => {
           <span className="max-sm:hidden ">Products</span>
         </div>
       </Link>
-      <Link to="">
+      <Link to="/admin/configs">
         <div
           className={`group flex gap-2 bg-dark-3 py-2 rounded-md px-4 font-semibold cursor-pointer  hover:bg-zinc-800 ${
-            pathname === "/" ? " bg-zinc-800" : ""
+            isManageConfigsPage ? " bg-zinc-800" : ""
           }`}
         >
           <img src="/icons/webConfig.svg" className="w-5 group-hover:fill-current " />

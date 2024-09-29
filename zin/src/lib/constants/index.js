@@ -40,9 +40,9 @@ export const productMenu = [
 export const admindashboard = [
   {
     Icon: AmpersandIcon,
-    name: "Admins",
-    description: "Manage your Admin users",
-    href: "/admin/admin-users",
+    name: "Add Variants",
+    description: "Add variants to your products",
+    href: "/admin/addvariant",
     cta: "Go to",
     className: "md:col-start-1 md:col-end-3 md:row-start-1 md:row-end-3",
   },
