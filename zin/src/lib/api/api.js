@@ -66,7 +66,7 @@ export const getAdmins = async () => {
 
 export const addProduct = async (formData) => {
   try {
-    const { name, description, price, category, stock, imageUrl } = formData;
+    const { name, description, price, category, stock, imageUrl, variations } = formData;
     const token = localStorage.getItem("Cookie");
     if (!token) {
       console.log("Token not found");
@@ -86,6 +86,7 @@ export const addProduct = async (formData) => {
         category,
         stock,
         imageUrl,
+        variations
       }), // Use the FormData directly
     });
 
@@ -416,7 +417,6 @@ export const removeItemFromCart = async (productId) => {
       return false;
     }
 
-    console.log(response);
     return response;
   } catch (error) {
     console.log(error);
@@ -424,3 +424,20 @@ export const removeItemFromCart = async (productId) => {
 };
 
 
+export const getVariations = async () => {
+  try {
+    const data = await fetch(`${host}/variations`, {
+      method: "GET",
+    })
+  
+    const response = await data.json();
+    if (!response.success) {
+      return false;
+    }
+
+    return response;
+
+  } catch (error) {
+    console.log(error);
+  }
+}

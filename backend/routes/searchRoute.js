@@ -39,19 +39,4 @@ router.post("/search", async (req, res) => {
   }
 });
 
-router.get('/search', async (req, res) => {
-  try {
-    const inputArray = ["SIZE", "bg"];
-
-    const variations = await VariationModel.find({
-      type: { $in: inputArray}
-    })
-
-    res.json({variations})
-  } catch (error) {
-    console.log(error);
-  }
-}); 
-
-
 module.exports = router;

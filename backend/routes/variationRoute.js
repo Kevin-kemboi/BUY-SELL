@@ -19,7 +19,7 @@ router.post("/add", fetchAdminUser, isAdmin, async (req, res) => {
 });
 
 // Update a variation (add/remove options)
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id", fetchAdminUser, isAdmin, async (req, res) => {
   const { id } = req.params;
   const { options } = req.body; // New options array
 
@@ -42,7 +42,7 @@ router.put("/update/:id", async (req, res) => {
 });
 
 // Delete a variation
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", fetchAdminUser, isAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {

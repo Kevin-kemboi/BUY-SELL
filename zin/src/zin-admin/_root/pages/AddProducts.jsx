@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { addProduct } from "@/lib/api/api";
+import { addProduct, getVariations } from "@/lib/api/api";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { X } from "lucide-react";
 
 const formSchema = z.object({
   name: z
@@ -38,17 +46,27 @@ const formSchema = z.object({
     .string()
     .min(1, { message: "Stock must be at least 1 character long" }),
   imageUrl: z.string(),
-  
 });
 
 const AddProducts = () => {
   const { toast } = useToast();
   const [imagePreview, setImagePreview] = useState(null); // State to hold the image preview
   const [uploadedImageUrl, setUploadedImageUrl] = useState(""); // State to store the uploaded image URL
+  const [options, setOptions] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
+  useEffect(() => {
+    const fetchVariations = async () => {
+      try {
+        const response = await getVariations(); // Replace with your API endpoint
+        setOptions(response.variations);
+      } catch (error) {
+        console.error("Error fetching variations:", error);
+      }
+    };
 
-
-
+    fetchVariations();
+  }, []);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -58,6 +76,7 @@ const AddProducts = () => {
       price: "",
       category: "",
       stock: "",
+      variations: [],
       imageUrl: "",
     },
   });
@@ -70,10 +89,11 @@ const AddProducts = () => {
       price: parseFloat(values.price),
       category: values.category,
       stock: parseInt(values.stock, 10),
+      variations: selectedOptions,
       imageUrl: uploadedImageUrl, // Use the uploaded image URL
     };
 
-    console.log({body})
+    console.log({ body });
 
     // Add the product
     const data = await addProduct(body);
@@ -84,14 +104,13 @@ const AddProducts = () => {
       form.reset();
       setUploadedImageUrl("");
       setImagePreview(false); // Reset the uploaded image URL after submission
-
+      setSelectedOptions([]);
     } else {
       toast({
         title: data.error,
       });
     }
   };
-  
 
   const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -105,7 +124,7 @@ const AddProducts = () => {
         method: "POST",
         body: formData,
       });
-      console.log(response)
+      console.log(response);
       if (!response.ok) {
         throw new Error("Failed to upload image");
       }
@@ -113,20 +132,33 @@ const AddProducts = () => {
       const data = await response.json();
       console.log("Uploaded file:", data);
       const imageUrl = `http://localhost:5173/uploads/${data.filename}`; // Construct the image URL
-      console.log(URL.createObjectURL(file))
+      console.log(URL.createObjectURL(file));
       setUploadedImageUrl(imageUrl); // Store the uploaded image URL
       // You can now use data.filename or whatever the server returns
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   }, []);
-  
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: "image/*",
     maxFiles: 1,
   });
+
+  const handleSelectChange = (value) => {
+    if (!selectedOptions.includes(value)) {
+      setSelectedOptions((prev) => [...prev, value]); // Push selected option to selectedOptions array
+    }
+  };
+
+  const handleOptionDelete = (itemToDelete) => {
+    setSelectedOptions((prev) => prev.filter((item) => item !== itemToDelete));
+    form.setValue(
+      "variations",
+      selectedOptions.filter((item) => item !== itemToDelete)
+    ); // Update the form value
+  };
 
   return (
     <Form {...form}>
@@ -185,6 +217,7 @@ const AddProducts = () => {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="category"
@@ -219,7 +252,47 @@ const AddProducts = () => {
             </FormItem>
           )}
         />
-         <FormField
+
+        <FormField
+          control={form.control}
+          name="variations"
+          render={({ field }) => (
+            <FormItem className="col-end-3 col-start-1">
+              <FormLabel>Options</FormLabel>
+              <FormControl>
+                <Select onValueChange={handleSelectChange}>
+                  <SelectTrigger className="bg-dark-4 w-full">
+                    <SelectValue placeholder="Theme" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-dark-4 text-white border-none">
+                    {options.map((option) => (
+                      <SelectItem key={option._id} value={option.type}>
+                        {option.type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <div className=" w-full flex gap-2 flex-wrap">
+                {selectedOptions.map((item) => (
+                  <div
+                    key={item}
+                    className="border text-xs px-1 rounded-lg flex gap-1 items-center justify-center"
+                  >
+                    {item}
+                    <X
+                      className="w-4"
+                      onClick={() => handleOptionDelete(item)}
+                    />
+                  </div>
+                ))}
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
           control={form.control}
           name="imageUrl"
           render={({ field }) => (
@@ -230,17 +303,20 @@ const AddProducts = () => {
                 className="border-dashed border-2 border-gray-500 p-5 rounded-md cursor-pointer h-[300px] flex items-center justify-center max-sm:h-[150px]"
               >
                 <input {...getInputProps()} />
-                {!imagePreview &&
-
+                {!imagePreview && (
                   <p>Drag & drop an image here, or click to select one</p>
-                }
+                )}
                 {imagePreview && (
-                <div className="mt-2">
-                  <img src={imagePreview} alt="Image Preview" className="h-32 object-cover rounded-md" />
-                </div>
-              )}
+                  <div className="mt-2">
+                    <img
+                      src={imagePreview}
+                      alt="Image Preview"
+                      className="h-32 object-cover rounded-md"
+                    />
+                  </div>
+                )}
               </div>
-              
+
               <FormControl>
                 <Input type="hidden" {...field} />
               </FormControl>
@@ -248,6 +324,7 @@ const AddProducts = () => {
             </FormItem>
           )}
         />
+
         <Button type="submit" className="col-start-1 col-end-3 py-2">
           Add product
         </Button>
