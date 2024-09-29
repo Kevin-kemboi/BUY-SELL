@@ -9,7 +9,15 @@ router.post("/add", fetchAdminUser, isAdmin, async (req, res) => {
   const { type, options } = req.body;
 
   try {
-    const variation = new Variation({ type, options });
+    const exists = await Variation.find({ type: type });
+
+    if (exists) {
+     return res
+        .status(400)
+        .json({ success: false, message: "variation already exits" });
+    }
+
+    const variation = await Variation.create({ type, options });
     await variation.save();
     res.status(201).json({ success: true, variation });
   } catch (error) {
@@ -31,7 +39,9 @@ router.put("/update/:id", fetchAdminUser, isAdmin, async (req, res) => {
     );
 
     if (!variation) {
-      return res.status(404).json({ success: false, error: "Variation not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Variation not found" });
     }
 
     res.json({ success: true, variation });
@@ -48,7 +58,9 @@ router.delete("/delete/:id", fetchAdminUser, isAdmin, async (req, res) => {
   try {
     const variation = await Variation.findByIdAndDelete(id);
     if (!variation) {
-      return res.status(404).json({ success: false, error: "Variation not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Variation not found" });
     }
     res.json({ success: true, message: "Variation deleted successfully" });
   } catch (error) {
