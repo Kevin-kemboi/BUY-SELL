@@ -66,7 +66,8 @@ export const getAdmins = async () => {
 
 export const addProduct = async (formData) => {
   try {
-    const { name, description, price, category, stock, imageUrl, variations } = formData;
+    const { name, description, price, category, stock, imageUrl, variations } =
+      formData;
     const token = localStorage.getItem("Cookie");
     if (!token) {
       console.log("Token not found");
@@ -86,11 +87,50 @@ export const addProduct = async (formData) => {
         category,
         stock,
         imageUrl,
-        variations
+        variations,
       }), // Use the FormData directly
     });
 
     const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateProduct = async (id, product) => {
+  try {
+    const token = localStorage.getItem("Cookie");
+    if (!token) {
+      console.log("Token not found");
+      return false;
+    }
+
+
+
+    const body = {
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      category: product.category,
+      stock: product.stock,
+      imageUrl: product.imageUrl,
+      variations: product.variations,
+    };
+
+    console.log(product)
+
+    const response = await fetch(`${host}/admin/updateproduct/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Token: token,
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+
     return data;
   } catch (error) {
     console.log(error);
@@ -162,43 +202,6 @@ export const getProductById = async (productId) => {
     }
 
     const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const updateProduct = async (id, product) => {
-  try {
-    const token = localStorage.getItem("Cookie");
-    if (!token) {
-      console.log("Token not found");
-      return false;
-    }
-
-    console.log(product);
-    const parsedPrice = parseFloat(product.price);
-    const parsedStock = parseInt(product.stock, 10);
-
-    const body = {
-      name: product.name,
-      description: product.description,
-      price: parsedPrice,
-      category: product.category,
-      stock: parsedStock,
-    };
-
-    const response = await fetch(`${host}/admin/updateproduct/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Token: token,
-      },
-      body: JSON.stringify(body),
-    });
-
-    const data = await response.json();
-
     return data;
   } catch (error) {
     console.log(error);
@@ -365,8 +368,8 @@ export const addItemToCart = async (productId) => {
 
     const body = {
       productId: productId,
-      quantity: 1
-    }
+      quantity: 1,
+    };
 
     const data = await fetch(`${host}/cart/add`, {
       method: "POST",
@@ -374,7 +377,7 @@ export const addItemToCart = async (productId) => {
         "Content-Type": "application/json",
         Token: token,
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
 
     const response = await data.json();
@@ -389,7 +392,6 @@ export const addItemToCart = async (productId) => {
   }
 };
 
-
 export const removeItemFromCart = async (productId) => {
   try {
     const token = localStorage.getItem("UserCookie");
@@ -400,8 +402,8 @@ export const removeItemFromCart = async (productId) => {
 
     const body = {
       productId: productId,
-      quantity: 1
-    }
+      quantity: 1,
+    };
 
     const data = await fetch(`${host}/cart/remove`, {
       method: "POST",
@@ -409,7 +411,7 @@ export const removeItemFromCart = async (productId) => {
         "Content-Type": "application/json",
         Token: token,
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
 
     const response = await data.json();
@@ -423,21 +425,19 @@ export const removeItemFromCart = async (productId) => {
   }
 };
 
-
 export const getVariations = async () => {
   try {
     const data = await fetch(`${host}/variations`, {
       method: "GET",
-    })
-  
+    });
+
     const response = await data.json();
     if (!response.success) {
       return false;
     }
 
     return response;
-
   } catch (error) {
     console.log(error);
   }
-}
+};

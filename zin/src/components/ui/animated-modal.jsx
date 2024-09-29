@@ -1,13 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const ModalContext = createContext(undefined);
 
@@ -33,10 +27,7 @@ export function Modal({ children }) {
   return <ModalProvider>{children}</ModalProvider>;
 }
 
-export const ModalTrigger = ({
-  children,
-  className,
-}) => {
+export const ModalTrigger = ({ children, className }) => {
   const { setOpen } = useModal();
   return (
     <button
@@ -51,10 +42,7 @@ export const ModalTrigger = ({
   );
 };
 
-export const ModalBody = ({
-  children,
-  className,
-}) => {
+export const ModalBody = ({ children, className }) => {
   const { open } = useModal();
 
   useEffect(() => {
@@ -65,9 +53,7 @@ export const ModalBody = ({
     }
   }, [open]);
 
-  const modalRef = useRef(null);
   const { setOpen } = useModal();
-  useOutsideClick(modalRef, () => setOpen(false));
 
   return (
     <AnimatePresence>
@@ -89,7 +75,6 @@ export const ModalBody = ({
           <Overlay />
 
           <motion.div
-            ref={modalRef}
             className={cn(
               "min-h-[70%] min-w-[60%] max-w-[90%] max-h-[90%] md:max-w-[40%] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 rounded-lg md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden",
               className
@@ -126,10 +111,7 @@ export const ModalBody = ({
   );
 };
 
-export const ModalContent = ({
-  children,
-  className,
-}) => {
+export const ModalContent = ({ children, className }) => {
   return (
     <div className={cn("flex flex-col flex-1 p-8 md:p-10", className)}>
       {children}
@@ -137,10 +119,7 @@ export const ModalContent = ({
   );
 };
 
-export const ModalFooter = ({
-  children,
-  className,
-}) => {
+export const ModalFooter = ({ children, className }) => {
   return (
     <div
       className={cn(
@@ -197,29 +176,4 @@ const CloseIcon = () => {
       </svg>
     </button>
   );
-};
-
-// Hook to detect clicks outside of a component.
-// Add it in a separate file, I've added here for simplicity
-export const useOutsideClick = (
-  ref,
-  callback
-) => {
-  useEffect(() => {
-    const listener = (event) => {
-      // DO NOTHING if the element being clicked is the target element or their children
-      if (!ref.current || ref.current.contains(event.target)) {
-        return;
-      }
-      callback(event);
-    };
-
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
-
-    return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
-    };
-  }, [ref, callback]);
 };

@@ -116,6 +116,7 @@ const ProductList = () => {
                       <ModalBody className={`bg-dark-3`}>
                         <UpdateModal
                           product={product}
+                          {...product}
                           refreshProducts={fetchData}
                         />
                       </ModalBody>

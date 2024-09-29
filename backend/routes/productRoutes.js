@@ -106,10 +106,6 @@ router.put(
       .withMessage(
         "Stock is required and should be an integer greater than or equal to 0."
       ),
-    body("imageUrl")
-      .optional()
-      .isURL()
-      .withMessage("Image URL should be a valid URL."),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -224,7 +220,8 @@ router.get("/productslist", async (req, res) => {
     const products = await Product.find(query)
       .skip(page ? (page - 1) * pageSize : 0)
       .limit(pageSize || 0)
-      .sort(sortOptions || {});
+      .sort(sortOptions || {})
+      .populate('variations')
 
     // Get total count of products (use the same filter query for accurate count)
     const totalCount = await Product.countDocuments(query);
