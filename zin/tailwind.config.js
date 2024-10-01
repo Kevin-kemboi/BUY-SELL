@@ -76,17 +76,17 @@ export default {
         inter: ["Inter", "sans-serif"],
       },
       keyframes: {
-        "slideRight": {
-          '0%': { transform: 'translateX(-10%)', opacity: 0 },
-          '100%': { transform: 'translateX(0)', opacity: 1 },
+        slideRight: {
+          "0%": { transform: "translateX(-10%)", opacity: 0 },
+          "100%": { transform: "translateX(0)", opacity: 1 },
         },
-        "slideLeft": {
-          '0%': { transform: 'translateX(20%)', opacity: 0 },
-          '100%': { transform: 'translateX(0)', opacity: 1 },
+        slideLeft: {
+          "0%": { transform: "translateX(20%)", opacity: 0 },
+          "100%": { transform: "translateX(0)", opacity: 1 },
         },
-        "slideUp": {
-          '0%': { transform: 'translateY(20%)', opacity: 0 },
-          '100%': { transform: 'translateY(0)', opacity: 1 },
+        slideUp: {
+          "0%": { transform: "translateY(20%)", opacity: 0 },
+          "100%": { transform: "translateY(0)", opacity: 1 },
         },
         "border-beam": {
           "100%": {
@@ -109,16 +109,27 @@ export default {
           from: { transform: "translateY(0)" },
           to: { transform: "translateY(calc(-100% - var(--gap)))" },
         },
+        spotlight: {
+          "0%": {
+            opacity: 0,
+            transform: "translate(-72%, -62%) scale(0.5)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translate(-50%,-40%) scale(1)",
+          },
+        },
       },
       animation: {
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "marquee": "marquee var(--duration) linear infinite",
+        marquee: "marquee var(--duration) linear infinite",
         "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
-        "slideRight": 'slideRight ease-in-out ',      
-        "slideLeft": 'slideLeft ease-in-out ',      
-        "slideUp": 'slideUp ease-in-out ',      
+        slideRight: "slideRight ease-in-out ",
+        slideLeft: "slideLeft ease-in-out ",
+        slideUp: "slideUp ease-in-out ",
+        spotlight: "spotlight 2s ease 2.5s 1 forwards",
       },
     },
   },

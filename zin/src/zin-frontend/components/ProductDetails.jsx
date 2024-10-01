@@ -33,7 +33,7 @@ console.log(product)
     <>
       <div className="flex bg-dark-2 w-[95%] xl:w-[75%] h-[85vh]  mx-auto mt-5 rounded-md px-5">
         <div className="w-[70%] flex items-center justify-center ">
-          <img src={product.imageUrl} alt={product.name} className="w-[70%]" />
+          <img src={product.imageUrl} alt={product.name} className="size-[90%] object-contain" />
         </div>
         <div className="w-1/2 py-16">
           <div className="mx-3 py-6 flex flex-col gap-3  border-b border-dark-5/30">
