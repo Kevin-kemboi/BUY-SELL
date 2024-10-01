@@ -23,10 +23,16 @@ import CartProvider from "./zin-frontend/context/CartContext";
 import Configs from "./zin-admin/_root/pages/Configs";
 import AddVariant from "./zin-admin/_root/pages/AddVariant";
 import FAQ from "./zin-frontend/components/FAQ";
+import PrivacyPolicy from "./zin-frontend/components/PrivacyPolicy";
+import ShippingReturnPolicy from "./zin-frontend/components/Shipping";
+import TermsConditions from "./zin-frontend/components/Terms";
+import About from "./zin-frontend/components/About";
+import ScrollToTop from "./zin-frontend/components/ScrollToTop";
 
 function App() {
   return (
     <main className="min-h-screen min-w-screen bg-dark-2 text-light-2">
+      <ScrollToTop/>
       <Routes>
         {/* Public Routes */}
         <Route
@@ -42,6 +48,10 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/allproducts" element={<AllProducts />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/shipping" element={<ShippingReturnPolicy />} />
+          <Route path="/terms" element={<TermsConditions />} />
+          <Route path="/about" element={<About />} />
         </Route>
 
         <Route
