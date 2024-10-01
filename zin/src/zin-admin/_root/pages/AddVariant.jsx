@@ -13,6 +13,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { addVariant } from "@/lib/api/api";
+import { toast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   type: z.string().min(1, {
@@ -29,12 +31,16 @@ const AddVariant = () => {
     },
   });
   // 2. Define a submit handler.
-  function onSubmit(values) {
-    
+  async function onSubmit(values) {
     const a = values.options.split(',').map(item => item.trim())
     values.options = a;
-
-    console.log(values);
+    console.log(values)
+    const data = await addVariant(values);
+    if(data.success){
+      toast({ title: 'Variant added'})
+    } else{
+      toast({title: data.error})
+    }
   }
 
   return (

@@ -441,3 +441,39 @@ export const getVariations = async () => {
     console.log(error);
   }
 };
+
+
+export const addVariant = async(values) => {
+  try {
+    const token = localStorage.getItem('Cookie');
+    if(!token){
+      console.log('token not found')
+      return false
+    }
+
+    const body = {
+      type: values.type,
+      options: values.options
+    }
+
+    const data = await fetch(`${host}/variations/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Token: token
+      },
+      body: JSON.stringify(body)
+    })
+
+    const response = await data.json();
+    console.log(response)
+    if(!response.success){
+      return false;
+    }
+
+    return response;
+
+  } catch (error) {
+    console.log(error)
+  }
+}
