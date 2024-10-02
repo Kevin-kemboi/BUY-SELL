@@ -37,18 +37,18 @@ const SortOptions = ({ sortBy = [] }) => {
       className="gap-1"
     >
       {sortBy.map((filter) => (
-        <div key={filter.value} className="flex items-center space-x-1 ">
+        <div key={filter.value} className="flex items-center justify-end space-x-1 ">
+          <Label
+            className=" cursor-pointer text-[10px] hover:underline underline-offset-1 transition-all max-sm:text-base "
+            htmlFor={filter.name}
+          >
+            {filter.name}
+          </Label>
           <RadioGroupItem
             value={filter.value}
             id={filter.name}
             className="cursor-pointer"
           />
-          <Label
-            className=" cursor-pointer text-[10px] hover:underline underline-offset-1 transition-all"
-            htmlFor={filter.name}
-          >
-            {filter.name}
-          </Label>
         </div>
       ))}
     </RadioGroup>

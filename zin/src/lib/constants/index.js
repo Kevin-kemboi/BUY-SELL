@@ -142,21 +142,19 @@ export const usersMenu = [
   },
 ];
 
-
 export const categories = [
-  { name: "All", value: ""},
+  { name: "All", value: "" },
+  { name: "Kids", value: "kids" },
   { name: "Mens", value: "mens" },
   { name: "Womens", value: "womens" },
-  { name: "Kids", value: "kids" },
   { name: "Footwear", value: "footwear" },
   { name: "Electronics", value: "electronics" },
   { name: "Accessories", value: "accessories" },
 ];
 
 export const sortOptions = [
-  { name: "None", value: ""},
-  { name: "Latest arrivals", value: "latest"},
-  { name: "Price: Low to high", value: "low"},
-  { name: "Price: High to low", value: "high"},
+  { name: "None", value: "" },
+  { name: "Latest arrivals", value: "latest" },
+  { name: "Price: High to low", value: "high" },
+  { name: "Price: Low to high", value: "low" },
 ];
-

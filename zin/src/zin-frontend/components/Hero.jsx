@@ -17,14 +17,16 @@ const Hero = () => {
           fill="white"
         />
         <div className="absolute top-10 left-10">
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0 }}
-            className="font-mono font-extrabold lg:text-[7rem] text-6xl "
+            className="font-mono font-extrabold lg:text-[7rem] text-6xl"
           >
-            Nike Kobe X All Star Edition{" "}
-          </motion.h1>
+            <h2 className="bg-gradient-to-b from-zinc-200 font-mono to-zinc-600 bg-clip-text leading-none text-transparent">
+              Nike Kobe X All Star Edition{" "}
+            </h2>
+          </motion.div>
           <motion.p
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -62,6 +64,7 @@ const Hero = () => {
           <span>T</span>
           <span>Y</span>
         </motion.div>
+        
         <motion.img
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}

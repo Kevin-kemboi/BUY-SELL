@@ -41,8 +41,10 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <div className="mt-2 px-3 w-full h-full ">
-        <h1 className="text-6xl font-bold max-w-7xl mx-auto mt-36 my-5">FEATURED</h1>
+      <div className="mt-2 px-3 max-w-7xl h-full mx-auto">
+        <h2 className="text-7xl m-5 font-bold pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-white font-mono to-dark-4 bg-clip-text leading-none text-transparent max-sm:text-5xl max-sm:text-center mt-20 max-w-7xl">
+          FEATURED
+        </h2>
         <BentoGrid className="max-w-7xl h-[80%] max-sm:min-h-screen mx-auto md:grid-cols-3 w-full">
           {displayProducts.map((item) => (
             <BentoGridItem

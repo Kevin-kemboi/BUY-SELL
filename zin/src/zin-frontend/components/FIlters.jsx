@@ -42,14 +42,14 @@ const Filters = ({ filters = [] }) => {
       className="gap-1"
     >
       {filters.map((filter) => (
-        <div key={filter.value} className="flex items-center space-x-1 ">
+        <div key={filter.value} className="flex items-center space-x-1">
           <RadioGroupItem
             value={filter.value}
             id={filter.name}
             className="cursor-pointer"
           />
           <Label
-            className=" cursor-pointer text-xs hover:underline underline-offset-1 transition-all"
+            className=" cursor-pointer text-xs hover:underline underline-offset-1 transition-all max-sm:text-base"
             htmlFor={filter.name}
           >
             {filter.name}

@@ -1,8 +1,15 @@
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import { addItemToCart, getProductById } from "@/lib/api/api";
 import { formUrlQuery } from "@/lib/utils";
+import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import {
+  useParams,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -46,16 +53,28 @@ const ProductDetails = () => {
 
   // Add item to cart
   const addItem = async () => {
+
+    const token = localStorage.getItem('UserCookie')
+    
+
     const item = await addItemToCart(id); // Include selected variants when adding to cart
     if (item.success) {
-      console.log("added");
+      toast({
+        title: 'Item added.'
+      })
+    }else if(!token){
+      toast({title: 'Login to add to cart'})
+    } else{
+      toast({title: 'Error'})
     }
   };
 
   // Function to check if all variant types have been selected
   const checkIfAllVariantsSelected = () => {
     if (!product) return false;
-    return product.variations.every((variant) => selectedVariants[variant.type]);
+    return product.variations.every(
+      (variant) => selectedVariants[variant.type]
+    );
   };
 
   // UseEffect to update the button's disabled state based on variant selections
@@ -80,30 +99,32 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div className="flex bg-dark-2 w-[95%] xl:w-[75%] h-[85vh]  mx-auto mt-5 rounded-md px-5">
-        <div className="w-[70%] flex items-center justify-center ">
+      <div className="flex max-sm:flex-col max-sm:justify-center bg-dark-2 w-[95%] xl:w-[75%] min-h-[85vh]  mx-auto mt-5 rounded-md px-5 max-sm:py-3">
+        <div className="w-[70%]  flex items-center justify-center max-sm:w-full max-sm:border-b pb-5 border-dark-5/30">
           <img
             src={product.imageUrl}
             alt={product.name}
-            className="size-[90%] object-contain"
+            className="size-[90%] object-contain max-sm:w-full"
           />
         </div>
-        <div className="w-1/2 py-16">
-          <div className="mx-3 py-6 flex flex-col gap-3  border-b border-dark-5/30">
-            <h1 className="text-5xl font-bold text-wrap"> {product.name}</h1>
-            <p className="text-xl line-clamp-3">{product.description}</p>
-            <span className="bg-blue-500 w-max font-semibold p-1 px-3 rounded-full text-xl">
+        <div className="w-1/2 py-16 max-sm:w-full max-sm:p-0">
+          <div className="mx-3 py-6 flex flex-col gap-3  border-b border-dark-5/30 max-sm:flex-row max-sm:justify-between max-sm:items-center max-sm:border-none max-sm:py-5">
+            <h1 className="text-5xl font-bold text-wrap max-sm:text-2xl capitalize">
+              {" "}
+              {product.name}
+            </h1>
+            <span className="bg-blue-700 w-max font-semibold p-2 px-3  rounded-full text-base max-sm:text-xs flex font-mono items-center justify-center h-max">
               ₹{product.price}
             </span>
           </div>
 
-          <div className="mx-3 py-6 text-sm font-medium flex flex-col justify-between gap-3">
+          <div className="mx-3 py-6 max-sm:py-0 text-sm font-medium flex flex-col justify-between gap-3">
             {product.variations.map((item) => (
               <div
                 key={item._id}
-                className="flex flex-col gap-2 items-start justify-center my-1.5"
+                className="flex flex-col gap-2 items-start justify-center my-1.5 max-sm:m-0"
               >
-                <p className="text-xl">{item.type}</p>
+                <p className="text-xl max-sm:text-sm">{item.type}</p>
                 <div className="flex gap-3">
                   {item.options.map((option) => {
                     const isSelected = selectedVariants[item.type] === option;
@@ -111,8 +132,8 @@ const ProductDetails = () => {
                       <div
                         key={option}
                         className={`${
-                          isSelected ? "border-blue-600" : "border-dark-5/20"
-                        } bg-dark-4/80 border p-1 px-3 rounded-full text-xs font-normal cursor-pointer`}
+                          isSelected ? "border-blue-700" : "border-dark-5/10"
+                        } bg-dark-4/80 p-1 px-3 rounded-full text-sm font-normal cursor-pointer border-2`}
                         onClick={() =>
                           isSelected
                             ? handleVariantDeselect(item.type)
@@ -127,11 +148,15 @@ const ProductDetails = () => {
               </div>
             ))}
           </div>
+          <p className="text-sm mx-3 my-6 line-clamp-3 text-zinc-400/80">
+            {product.description}
+          </p>
           <Button
             onClick={addItem}
-            className="bg-blue-500 p-2 font-bold m-5 hover:bg-blue-500/80"
+            className="bg-blue-700 relative p-2 w-full font-bold rounded-full hover:bg-blue-900/80 group transition-all"
             disabled={isAddToCartDisabled} // Disable button if not all variants are selected
           >
+            <Plus className="w-4 absolute left-5 group-hover:rotate-45 transition-all"/>
             Add to Cart
           </Button>
         </div>

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { getCart } from "@/lib/api/api";
+import { toast } from "@/components/ui/use-toast";
 
 const CartContext = createContext();
 
@@ -23,7 +24,7 @@ const CartProvider = ({ children }) => {
     try {
       const token = localStorage.getItem("UserCookie");
       if (!token) {
-        console.log("Token not found");
+        toast({title: 'Login to update cart'})
         return false;
       }
 
@@ -37,8 +38,11 @@ const CartProvider = ({ children }) => {
 
       const response = await data.json();
       if (!response.success) {
+        toast({title: 'Error'})
         return false;
       }
+
+      toast({title: 'Item removed.'})
 
       setCartItems(response.cart.items)
       return true
