@@ -6,13 +6,16 @@ const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [cartTotal, setCartTotal] = useState();
   const host = "http://localhost:5000";
 
 
   const fetchCart = async () => {
-    const cartItems = await getCart();
-    if (cartItems.success) {
-      setCartItems(cartItems.cart.items);
+    const cartIts = await getCart();
+    console.log(cartIts)
+    if (cartIts.success) {
+      setCartItems(cartIts.cart.items);
+      setCartTotal(cartIts.cart.totalPrice)
     }
   };
 
@@ -52,7 +55,9 @@ const CartProvider = ({ children }) => {
     cartItems,
     setCartItems,
     fetchCart,
-    clearItem
+    clearItem,
+    cartTotal,
+    setCartTotal
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

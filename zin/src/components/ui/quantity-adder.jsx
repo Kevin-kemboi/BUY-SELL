@@ -7,13 +7,14 @@ import { useCart } from "@/zin-frontend/context/CartContext";
 export default function Quantity({ itemQuantity, productId, itemTotal }) {
   const [quantity, setQuantity] = useState(itemQuantity);
   const [total, setTotal] = useState(itemTotal);
-  const { clearItem } = useCart();
+  const { clearItem, setCartTotal } = useCart();
 
   const decrease = async () => {
     const item = await removeItemFromCart(productId);
     console.log(item);
     setTotal(item.totalPrice);
     setQuantity(item.quantity);
+    setCartTotal(item.totalCartPrice);
   };
 
   const increase = async () => {
@@ -21,6 +22,7 @@ export default function Quantity({ itemQuantity, productId, itemTotal }) {
     console.log(item);
     setTotal(item.totalPrice);
     setQuantity(item.quantity);
+    setCartTotal(item.totalCartPrice);
   };
 
   useEffect(() => {

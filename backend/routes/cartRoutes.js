@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const router = express.Router();
 
 const fetchStoreUser = require("../middleware/fetchStoreUser");
@@ -58,12 +57,39 @@ router.post("/add", fetchStoreUser, async (req, res) => {
     // Calculate the total price for the specific product
     const totalPrice = product.price * updatedItem.quantity;
 
-    // Return the quantity and total price of the added/updated product
+    // Calculate the total price for all items in the cart
+    const allItemsInCart = await Cart.aggregate([
+      { $match: { user: userId } }, // Match the cart for the current user
+      { $unwind: "$items" }, // Unwind the items array
+      {
+        $lookup: {
+          from: "products", // Assuming your products collection is named "products"
+          localField: "items.products",
+          foreignField: "_id",
+          as: "productDetails",
+        },
+      },
+      { $unwind: "$productDetails" }, // Unwind the product details
+      {
+        $group: {
+          _id: null,
+          total: {
+            $sum: { $multiply: ["$items.quantity", "$productDetails.price"] },
+          }, // Sum the total prices
+        },
+      },
+    ]);
+
+    const totalCartPrice =
+      allItemsInCart.length > 0 ? allItemsInCart[0].total : 0;
+
+    // Return the quantity and total price of the added/updated product, and the total cart price
     return res.status(200).json({
       success: true,
       productId: productId,
       quantity: updatedItem.quantity,
       totalPrice,
+      totalCartPrice, // Add the total price of all items in the cart
     });
   } catch (error) {
     console.error("Error adding item to cart:", error);
@@ -108,12 +134,39 @@ router.post("/remove", fetchStoreUser, async (req, res) => {
         { $pull: { items: { products: productId } } } // Remove the item from the cart
       );
 
+      // Calculate the total price for remaining items in the cart
+      const allItemsInCart = await Cart.aggregate([
+        { $match: { user: userId } }, // Match the cart for the current user
+        { $unwind: "$items" }, // Unwind the items array
+        {
+          $lookup: {
+            from: "products", // Assuming your products collection is named "products"
+            localField: "items.products",
+            foreignField: "_id",
+            as: "productDetails",
+          },
+        },
+        { $unwind: "$productDetails" }, // Unwind the product details
+        {
+          $group: {
+            _id: null,
+            total: {
+              $sum: { $multiply: ["$items.quantity", "$productDetails.price"] },
+            }, // Sum the total prices
+          },
+        },
+      ]);
+
+      const totalCartPrice =
+        allItemsInCart.length > 0 ? allItemsInCart[0].total : 0;
+
       return res.status(200).json({
         success: true,
         message: "Item removed from cart",
         productId: productId,
         quantity: 0, // Quantity is 0 since the item is completely removed
         totalPrice: 0, // Total price is 0 since the item is completely removed
+        totalCartPrice, // Add the total price of all remaining items in the cart
       });
     } else {
       // Decrease the quantity of the product in the cart
@@ -136,12 +189,39 @@ router.post("/remove", fetchStoreUser, async (req, res) => {
       // Calculate the total price for the updated product
       const itemTotalPrice = updatedItem.quantity * product.price;
 
+      // Calculate the total price for remaining items in the cart
+      const allItemsInCart = await Cart.aggregate([
+        { $match: { user: userId } }, // Match the cart for the current user
+        { $unwind: "$items" }, // Unwind the items array
+        {
+          $lookup: {
+            from: "products", // Assuming your products collection is named "products"
+            localField: "items.products",
+            foreignField: "_id",
+            as: "productDetails",
+          },
+        },
+        { $unwind: "$productDetails" }, // Unwind the product details
+        {
+          $group: {
+            _id: null,
+            total: {
+              $sum: { $multiply: ["$items.quantity", "$productDetails.price"] },
+            }, // Sum the total prices
+          },
+        },
+      ]);
+
+      const totalCartPrice =
+        allItemsInCart.length > 0 ? allItemsInCart[0].total : 0;
+
       return res.status(200).json({
         success: true,
         message: "Item quantity updated",
         productId: productId,
         quantity: updatedItem.quantity, // Return the updated quantity
         totalPrice: itemTotalPrice, // Return the updated total price for this specific product
+        totalCartPrice, // Add the total price of all remaining items in the cart
       });
     }
   } catch (error) {
@@ -152,7 +232,6 @@ router.post("/remove", fetchStoreUser, async (req, res) => {
     });
   }
 });
-
 
 // Remove item from cart
 router.delete("/clearitem/:productId", fetchStoreUser, async (req, res) => {
@@ -187,7 +266,7 @@ router.get("/getcart", fetchStoreUser, async (req, res) => {
 
     // Use aggregation pipeline to get cart with product details, total price, and item total
     const cart = await Cart.aggregate([
-      { $match: { user: new mongoose.Types.ObjectId(userId) } }, // Match the cart to the user
+      { $match: { user: userId } }, // Match the cart to the user
       { $unwind: "$items" }, // Unwind the items array to process each item separately
       {
         $lookup: {
@@ -236,10 +315,11 @@ router.get("/getcart", fetchStoreUser, async (req, res) => {
     res.status(200).json({ success: true, cart: cart[0] });
   } catch (error) {
     console.error("Error fetching cart:", error);
-    res.status(500).json({ message: "Error fetching cart", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching cart", error: error.message });
   }
 });
-
 
 module.exports = router;
 
