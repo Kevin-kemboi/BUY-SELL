@@ -99,7 +99,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div className="flex max-sm:flex-col max-sm:justify-center bg-dark-2 w-[95%] xl:w-[75%] min-h-[85vh]  mx-auto mt-5 rounded-md px-5 max-sm:py-3">
+      <div className="flex max-sm:flex-col max-sm:justify-center bg-dark-2 w-[95%] xl:w-[75%] h-[85vh] max-h-[800px] mx-auto mt-5 rounded-md px-5 max-sm:py-3">
         <div className="w-[70%]  flex items-center justify-center max-sm:w-full max-sm:border-b pb-5 border-dark-5/30">
           <img
             src={product.imageUrl}

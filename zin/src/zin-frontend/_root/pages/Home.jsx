@@ -41,8 +41,8 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <div className="mt-2 px-3 max-w-7xl h-full mx-auto">
-        <h2 className="text-7xl m-5 font-bold pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-white font-mono to-dark-4 bg-clip-text leading-none text-transparent max-sm:text-5xl max-sm:text-center mt-20 max-w-7xl">
+      <div className="mt-2 px-3 h-full mx-auto">
+        <h2 className="text-7xl m-5 font-bold pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-white font-mono to-dark-4 bg-clip-text leading-none text-transparent max-sm:text-5xl max-sm:text-center mt-20 max-w-7xl mx-auto">
           FEATURED
         </h2>
         <BentoGrid className="max-w-7xl h-[80%] max-sm:min-h-screen mx-auto md:grid-cols-3 w-full">
@@ -58,12 +58,14 @@ const Home = () => {
           ))}
         </BentoGrid>
 
-        <div className="mt-3">
+        <div className="mt-3 relative">
           <Marquee className="[--duration:190s]">
             {products.slice(0, 10).map((item) => (
               <ProductCard key={item._id} {...item} />
             ))}
           </Marquee>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-dark-6 "></div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-dark-6"></div>
         </div>
       </div>
     </>
