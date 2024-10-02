@@ -11,7 +11,7 @@ const CartItemCard = ({ name, itemTotal, quantity, imageUrl, _id }) => {
         <img src={imageUrl} alt="" className=" object-cover size-[85%]" />
         <X onClick={()=> clearItem(_id)} className="absolute top-0.5 left-0 text-dark-5/70 bg-zinc-500/20 cursor-pointer hover:text-white/90 rounded-full p-1 backdrop-blur-md backdrop-saturate-200 size-5" />
       </div>
-      <div className="h-full flex pb-1 items-start py-2 w-1/2 text-wrap line-clamp-2  px-2 capitalize text-xs font-bold ">
+      <div className="h-full flex pb-1 items-start py-2 w-1/2 text-wrap line-clamp-2  px-2 capitalize text-xs  ">
         {name}
       </div>
 

@@ -28,7 +28,7 @@ const Hero = () => {
           <motion.p
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1 }}
+            transition={{ duration: 0.5, delay: 1 }}
             className="text-3xl font-bold font-mono bg-white text-black w-[70%]"
           >
             Strike with Precision.

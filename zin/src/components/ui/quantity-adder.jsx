@@ -31,7 +31,7 @@ export default function Quantity({ itemQuantity, productId, itemTotal }) {
 
   return (
     <div className=" gap-1  h-[100%] flex flex-col items-center justify-center">
-      <div className=" w-full flex items-center justify-center text-xs font-medium">
+      <div className=" w-full flex items-center justify-center text-xs font-extralight font-mono">
         ₹{total}
       </div>
       <div className="flex items-center justify-center h-7 w-max  rounded-md border border-dark-4 overflow-hidden">

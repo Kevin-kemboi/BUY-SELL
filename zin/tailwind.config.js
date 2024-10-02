@@ -129,7 +129,7 @@ export default {
         slideRight: "slideRight ease-in-out ",
         slideLeft: "slideLeft ease-in-out ",
         slideUp: "slideUp ease-in-out ",
-        spotlight: "spotlight 2s ease 2.5s 1 forwards",
+        spotlight: "spotlight 1.6s ease 2.5s 1 forwards",
       },
     },
   },
