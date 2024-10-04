@@ -17,11 +17,6 @@ app.use(cors(
   }
 ));
 
-app.options('*', cors({
-  origin: ["https://zinstore.vercel.app"],  // Ensure the same origin
-  methods: ["POST", "GET", "PUT", "DELETE"],
-  credentials: true
-}));
 
 
 
