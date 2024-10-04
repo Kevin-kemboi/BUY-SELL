@@ -3,7 +3,7 @@ import { Spotlight } from "@/components/ui/spotlight";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
-const Hero = () => {
+const Nike = () => {
   return (
     <div className="h-[90vh] max-h-[900px] relative flex items-center justify-center group ">
       <DotPattern
@@ -78,4 +78,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Nike;

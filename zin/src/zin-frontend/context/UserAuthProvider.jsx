@@ -7,6 +7,8 @@ const UserAuthContext = createContext();
 const UserAuthProvider = ({ children }) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const [user, setUser] = useState({});
+  const [userEmail, setUserEmail] = useState();
+
 
   const confirmAuth = async () => {
     const token = localStorage.getItem("UserCookie");
@@ -35,6 +37,8 @@ const UserAuthProvider = ({ children }) => {
     setIsUserAuthenticated,
     confirmAuth,
     userLogout,
+    setUserEmail,
+    userEmail
   };
 
   return (

@@ -331,6 +331,34 @@ export const createUser = async (params) => {
   return data;
 };
 
+export const verifyUser = async (email, otp) =>{
+  try {
+    const otpCode = otp.join('')
+    console.log(otpCode)
+    const body = {
+      email,
+      otp: otpCode
+    }
+
+    const response = await fetch(`${host}/user/verify-otp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body)
+    })
+
+    const data = await response.json();
+
+    console.log(data)
+    return data
+
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const getCart = async () => {
   try {
     const token = localStorage.getItem("UserCookie");

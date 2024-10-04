@@ -98,7 +98,7 @@ const RootNavbar = () => {
         <Sheet>
           <SheetTrigger className="h-full" asChild>
             <Button className="sm:border hover:bg-transparent group h-full border-dark-4 bg-dark-6 px-2 relative">
-              {cartItems.length === 0 ? (
+              {cartItems.length <= 0 ? (
                 <ShoppingCart className="sm:max-w-4" />
               ) : (
                 <div className="">

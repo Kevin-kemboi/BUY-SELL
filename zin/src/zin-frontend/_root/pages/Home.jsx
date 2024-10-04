@@ -2,7 +2,7 @@ import Marquee from "@/components/magicui/marquee";
 import { ProductCard } from "@/components/magicui/ProductCard";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { getProductsFrontend, shuffleArray } from "@/lib/api/api";
-import Hero from "@/zin-frontend/components/Hero";
+import Nike from "@/zin-frontend/components/Nike";
 import { useEffect, useState } from "react";
 
 const Home = () => {
@@ -40,7 +40,7 @@ const Home = () => {
 
   return (
     <>
-      <Hero />
+      <Nike />
       <div className="mt-2 px-3 h-full mx-auto">
         <h2 className="text-7xl m-5 font-bold pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-white font-mono to-dark-4 bg-clip-text leading-none text-transparent max-sm:text-5xl max-sm:text-center mt-20 max-w-7xl mx-auto">
           FEATURED

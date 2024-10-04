@@ -28,11 +28,12 @@ import ShippingReturnPolicy from "./zin-frontend/components/Shipping";
 import TermsConditions from "./zin-frontend/components/Terms";
 import About from "./zin-frontend/components/About";
 import ScrollToTop from "./zin-frontend/components/ScrollToTop";
+import Verification from "./zin-frontend/_auth/forms/Verification";
 
 function App() {
   return (
     <main className="min-h-screen min-w-screen bg-dark-2 text-light-2">
-      <ScrollToTop/>
+      <ScrollToTop />
       <Routes>
         {/* Public Routes */}
         <Route
@@ -57,12 +58,15 @@ function App() {
         <Route
           element={
             <UserAuthProvider>
-              <UserAuthLayout />
+              <CartProvider>
+                <UserAuthLayout />
+              </CartProvider>
             </UserAuthProvider>
           }
         >
           <Route path="/login" element={<UserLogin />} />
           <Route path="/signup" element={<UserSignup />} />
+          <Route path="/verify" element={<Verification />} />
         </Route>
 
         {/* Admin Routes wrapped with AdminAuthProvider */}

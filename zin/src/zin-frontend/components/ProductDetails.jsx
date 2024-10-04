@@ -10,6 +10,7 @@ import {
   useLocation,
   useSearchParams,
 } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -19,6 +20,7 @@ const ProductDetails = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const [isAddToCartDisabled, setIsAddToCartDisabled] = useState(true); // State to control the button
+  const {fetchCart} =  useCart()
 
   // Function to handle variant selection
   const handleVariantSelect = (type, option) => {
@@ -58,6 +60,8 @@ const ProductDetails = () => {
     
 
     const item = await addItemToCart(id); // Include selected variants when adding to cart
+    console.log(item)
+    fetchCart();
     if (item.success) {
       toast({
         title: 'Item added.'

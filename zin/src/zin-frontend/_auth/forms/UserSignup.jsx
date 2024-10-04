@@ -31,7 +31,7 @@ const formSchema = z.object({
 
 const UserSignup = () => {
   const navigate = useNavigate();
-  const { setIsUserAuthenticated } = useUserAuth();
+  const { setUserEmail } = useUserAuth();
   const { toast } = useToast();
 
   const form = useForm({
@@ -50,16 +50,12 @@ const UserSignup = () => {
   });
 
   async function onSubmit(values) {
-    console.log(values);
     const data = await createUser(values);
+    console.log(data)
     if (data.success) {
-      localStorage.setItem("UserCookie", data.authToken);
-      navigate("/");
+      navigate("/verify");
       form.reset();
-      setIsUserAuthenticated(true);
-      toast({
-        title: "Sign-up successful!",
-      });
+      setUserEmail(data.email)
     } else {
       toast({
         title: data.error,

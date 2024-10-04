@@ -53,7 +53,7 @@ const CartProvider = ({ children }) => {
 
   useEffect(() => {
     fetchCart();
-  }, [cartItems]);
+  }, []);
 
   const value = {
     cartItems,
