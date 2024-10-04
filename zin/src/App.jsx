@@ -1,35 +1,34 @@
 import { Route, Routes } from "react-router-dom";
-import ScrollToTop from "./zin-frontend/components/ScrollToTop";
-import UserAuthProvider from "./zin-frontend/context/UserAuthProvider";
-import CartProvider from "./zin-frontend/context/CartContext";
-import RootLayout from "./zin-frontend/_root/RootLayout";
-import Home from "./zin-frontend/_root/pages/Home";
-import ProductDetails from "./zin-frontend/components/ProductDetails";
-import AllProducts from "./zin-frontend/_root/pages/AllProducts";
-import FAQ from "./zin-frontend/components/FAQ";
-import PrivacyPolicy from "./zin-frontend/components/PrivacyPolicy";
-import ShippingReturnPolicy from "./zin-frontend/components/Shipping";
-import TermsConditions from "./zin-frontend/components/Terms";
-import About from "./zin-frontend/components/About";
-import UserAuthLayout from "./zin-frontend/_auth/UserAuthLayout";
-import UserLogin from "./zin-frontend/_auth/forms/UserLogin";
-import UserSignup from "./zin-frontend/_auth/forms/UserSignup";
-import Verification from "./zin-frontend/_auth/forms/Verification";
-import AdminAuthProvider from "./zin-admin/context/AdminAuthProvider";
-import AdminAuthLayout from "./zin-admin/_auth/AdminAuthLayout";
-import AdminLogin from "./zin-admin/_auth/forms/AdminLogin";
-import AdminSignUp from "./zin-admin/_auth/forms/AdminSignUp";
-import AdminRootLayout from "./zin-admin/_root/AdminRootLayout";
-import AdminDashboard from "./zin-admin/_root/pages/AdminDashboard";
-import Product from "./zin-admin/_root/pages/Product";
-import AddProducts from "./zin-admin/_root/pages/AddProducts";
-import ProductList from "./zin-admin/components/ProductList";
-import ProductProfile from "./zin-admin/_root/pages/ProductProfile";
-import Users from "./zin-admin/_root/pages/Users";
-import Admins from "./zin-admin/_root/pages/Admins";
-import Configs from "./zin-admin/_root/pages/Configs";
-import AddVariant from "./zin-admin/_root/pages/AddVariant";
-
+import ScrollToTop from "./zinfrontend/components/ScrollToTop";
+import UserAuthProvider from "./zinfrontend/context/UserAuthProvider";
+import CartProvider from "./zinfrontend/context/CartContext";
+import RootLayout from "./zinfrontend/_root/RootLayout";
+import Home from "./zinfrontend/_root/pages/Home";
+import ProductDetails from "./zinfrontend/components/ProductDetails";
+import AllProducts from "./zinfrontend/_root/pages/AllProducts";
+import FAQ from "./zinfrontend/components/FAQ";
+import PrivacyPolicy from "./zinfrontend/components/PrivacyPolicy";
+import ShippingReturnPolicy from "./zinfrontend/components/Shipping";
+import TermsConditions from "./zinfrontend/components/Terms";
+import About from "./zinfrontend/components/About";
+import UserAuthLayout from "./zinfrontend/_auth/UserAuthLayout";
+import UserLogin from "./zinfrontend/_auth/forms/UserLogin";
+import UserSignup from "./zinfrontend/_auth/forms/UserSignup";
+import Verification from "./zinfrontend/_auth/forms/Verification";
+import AdminAuthProvider from "./zinadmin/context/AdminAuthProvider";
+import AdminAuthLayout from "./zinadmin/_auth/AdminAuthLayout";
+import AdminLogin from "./zinadmin/_auth/forms/AdminLogin";
+import AdminSignUp from "./zinadmin/_auth/forms/AdminSignUp";
+import AdminRootLayout from "./zinadmin/_root/AdminRootLayout";
+import AdminDashboard from "./zinadmin/_root/pages/AdminDashboard";
+import Product from "./zinadmin/_root/pages/Product";
+import AddProducts from "./zinadmin/_root/pages/AddProducts";
+import ProductList from "./zinadmin/components/ProductList";
+import ProductProfile from "./zinadmin/_root/pages/ProductProfile";
+import Users from "./zinadmin/_root/pages/Users";
+import Admins from "./zinadmin/_root/pages/Admins";
+import Configs from "./zinadmin/_root/pages/Configs";
+import AddVariant from "./zinadmin/_root/pages/AddVariant";
 
 function App() {
   return (
@@ -46,7 +45,7 @@ function App() {
             </UserAuthProvider>
           }
         >
-          <Route path="/" element={<Home   />} />
+          <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/allproducts" element={<AllProducts />} />
           <Route path="/faq" element={<FAQ />} />

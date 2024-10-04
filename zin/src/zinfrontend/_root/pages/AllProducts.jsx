@@ -1,15 +1,15 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import { Button } from "@/components/ui/button";
 import { getProductsFrontend } from "@/lib/api/api";
-import LeftSidebar from "@/zin-frontend/components/LeftSidebar";
-import RightSidebar from "@/zin-frontend/components/RightSidebar";
+import LeftSidebar from "@/zinfrontend/components/LeftSidebar";
+import RightSidebar from "@/zinfrontend/components/RightSidebar";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Settings2 } from "lucide-react";
-import Filters from "@/zin-frontend/components/FIlters";
+import Filters from "@/zinfrontend/components/FIlters";
 import { categories, sortOptions } from "@/lib/constants";
-import SortOptions from "@/zin-frontend/components/SortOptions";
+import SortOptions from "@/zinfrontend/components/SortOptions";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -44,7 +44,7 @@ const AllProducts = () => {
                 <Filters filters={categories} />
               </div>
               <div className="">
-              <p className="text-xs my-2 text-zinc-400 text-end">SORT BY</p>
+                <p className="text-xs my-2 text-zinc-400 text-end">SORT BY</p>
                 <SortOptions sortBy={sortOptions} />
               </div>
             </div>

@@ -2,7 +2,7 @@ import Marquee from "@/components/magicui/marquee";
 import { ProductCard } from "@/components/magicui/ProductCard";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { getProductsFrontend, shuffleArray } from "@/lib/api/api";
-import Nike from "@/zin-frontend/components/Nike";
+import Nike from "@/zinfrontend/components/Nike";
 import { useEffect, useState } from "react";
 
 const Home = () => {

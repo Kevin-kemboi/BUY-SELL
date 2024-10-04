@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { createUser } from "../../../lib/api/api";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-import { useUserAuth } from "@/zin-frontend/context/UserAuthProvider";
+import { useUserAuth } from "@/zinfrontend/context/UserAuthProvider";
 import { useState } from "react";
 
 const formSchema = z.object({

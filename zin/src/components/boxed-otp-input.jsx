@@ -3,11 +3,10 @@
 import React, { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
-import { useUserAuth } from "@/zin-frontend/context/UserAuthProvider";
+import { useUserAuth } from "@/zinfrontend/context/UserAuthProvider";
 import { verifyUser } from "@/lib/api/api";
 import { toast } from "./ui/use-toast";
 import { useNavigate } from "react-router-dom";
-
 
 export function BoxedOtpInput() {
   const navigate = useNavigate();
@@ -37,8 +36,7 @@ export function BoxedOtpInput() {
   // Check if all OTP digits have been filled
   const isOtpComplete = otp.every((digit) => digit !== "");
 
-  const handleVerify = async()=> {
-
+  const handleVerify = async () => {
     const data = await verifyUser(userEmail, otp);
 
     if (data.success) {
@@ -53,12 +51,14 @@ export function BoxedOtpInput() {
         title: data.error,
       });
     }
-  }
+  };
 
   return (
     <div className="flex flex-col items-center space-y-4">
       <h2 className="text-2xl font-bold">Enter OTP</h2>
-      <p className="text-zinc-500 text-sm">An OTP has been sent to {userEmail} </p>
+      <p className="text-zinc-500 text-sm">
+        An OTP has been sent to {userEmail}{" "}
+      </p>
       <div className="flex space-x-2">
         {otp.map((data, index) => (
           <Input
