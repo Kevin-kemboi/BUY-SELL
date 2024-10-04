@@ -1,34 +1,35 @@
 import { Route, Routes } from "react-router-dom";
-import AdminLogin from "./zin-admin/_auth/forms/AdminLogin";
-import AdminSignUp from "./zin-admin/_auth/forms/AdminSignUp";
-import AdminAuthLayout from "./zin-admin/_auth/AdminAuthLayout";
-import AdminRootLayout from "./zin-admin/_root/AdminRootLayout";
-import AdminDashboard from "./zin-admin/_root/pages/AdminDashboard";
-import Product from "./zin-admin/_root/pages/Product";
-import AddProducts from "./zin-admin/_root/pages/AddProducts";
-import ProductProfile from "./zin-admin/_root/pages/ProductProfile";
-import Users from "./zin-admin/_root/pages/Users";
-import ProductList from "./zin-admin/components/ProductList";
-import Admins from "./zin-admin/_root/pages/Admins";
+import ScrollToTop from "./zin-frontend/components/ScrollToTop";
+import UserAuthProvider from "./zin-frontend/context/UserAuthProvider";
+import CartProvider from "./zin-frontend/context/CartContext";
 import RootLayout from "./zin-frontend/_root/RootLayout";
 import Home from "./zin-frontend/_root/pages/Home";
 import ProductDetails from "./zin-frontend/components/ProductDetails";
 import AllProducts from "./zin-frontend/_root/pages/AllProducts";
-import AdminAuthProvider from "./zin-admin/context/AdminAuthProvider";
-import UserAuthProvider from "./zin-frontend/context/UserAuthProvider";
-import UserAuthLayout from "./zin-frontend/_auth/UserAuthLayout";
-import UserLogin from "./zin-frontend/_auth/forms/UserLogin";
-import UserSignup from "./zin-frontend/_auth/forms/UserSignup";
-import CartProvider from "./zin-frontend/context/CartContext";
-import Configs from "./zin-admin/_root/pages/Configs";
-import AddVariant from "./zin-admin/_root/pages/AddVariant";
 import FAQ from "./zin-frontend/components/FAQ";
 import PrivacyPolicy from "./zin-frontend/components/PrivacyPolicy";
 import ShippingReturnPolicy from "./zin-frontend/components/Shipping";
 import TermsConditions from "./zin-frontend/components/Terms";
 import About from "./zin-frontend/components/About";
-import ScrollToTop from "./zin-frontend/components/ScrollToTop";
+import UserAuthLayout from "./zin-frontend/_auth/UserAuthLayout";
+import UserLogin from "./zin-frontend/_auth/forms/UserLogin";
+import UserSignup from "./zin-frontend/_auth/forms/UserSignup";
 import Verification from "./zin-frontend/_auth/forms/Verification";
+import AdminAuthProvider from "./zin-admin/context/AdminAuthProvider";
+import AdminAuthLayout from "./zin-admin/_auth/AdminAuthLayout";
+import AdminLogin from "./zin-admin/_auth/forms/AdminLogin";
+import AdminSignUp from "./zin-admin/_auth/forms/AdminSignUp";
+import AdminRootLayout from "./zin-admin/_root/AdminRootLayout";
+import AdminDashboard from "./zin-admin/_root/pages/AdminDashboard";
+import Product from "./zin-admin/_root/pages/Product";
+import AddProducts from "./zin-admin/_root/pages/AddProducts";
+import ProductList from "./zin-admin/components/ProductList";
+import ProductProfile from "./zin-admin/_root/pages/ProductProfile";
+import Users from "./zin-admin/_root/pages/Users";
+import Admins from "./zin-admin/_root/pages/Admins";
+import Configs from "./zin-admin/_root/pages/Configs";
+import AddVariant from "./zin-admin/_root/pages/AddVariant";
+
 
 function App() {
   return (
@@ -45,7 +46,7 @@ function App() {
             </UserAuthProvider>
           }
         >
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home   />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/allproducts" element={<AllProducts />} />
           <Route path="/faq" element={<FAQ />} />
