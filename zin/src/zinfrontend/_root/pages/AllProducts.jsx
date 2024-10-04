@@ -30,7 +30,7 @@ const AllProducts = () => {
   }, [filter, sortBy]);
 
   return (
-    <div className=" max-w-6xl flex mx-auto max-sm:flex-col">
+    <div className=" max-w-6xl flex mx-auto max-sm:flex-col ">
       <LeftSidebar />
       <div className="mb-4 mx-2 sm:hidden">
         <Drawer>
@@ -51,7 +51,7 @@ const AllProducts = () => {
           </DrawerContent>
         </Drawer>
       </div>
-      <BlurFade className="w-full max-sm:px-1 mx-auto h-max px-6 grid md:grid-cols-3 grid-cols-2  gap-2 duration-200">
+      <BlurFade className="size-full relative max-sm:px-1 mx-auto min-h-screen px-6 grid md:grid-cols-3 grid-cols-2 gap-2 duration-200">
         {products.length > 0 ? (
           products.map((product) => (
             <Link
@@ -74,7 +74,7 @@ const AllProducts = () => {
             </Link>
           ))
         ) : (
-          <div className=" w-full h-full flex items-center justify-center">
+          <div className=" size-full absolute flex items-center justify-center">
             <Loader className="animate-spin w-6" />
           </div>
         )}
