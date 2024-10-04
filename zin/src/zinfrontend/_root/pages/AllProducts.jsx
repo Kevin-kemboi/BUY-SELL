@@ -6,7 +6,7 @@ import RightSidebar from "@/zinfrontend/components/RightSidebar";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { Settings2 } from "lucide-react";
+import { Loader, Settings2 } from "lucide-react";
 import Filters from "@/zinfrontend/components/FIlters";
 import { categories, sortOptions } from "@/lib/constants";
 import SortOptions from "@/zinfrontend/components/SortOptions";
@@ -74,8 +74,8 @@ const AllProducts = () => {
             </Link>
           ))
         ) : (
-          <div className=" w-full flex items-center justify-center">
-            <p>No Products found</p>
+          <div className=" w-full h-full flex items-center justify-center">
+            <Loader className="animate-spin w-6" />
           </div>
         )}
       </BlurFade>
