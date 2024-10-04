@@ -9,8 +9,13 @@ const app = express();
 const port = 5000;
 
 app.use(express.json());
-app.use(cors());
-
+app.use(cors(
+  {
+    origin: ["https://zinstore.vercel.app"],
+    methods: ["POST", "GET","PUT","DELETE"],
+    credentials: true 
+  }
+))
 app.use("/admin", require("./routes/productRoutes"));
 app.use("/admin", require("./routes/adminRoutes"));
 app.use("/", require("./routes/searchRoute"));
