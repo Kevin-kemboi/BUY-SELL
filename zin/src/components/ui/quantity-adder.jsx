@@ -11,7 +11,6 @@ export default function Quantity({ itemQuantity, productId, itemTotal }) {
 
   const decrease = async () => {
     const item = await removeItemFromCart(productId);
-    console.log(item);
     setTotal(item.totalPrice);
     setQuantity(item.quantity);
     setCartTotal(item.totalCartPrice);
@@ -19,7 +18,6 @@ export default function Quantity({ itemQuantity, productId, itemTotal }) {
 
   const increase = async () => {
     const item = await addItemToCart(productId);
-    console.log(item);
     setTotal(item.totalPrice);
     setQuantity(item.quantity);
     setCartTotal(item.totalCartPrice);

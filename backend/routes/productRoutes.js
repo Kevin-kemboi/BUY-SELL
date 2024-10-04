@@ -7,6 +7,8 @@ const Product = require("../models/Product.model");
 const upload = require("../middleware/storage");
 const Variation = require("../models/Variation.model");
 
+const front_host = process.env.FRONTEND_HOST
+
 router.post("/api/upload", (req, res) => {
   upload(req, res, (err) => {
     if (err) {
@@ -17,10 +19,9 @@ router.post("/api/upload", (req, res) => {
       console.error("No file uploaded");
       return res.status(400).json({ error: "No file uploaded" });
     }
-    console.log("File uploaded successfully:", req.file);
     res.json({
       filename: req.file.filename,
-      filepath: `http://localhost:5173/uploads/${req.file.filename}`,
+      filepath: `${front_host}/uploads/${req.file.filename}`,
     });
   });
 });

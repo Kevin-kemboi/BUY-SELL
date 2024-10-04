@@ -8,7 +8,6 @@ const Admins = () => {
     const data = await getAdmins();
     const { admins } = data;
     setAdmins(admins);
-    console.log(admins);
   };
 
   useEffect(() => {

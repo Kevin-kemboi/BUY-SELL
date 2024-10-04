@@ -1,4 +1,5 @@
-const host = "http://localhost:5000";
+const host = import.meta.env.VITE_BACKEND_HOST;
+
 
 export const createAdminUser = async (params) => {
   const { username, email, password, role } = params;
@@ -73,7 +74,6 @@ export const addProduct = async (formData) => {
       console.log("Token not found");
       return false;
     }
-    console.log(formData);
     const response = await fetch(`${host}/admin/addproduct`, {
       method: "POST",
       headers: {
@@ -118,7 +118,6 @@ export const updateProduct = async (id, product) => {
       variations: product.variations,
     };
 
-    console.log(product)
 
     const response = await fetch(`${host}/admin/updateproduct/${id}`, {
       method: "PUT",
@@ -285,7 +284,6 @@ export const confirmUser = async (token) => {
       return false;
     }
 
-    console.log(response);
     return response;
   } catch (error) {
     console.log(error);
@@ -334,7 +332,6 @@ export const createUser = async (params) => {
 export const verifyUser = async (email, otp) =>{
   try {
     const otpCode = otp.join('')
-    console.log(otpCode)
     const body = {
       email,
       otp: otpCode
@@ -350,7 +347,6 @@ export const verifyUser = async (email, otp) =>{
 
     const data = await response.json();
 
-    console.log(data)
     return data
 
 
@@ -379,7 +375,6 @@ export const getCart = async () => {
       return false;
     }
 
-    console.log(response);
     return response;
   } catch (error) {
     console.log(error);
@@ -413,7 +408,6 @@ export const addItemToCart = async (productId) => {
       return false;
     }
 
-    console.log(response);
     return response;
   } catch (error) {
     console.log(error);
@@ -494,7 +488,6 @@ export const addVariant = async(values) => {
     })
 
     const response = await data.json();
-    console.log(response)
     if(!response.success){
       return false;
     }

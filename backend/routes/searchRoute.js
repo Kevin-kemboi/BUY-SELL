@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/Product.model");
-const VariationModel = require("../models/Variation.model");
 
 router.post("/search", async (req, res) => {
   try {

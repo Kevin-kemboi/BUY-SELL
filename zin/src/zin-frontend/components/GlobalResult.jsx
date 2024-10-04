@@ -22,7 +22,6 @@ const GlobalResult = ({ isSheet }) => {
           query: global,
         });
 
-        console.log(res.results);
         setResult(res.results);
       } catch (error) {
         console.log(error);

@@ -60,7 +60,6 @@ const ProductDetails = () => {
     
 
     const item = await addItemToCart(id); // Include selected variants when adding to cart
-    console.log(item)
     fetchCart();
     if (item.success) {
       toast({

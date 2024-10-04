@@ -40,7 +40,6 @@ export function BoxedOtpInput() {
   const handleVerify = async()=> {
 
     const data = await verifyUser(userEmail, otp);
-    console.log(data)
 
     if (data.success) {
       localStorage.setItem("UserCookie", data.authToken);

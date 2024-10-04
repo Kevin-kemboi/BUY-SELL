@@ -28,7 +28,6 @@ const ProductList = () => {
       const pageSize = 4;
       const totalPages = Math.ceil(totalCount / pageSize);
       setTotalPages(totalPages);
-      console.log(totalPages)
     }
   };
 

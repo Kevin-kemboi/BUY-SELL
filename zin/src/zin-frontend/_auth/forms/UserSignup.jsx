@@ -53,7 +53,6 @@ const UserSignup = () => {
 
   async function onSubmit(values) {
     const data = await createUser(values);
-    console.log(data);
     if (data.success) {
       navigate("/verify");
       form.reset();

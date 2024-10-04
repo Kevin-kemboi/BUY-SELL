@@ -34,7 +34,6 @@ const AddVariant = () => {
   async function onSubmit(values) {
     const a = values.options.split(',').map(item => item.trim())
     values.options = a;
-    console.log(values)
     const data = await addVariant(values);
     if(data.success){
       toast({ title: 'Variant added'})

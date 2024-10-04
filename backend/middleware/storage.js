@@ -5,7 +5,6 @@ const fs = require("fs");
 
 const uploadPath = path.join(__dirname, "../../zin/public/uploads");
 
-console.log("Resolved upload path:", uploadPath);
 // Ensure the directory exists
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });

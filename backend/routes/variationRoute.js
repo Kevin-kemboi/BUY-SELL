@@ -8,10 +8,8 @@ const isAdmin = require("../middleware/AdminVerify");
 router.post("/add", fetchAdminUser, isAdmin, async (req, res) => {
   const { type, options } = req.body;
 
-  console.log(type)
   try {
     const exists = await Variation.find({ type: type });
-    console.log(exists)
     if (exists.length > 0) {
      return res
         .status(400)

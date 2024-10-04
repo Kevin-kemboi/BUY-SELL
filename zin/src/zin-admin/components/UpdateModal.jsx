@@ -106,7 +106,6 @@ const UpdateModal = ({ product, refreshProducts }) => {
 
     try {
       const update = await updateProduct(product._id, body);
-      console.log(update)
       if (update.success) {
         toast({ title: "Product updated successfully" });
         setOpen(false);
@@ -129,7 +128,7 @@ const UpdateModal = ({ product, refreshProducts }) => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://localhost:5000/admin/api/upload", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/admin/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -138,7 +137,7 @@ const UpdateModal = ({ product, refreshProducts }) => {
       }
 
       const data = await response.json();
-      const imageUrl = `http://localhost:5173/uploads/${data.filename}`;
+      const imageUrl = `${import.meta.env.VITE_FRONTEND_HOST}/uploads/${data.filename}`;
       setUploadedImageUrl(imageUrl); // Set uploaded image URL
     } catch (error) {
       console.error("Error uploading image:", error);

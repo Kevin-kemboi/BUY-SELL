@@ -93,7 +93,6 @@ const AddProducts = () => {
       imageUrl: uploadedImageUrl, // Use the uploaded image URL
     };
 
-    console.log({ body });
 
     // Add the product
     const data = await addProduct(body);
@@ -120,19 +119,16 @@ const AddProducts = () => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://localhost:5000/admin/api/upload", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/admin/api/upload`, {
         method: "POST",
         body: formData,
       });
-      console.log(response);
       if (!response.ok) {
         throw new Error("Failed to upload image");
       }
 
       const data = await response.json();
-      console.log("Uploaded file:", data);
-      const imageUrl = `http://localhost:5173/uploads/${data.filename}`; // Construct the image URL
-      console.log(URL.createObjectURL(file));
+      const imageUrl = `${import.meta.env.VITE_FRONTEND_HOST}/uploads/${data.filename}`; // Construct the image URL
       setUploadedImageUrl(imageUrl); // Store the uploaded image URL
       // You can now use data.filename or whatever the server returns
     } catch (error) {

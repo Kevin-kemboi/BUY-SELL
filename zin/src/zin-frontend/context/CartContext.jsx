@@ -8,12 +8,11 @@ const CartContext = createContext();
 const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [cartTotal, setCartTotal] = useState();
-  const host = "http://localhost:5000";
+  const host = import.meta.env.VITE_BACKEND_HOST;
 
 
   const fetchCart = async () => {
     const cartIts = await getCart();
-    console.log(cartIts)
     if (cartIts.success) {
       setCartItems(cartIts.cart.items);
       setCartTotal(cartIts.cart.totalPrice)
