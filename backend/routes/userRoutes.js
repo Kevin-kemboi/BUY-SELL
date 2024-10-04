@@ -42,8 +42,8 @@ router.post("/verify-otp", async (req, res) => {
 
     // Set the user to verified and clear OTP fields
     user.verified = true;
-    user.otp = undefined; // Clear the OTP
-    user.otpExpiry = undefined; // Clear the OTP expiry
+    user.otp = null; // Clear the OTP
+    user.otpExpiry = null; // Clear the OTP expiry
     await user.save();
     // Generate the auth token now that the user is verified
     const data = {

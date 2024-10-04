@@ -3,7 +3,7 @@ import React from 'react'
 
 const Verification = () => {
   return (
-    <div>
+    <div className='bg-dark-6 w-full h-[90vh] flex items-center justify-center'>
         <BoxedOtpInput />
     </div>
   )

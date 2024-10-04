@@ -8,7 +8,7 @@ const UserAuthLayout = () => {
     <>
       <RootNavbar/>
       {!isUserAuthenticated ? (
-        <div className="w-full h-full flex items-center justify-center max-sm:w-full">
+        <div className="w-full h-full flex items-center justify-center max-sm:w-full bg-dark-6">
           <Outlet />
         </div>
       ) : (

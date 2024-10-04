@@ -16,6 +16,7 @@ import { createUser } from "../../../lib/api/api";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserAuth } from "@/zin-frontend/context/UserAuthProvider";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(1).max(50),
@@ -33,6 +34,7 @@ const UserSignup = () => {
   const navigate = useNavigate();
   const { setUserEmail } = useUserAuth();
   const { toast } = useToast();
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -51,11 +53,11 @@ const UserSignup = () => {
 
   async function onSubmit(values) {
     const data = await createUser(values);
-    console.log(data)
+    console.log(data);
     if (data.success) {
       navigate("/verify");
       form.reset();
-      setUserEmail(data.email)
+      setUserEmail(data.email);
     } else {
       toast({
         title: data.error,
@@ -64,12 +66,12 @@ const UserSignup = () => {
   }
 
   return (
-    <div className=" md:min-h-[80vh] min-h-[75vh] w-[530px] rounded-md flex items-center justify-start flex-col py-6 max-sm:w-full ">
+    <div className=" md:min-h-[80vh] min-h-[75vh] w-[530px] rounded-md flex items-center justify-start flex-col py-6 max-sm:w-full bg-dark-6">
       <h2 className="text-3xl font-bold  m-5">Sign-Up</h2>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className=" bg-dark-2 p-7 rounded-md w-[600px] gap-5  max-sm:flex  max-sm:flex-col max-sm:p-7 max-sm:w-[93%] grid grid-cols-2"
+          className=" bg-dark-6 p-7 rounded-md w-[600px] gap-5  max-sm:flex  max-sm:flex-col max-sm:p-7 max-sm:w-[93%] grid grid-cols-2"
         >
           <FormField
             control={form.control}
@@ -80,7 +82,7 @@ const UserSignup = () => {
                 <FormControl>
                   <Input
                     placeholder="Enter your Name"
-                    className="bg-dark-3 text-light-2 border border-dark-4 "
+                    className="bg-dark-1 text-light-2 border border-dark-4 "
                     {...field}
                   />
                 </FormControl>
@@ -97,7 +99,7 @@ const UserSignup = () => {
                 <FormControl>
                   <Input
                     placeholder="Enter your Address"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    className="bg-dark-1 text-light-2 border border-dark-4  "
                     {...field}
                   />
                 </FormControl>
@@ -114,7 +116,7 @@ const UserSignup = () => {
                 <FormControl>
                   <Input
                     placeholder="Enter your Appartment"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    className="bg-dark-1 text-light-2 border border-dark-4  "
                     {...field}
                   />
                 </FormControl>
@@ -131,7 +133,7 @@ const UserSignup = () => {
                 <FormControl>
                   <Input
                     placeholder="Enter your City"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    className="bg-dark-1 text-light-2 border border-dark-4  "
                     {...field}
                   />
                 </FormControl>
@@ -148,7 +150,7 @@ const UserSignup = () => {
                 <FormControl>
                   <Input
                     placeholder="Enter your State"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    className="bg-dark-1 text-light-2 border border-dark-4  "
                     {...field}
                   />
                 </FormControl>
@@ -165,7 +167,7 @@ const UserSignup = () => {
                 <FormControl>
                   <Input
                     placeholder="Enter your ZIP"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    className="bg-dark-1 text-light-2 border border-dark-4  "
                     {...field}
                   />
                 </FormControl>
@@ -182,7 +184,7 @@ const UserSignup = () => {
                 <FormControl>
                   <Input
                     placeholder="Enter your phNo"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    className="bg-dark-1 text-light-2 border border-dark-4  "
                     {...field}
                   />
                 </FormControl>
@@ -199,7 +201,7 @@ const UserSignup = () => {
                 <FormControl>
                   <Input
                     placeholder="Enter your Email"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    className="bg-dark-1 text-light-2 border border-dark-4  "
                     {...field}
                   />
                 </FormControl>
@@ -211,23 +213,31 @@ const UserSignup = () => {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem className=" col-start-1 col-end-3">
+              <FormItem className="col-start-1 col-end-3">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
+                    type={showPassword ? "text" : "password"} // Change input type based on showPassword state
                     placeholder="Enter your password"
-                    className="bg-dark-3 text-light-2 border border-dark-4  "
+                    className="bg-dark-1 text-light-2 border border-dark-4"
                     {...field}
                   />
                 </FormControl>
                 <FormMessage />
+                <Button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+                  className="text-blue-600 hover:underline mt-1 text-xs p-0 mx-2 bg-transparent"
+                >
+                  {showPassword ? "Hide Password" : "Show Password"}
+                </Button>
               </FormItem>
             )}
           />
 
           <Button
             type="submit"
-            className="w-1/4 mx-auto py-2 hover:bg-zinc-700  col-start-1 col-end-3"
+            className="w-1/4 mx-auto py-2 bg-blue-700 rounded-full hover:bg-blue-800  col-start-1 col-end-3"
           >
             SignUp
           </Button>
