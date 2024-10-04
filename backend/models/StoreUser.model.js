@@ -13,10 +13,7 @@ const StoreUser = new Schema({
   verified: { type: Boolean, default: false },
   otp: { type: String }, // Store OTP temporarily for verification
   otpExpiresAt: { type: Date }, // TTL index to expire after 10 mins (600 seconds)
-  createdAt: { type: Date, default: Date.now, expires: '3m' }, // Automatically delete after 10 minutes
+  createdAt: { type: Date, default: Date.now}, // Automatically delete after 10 minutes
 });
-
-// Create TTL index on createdAt field to automatically remove unverified users after 10 minutes
-StoreUser.index({ createdAt: 1, verified: false });
 
 module.exports = models.StoreUser || model("StoreUser", StoreUser);

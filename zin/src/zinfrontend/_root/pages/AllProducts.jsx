@@ -51,7 +51,7 @@ const AllProducts = () => {
           </DrawerContent>
         </Drawer>
       </div>
-      <BlurFade className="size-full relative max-sm:px-1 mx-auto min-h-screen px-6 grid md:grid-cols-3 grid-cols-2 gap-2 duration-200">
+      <BlurFade className="size-full relative max-sm:px-1 mx-auto px-6 grid md:grid-cols-3 grid-cols-2 gap-2 duration-200">
         {products.length > 0 ? (
           products.map((product) => (
             <Link
@@ -74,7 +74,7 @@ const AllProducts = () => {
             </Link>
           ))
         ) : (
-          <div className=" size-full absolute flex items-center justify-center">
+          <div className=" w-full h-screen absolute flex items-center justify-center">
             <Loader className="animate-spin w-6" />
           </div>
         )}
