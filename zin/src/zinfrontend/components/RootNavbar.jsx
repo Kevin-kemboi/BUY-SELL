@@ -24,7 +24,7 @@ const RootNavbar = () => {
   const { cartItems } = useCart();
 
   return (
-    <nav className="bg-dark-6 max-sm:fixed z-20 top-0 max-sm:gap-1 animate-in duration-1000 py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
+    <nav className="bg-dark-6 max-sm:fixed z-20 top-0 max-sm:gap-1 py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
       <div className=" h-7 ">
         <MobileNav />
       </div>
