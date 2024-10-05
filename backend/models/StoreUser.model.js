@@ -13,7 +13,7 @@ const StoreUser = new Schema({
   verified: { type: Boolean, default: false },
   otp: { type: String }, 
   otpExpiresAt: { type: Date }, 
-  createdAt: { type: Date, default: Date.now}, 
+  createdAt: { type: Date, default: Date.now},  
 });
 
 module.exports = models.StoreUser || model("StoreUser", StoreUser);
