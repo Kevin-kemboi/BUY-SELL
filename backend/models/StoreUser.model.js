@@ -11,9 +11,9 @@ const StoreUser = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   verified: { type: Boolean, default: false },
-  otp: { type: String }, // Store OTP temporarily for verification
-  otpExpiresAt: { type: Date }, // TTL index to expire after 10 mins (600 seconds)
-  createdAt: { type: Date, default: Date.now}, // Automatically delete after 10 minutes
+  otp: { type: String }, 
+  otpExpiresAt: { type: Date }, 
+  createdAt: { type: Date, default: Date.now}, 
 });
 
 module.exports = models.StoreUser || model("StoreUser", StoreUser);
