@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { addItemToCart, getProductById } from "@/lib/api/api";
 import { formUrlQuery } from "@/lib/utils";
-import { Plus } from "lucide-react";
+import { Loader, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   useParams,
@@ -97,7 +97,9 @@ const ProductDetails = () => {
   }, [id]);
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <div className="size-full absolute flex items-center justify-center">
+      <Loader className="size-10 animate-spin"/>
+    </div>;
   }
 
   return (
