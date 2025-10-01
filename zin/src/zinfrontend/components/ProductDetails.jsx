@@ -10,10 +10,13 @@ import {
   useNavigate,
   useLocation,
   useSearchParams,
+  Link
 } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
-const ProductDetails = () => {
+// Inner component for product details logic
+const ProductDetailsContent = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedVariants, setSelectedVariants] = useState({});
@@ -89,15 +92,21 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        // Show loading state
+        setProduct(null);
+        
         const response = await getProductById(id);
-        if (response && response.success) {
+        if (response && response.success && response.product) {
           setProduct(response.product);
           return;
         }
-        // fallback to mock list by id or first item
+        
+        // API returned success: false or no product
+        console.warn('[ProductDetails] API response missing product data, using fallback');
         const fallback = mockProducts.find(p => p._id === id) || mockProducts[0];
         setProduct(fallback);
       } catch (e) {
+        console.error('[ProductDetails] Error fetching product:', e.message);
         const fallback = mockProducts.find(p => p._id === id) || mockProducts[0];
         setProduct(fallback);
       }
@@ -106,9 +115,14 @@ const ProductDetails = () => {
   }, [id]);
 
   if (!product) {
-    return <div className="size-full absolute flex items-center justify-center">
-      <Loader className="size-10 animate-spin"/>
-    </div>;
+    return (
+      <div className="size-full min-h-[60vh] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader className="size-10 animate-spin"/>
+          <p className="text-zinc-400 text-sm">Loading product details...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -179,4 +193,12 @@ const ProductDetails = () => {
   );
 };
 
-export default ProductDetails;
+export default function ProductDetails() {
+  return (
+    <ErrorBoundary
+      onReset={() => window.history.back()}
+    >
+      <ProductDetailsContent />
+    </ErrorBoundary>
+  );
+};

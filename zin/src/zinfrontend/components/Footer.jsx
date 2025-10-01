@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import NetworkStatusIndicator from "@/components/NetworkStatusIndicator";
 
 export default function Footer() {
   return (
@@ -38,6 +39,7 @@ export default function Footer() {
           </p>
         </div>
       </div>
+      <NetworkStatusIndicator />
     </footer>
   );
 }

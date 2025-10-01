@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
+import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./zinfrontend/components/ScrollToTop";
 import UserAuthProvider from "./zinfrontend/context/UserAuthProvider";
 import CartProvider from "./zinfrontend/context/CartContext";
@@ -37,10 +38,18 @@ const AddVariant = lazy(() => import("./zinadmin/_root/pages/AddVariant"));
 function App() {
   // Removed offline badge; still supports lazy loading. To re-enable badge, restore previous logic.
   return (
-    <main className="min-h-screen min-w-screen bg-dark-2 text-light-2">
-      <ScrollToTop />
-      <Suspense fallback={<div className="p-10 text-center">Loading...</div>}>
-      <Routes>
+    <ErrorBoundary>
+      <main className="min-h-screen min-w-screen bg-dark-2 text-light-2">
+        <ScrollToTop />
+        <Suspense fallback={
+          <div className="p-10 flex items-center justify-center min-h-[50vh]">
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+              <p className="text-light-2">Loading application...</p>
+            </div>
+          </div>
+        }>
+        <Routes>
         {/* Public Routes */}
         <Route
           element={
@@ -106,9 +115,10 @@ function App() {
           <Route path="/admin/addvariant" element={<AddVariant />} />
           <Route path="/admin/updatevariant" element={<AddVariant />} />
         </Route>
-      </Routes>
-      </Suspense>
-    </main>
+        </Routes>
+        </Suspense>
+      </main>
+    </ErrorBoundary>
   );
 }
 

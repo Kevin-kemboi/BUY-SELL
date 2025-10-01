@@ -23,7 +23,9 @@ const RootNavbar = () => {
   const isUserAuthenticated = authCtx?.isUserAuthenticated || false;
   const userLogout = authCtx?.userLogout || (() => {});
   const isMobile = useDeviceWidth();
-  const { cartItems } = useCart();
+  
+  // Use destructuring with default values to prevent undefined errors
+  const { cartItems = [], isOffline } = useCart() || {};
 
   return (
     <nav className="bg-dark-6 max-sm:absolute z-20 top-0 max-sm:gap-1 py-1 pt-3 w-full flex items-center justify-between max-sm:px-3 px-6">
