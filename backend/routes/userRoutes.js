@@ -106,7 +106,7 @@ router.post(
 
       // Send OTP via email
       const mailOptions = {
-        from: '"Zin Store" zzzzlynx@gmail.com',
+        from: '"Buy & Sell" zzzzlynx@gmail.com',
         to: req.body.email,
         subject: "OTP Verification",
         text: `Your OTP code is: ${otp}. It expires in 10 minutes.`,

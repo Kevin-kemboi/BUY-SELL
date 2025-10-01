@@ -3,14 +3,14 @@ export default function About() {
     <div className="min-h-screen bg-dark-6 text-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold text-center mb-8">
-          About ZIN Store
+          About BUY
         </h1>
         <div className="space-y-3 text-gray-300">
           <p>
-            ZIN Store is a cutting-edge e-commerce platform dedicated to
-            bringing you the latest in technology and innovation. Founded in
-            2023, we've quickly become a go-to destination for tech enthusiasts
-            and early adopters.
+            BUY is a cutting-edge e-commerce platform dedicated to bringing you
+            the latest in products and innovation. Founded in 2023, we've
+            quickly become a go-to destination for enthusiasts and early
+            adopters across multiple categories.
           </p>
           <h2 className="text-xl font-semibold text-white mt-6">Our Mission</h2>
           <p>
@@ -43,11 +43,11 @@ export default function About() {
           <h2 className="text-xl font-semibold text-white mt-6">Contact Us</h2>
           <p>
             We're always here to help. If you have any questions, concerns, or
-            just want to chat about the latest tech, don't hesitate to reach out
-            to us at support@ZINstore.com or call us at 1-800-ZIN-TECH.
+            just want to chat, don't hesitate to reach out to us at
+            support@buy-demo.com or call us at 1-800-BUY-SHOP.
           </p>
           <p className="mt-8 text-sm text-gray-400">
-            ZIN Store - Bringing the Future to Your Doorstep
+            BUY - Bringing the Future to Your Doorstep
           </p>
         </div>
       </div>

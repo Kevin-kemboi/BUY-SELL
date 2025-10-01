@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { addItemToCart, getProductById } from "@/lib/api/api";
+import { mockProducts } from "@/lib/api/mockData";
 import { formUrlQuery } from "@/lib/utils";
 import { Loader, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -87,12 +88,20 @@ const ProductDetails = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const response = await getProductById(id);
-      if (response.success) {
-        setProduct(response.product);
+      try {
+        const response = await getProductById(id);
+        if (response && response.success) {
+          setProduct(response.product);
+          return;
+        }
+        // fallback to mock list by id or first item
+        const fallback = mockProducts.find(p => p._id === id) || mockProducts[0];
+        setProduct(fallback);
+      } catch (e) {
+        const fallback = mockProducts.find(p => p._id === id) || mockProducts[0];
+        setProduct(fallback);
       }
     };
-
     fetchProduct();
   }, [id]);
 

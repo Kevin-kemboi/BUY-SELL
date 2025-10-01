@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 
-const uploadPath = path.join(__dirname, "../../zin/public/uploads");
+const uploadPath = path.join(__dirname, "../../buyandsell/public/uploads");
 
 // Ensure the directory exists
 if (!fs.existsSync(uploadPath)) {

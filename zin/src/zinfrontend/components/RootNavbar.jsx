@@ -19,7 +19,9 @@ import { useDeviceWidth } from "../hooks/useDeviceWidth";
 import { useCart } from "../context/CartContext";
 
 const RootNavbar = () => {
-  const { isUserAuthenticated, userLogout } = useUserAuth();
+  const authCtx = useUserAuth();
+  const isUserAuthenticated = authCtx?.isUserAuthenticated || false;
+  const userLogout = authCtx?.userLogout || (() => {});
   const isMobile = useDeviceWidth();
   const { cartItems } = useCart();
 
@@ -32,7 +34,7 @@ const RootNavbar = () => {
         <Link to={`/`} className="flex  items-center gap-3 max-sm:gap-1">
           <img src="/icons/navbar.svg" className="w-11" />
           <h2 className="font-bold line-clamp-1 max-md:hidden max-sm:block">
-            ZIN STORE
+            BUY
           </h2>
         </Link>
         <div className=" flex max-sm:hidden items-center gap-3">

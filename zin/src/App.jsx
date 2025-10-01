@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { Suspense, lazy, useEffect, useState } from "react";
 import ScrollToTop from "./zinfrontend/components/ScrollToTop";
 import UserAuthProvider from "./zinfrontend/context/UserAuthProvider";
 import CartProvider from "./zinfrontend/context/CartContext";
@@ -6,34 +7,39 @@ import RootLayout from "./zinfrontend/_root/RootLayout";
 import Home from "./zinfrontend/_root/pages/Home";
 import ProductDetails from "./zinfrontend/components/ProductDetails";
 import AllProducts from "./zinfrontend/_root/pages/AllProducts";
-import FAQ from "./zinfrontend/components/FAQ";
-import PrivacyPolicy from "./zinfrontend/components/PrivacyPolicy";
-import ShippingReturnPolicy from "./zinfrontend/components/Shipping";
-import TermsConditions from "./zinfrontend/components/Terms";
-import About from "./zinfrontend/components/About";
-import UserAuthLayout from "./zinfrontend/_auth/UserAuthLayout";
-import UserLogin from "./zinfrontend/_auth/forms/UserLogin";
-import UserSignup from "./zinfrontend/_auth/forms/UserSignup";
-import Verification from "./zinfrontend/_auth/forms/Verification";
+// Lazy load static / rarely changed content pages to reduce initial bundle
+const FAQ = lazy(() => import("./zinfrontend/components/FAQ"));
+const PrivacyPolicy = lazy(() => import("./zinfrontend/components/PrivacyPolicy"));
+const ShippingReturnPolicy = lazy(() => import("./zinfrontend/components/Shipping"));
+const TermsConditions = lazy(() => import("./zinfrontend/components/Terms"));
+const About = lazy(() => import("./zinfrontend/components/About"));
+// Auth Pages
+const UserAuthLayout = lazy(() => import("./zinfrontend/_auth/UserAuthLayout"));
+const UserLogin = lazy(() => import("./zinfrontend/_auth/forms/UserLogin"));
+const UserSignup = lazy(() => import("./zinfrontend/_auth/forms/UserSignup"));
+const Verification = lazy(() => import("./zinfrontend/_auth/forms/Verification"));
+// Admin
 import AdminAuthProvider from "./zinadmin/context/AdminAuthProvider";
-import AdminAuthLayout from "./zinadmin/_auth/AdminAuthLayout";
-import AdminLogin from "./zinadmin/_auth/forms/AdminLogin";
-import AdminSignUp from "./zinadmin/_auth/forms/AdminSignUp";
-import AdminRootLayout from "./zinadmin/_root/AdminRootLayout";
-import AdminDashboard from "./zinadmin/_root/pages/AdminDashboard";
-import Product from "./zinadmin/_root/pages/Product";
-import AddProducts from "./zinadmin/_root/pages/AddProducts";
-import ProductList from "./zinadmin/components/ProductList";
-import ProductProfile from "./zinadmin/_root/pages/ProductProfile";
-import Users from "./zinadmin/_root/pages/Users";
-import Admins from "./zinadmin/_root/pages/Admins";
-import Configs from "./zinadmin/_root/pages/Configs";
-import AddVariant from "./zinadmin/_root/pages/AddVariant";
+const AdminAuthLayout = lazy(() => import("./zinadmin/_auth/AdminAuthLayout"));
+const AdminLogin = lazy(() => import("./zinadmin/_auth/forms/AdminLogin"));
+const AdminSignUp = lazy(() => import("./zinadmin/_auth/forms/AdminSignUp"));
+const AdminRootLayout = lazy(() => import("./zinadmin/_root/AdminRootLayout"));
+const AdminDashboard = lazy(() => import("./zinadmin/_root/pages/AdminDashboard"));
+const Product = lazy(() => import("./zinadmin/_root/pages/Product"));
+const AddProducts = lazy(() => import("./zinadmin/_root/pages/AddProducts"));
+const ProductList = lazy(() => import("./zinadmin/components/ProductList"));
+const ProductProfile = lazy(() => import("./zinadmin/_root/pages/ProductProfile"));
+const Users = lazy(() => import("./zinadmin/_root/pages/Users"));
+const Admins = lazy(() => import("./zinadmin/_root/pages/Admins"));
+const Configs = lazy(() => import("./zinadmin/_root/pages/Configs"));
+const AddVariant = lazy(() => import("./zinadmin/_root/pages/AddVariant"));
 
 function App() {
+  // Removed offline badge; still supports lazy loading. To re-enable badge, restore previous logic.
   return (
     <main className="min-h-screen min-w-screen bg-dark-2 text-light-2">
       <ScrollToTop />
+      <Suspense fallback={<div className="p-10 text-center">Loading...</div>}>
       <Routes>
         {/* Public Routes */}
         <Route
@@ -101,6 +107,7 @@ function App() {
           <Route path="/admin/updatevariant" element={<AddVariant />} />
         </Route>
       </Routes>
+      </Suspense>
     </main>
   );
 }

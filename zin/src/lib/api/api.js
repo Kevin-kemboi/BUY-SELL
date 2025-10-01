@@ -1,4 +1,28 @@
-const host = import.meta.env.VITE_BACKEND_HOST;
+const host = import.meta.env.VITE_BACKEND_HOST || 'http://localhost:5000';
+// Optional debug flag for verbose logging
+const DEBUG = import.meta.env.VITE_DEBUG === '1';
+// Explicit offline flag (manual) via env
+const OFFLINE = import.meta.env.VITE_OFFLINE === '1';
+// Dynamic fallback flag (auto-enabled if network fails)
+let dynamicOffline = OFFLINE;
+let mockLoaded = false;
+let mockProductsCache = [];
+let mockVariationsCache = [];
+
+async function ensureMock() {
+  if ((!OFFLINE && !dynamicOffline) || mockLoaded) return;
+  const mod = await import('./mockData.js');
+  mockProductsCache = mod.mockProducts;
+  mockVariationsCache = mod.mockVariations;
+  mockLoaded = true;
+}
+
+function activateDynamicOffline(reason) {
+  if (!dynamicOffline) {
+    console.warn('[api] Switching to offline mock mode:', reason);
+    dynamicOffline = true;
+  }
+}
 
 
 export const createAdminUser = async (params) => {
@@ -71,7 +95,7 @@ export const addProduct = async (formData) => {
       formData;
     const token = localStorage.getItem("Cookie");
     if (!token) {
-      console.log("Token not found");
+      if (DEBUG) console.warn("[api] admin addProduct: token not found");
       return false;
     }
     const response = await fetch(`${host}/admin/addproduct`, {
@@ -102,7 +126,7 @@ export const updateProduct = async (id, product) => {
   try {
     const token = localStorage.getItem("Cookie");
     if (!token) {
-      console.log("Token not found");
+      if (DEBUG) console.warn("[api] updateProduct: token not found");
       return false;
     }
 
@@ -138,20 +162,30 @@ export const updateProduct = async (id, product) => {
 
 export const getProducts = async (currentPage) => {
   try {
-    const response = await fetch(`${host}/admin/productslist`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Page: currentPage,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch products");
+    if (OFFLINE || dynamicOffline) {
+      await ensureMock();
+      return { success: true, products: mockProductsCache, totalCount: mockProductsCache.length };
     }
+    try {
+      const response = await fetch(`${host}/admin/productslist`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Page: currentPage,
+        },
+      });
 
-    const data = await response.json();
-    return data;
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      console.error('[api] getProducts network error, falling back to mock:', err.message);
+      activateDynamicOffline(err.message);
+      await ensureMock();
+      return { success: true, products: mockProductsCache, totalCount: mockProductsCache.length };
+    }
   } catch (error) {
     console.log(error);
     return { products: [] }; // Return an empty list if there is an error
@@ -161,21 +195,41 @@ export const getProducts = async (currentPage) => {
 export const getProductsFrontend = async (params = "") => {
   try {
     const { filter, sortBy } = params;
-    const response = await fetch(`${host}/admin/productslist`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Filter: filter || "",
-        Sort: sortBy || "",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch products");
+    if (OFFLINE || dynamicOffline) {
+      await ensureMock();
+      let filtered = [...mockProductsCache];
+      if (filter) filtered = filtered.filter(p => p.category === filter);
+      if (sortBy === 'latest') filtered.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+      if (sortBy === 'high') filtered.sort((a,b)=> b.price - a.price);
+      if (sortBy === 'low') filtered.sort((a,b)=> a.price - b.price);
+      return { success: true, products: filtered, totalCount: filtered.length };
     }
+    try {
+      const response = await fetch(`${host}/admin/productslist`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Filter: filter || "",
+          Sort: sortBy || "",
+        },
+      });
 
-    const data = await response.json();
-    return data;
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      console.error('[api] getProductsFrontend network error, falling back to mock:', err.message);
+      activateDynamicOffline(err.message);
+      await ensureMock();
+      let filtered = [...mockProductsCache];
+      if (filter) filtered = filtered.filter(p => p.category === filter);
+      if (sortBy === 'latest') filtered.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+      if (sortBy === 'high') filtered.sort((a,b)=> b.price - a.price);
+      if (sortBy === 'low') filtered.sort((a,b)=> a.price - b.price);
+      return { success: true, products: filtered, totalCount: filtered.length };
+    }
   } catch (error) {
     console.log(error);
     return { products: [] }; // Return an empty list if there is an error
@@ -184,6 +238,11 @@ export const getProductsFrontend = async (params = "") => {
 
 export const getProductById = async (productId) => {
   try {
+    if (OFFLINE || dynamicOffline) {
+      await ensureMock();
+      const prod = mockProductsCache.find(p => p._id === productId);
+      return prod ? { success: true, product: prod } : { success: false };
+    }
     const body = {
       id: productId,
     };
@@ -211,7 +270,7 @@ export const deleteProduct = async (id) => {
   try {
     const token = localStorage.getItem("Cookie");
     if (!token) {
-      console.log("Token not found");
+      if (DEBUG) console.warn("[api] deleteProduct: token not found");
       return false;
     }
 
@@ -270,6 +329,9 @@ export const confirmUser = async (token) => {
   try {
     if (!token) {
       return false;
+    }
+    if (OFFLINE || dynamicOffline) {
+      return { success: true, user: { _id: 'offline-user', name: 'Offline User' } };
     }
     const data = await fetch(`${host}/user/userinfo`, {
       method: "GET",
@@ -359,8 +421,12 @@ export const getCart = async () => {
   try {
     const token = localStorage.getItem("UserCookie");
     if (!token) {
-      console.log("Token not found");
+      if (DEBUG) console.warn("[api] getCart: user token not found");
       return false;
+    }
+    if (OFFLINE || dynamicOffline) {
+      await ensureMock();
+      return { success: true, cart: { items: mockProductsCache.slice(0,2).map(p=> ({ products: p, quantity: 1, itemTotal: p.price })), totalPrice: mockProductsCache.slice(0,2).reduce((a,c)=>a+c.price,0) } };
     }
     const data = await fetch(`${host}/cart/getcart`, {
       method: "GET",
@@ -385,7 +451,7 @@ export const addItemToCart = async (productId) => {
   try {
     const token = localStorage.getItem("UserCookie");
     if (!token) {
-      console.log("Token not found");
+      if (DEBUG) console.warn("[api] addItemToCart: user token not found");
       return false;
     }
 
@@ -418,7 +484,7 @@ export const removeItemFromCart = async (productId) => {
   try {
     const token = localStorage.getItem("UserCookie");
     if (!token) {
-      console.log("Token not found");
+      if (DEBUG) console.warn("[api] removeItemFromCart: user token not found");
       return false;
     }
 
@@ -449,6 +515,10 @@ export const removeItemFromCart = async (productId) => {
 
 export const getVariations = async () => {
   try {
+    if (OFFLINE || dynamicOffline) {
+      await ensureMock();
+      return { success: true, variations: mockVariationsCache };
+    }
     const data = await fetch(`${host}/variations`, {
       method: "GET",
     });
@@ -469,7 +539,7 @@ export const addVariant = async(values) => {
   try {
     const token = localStorage.getItem('Cookie');
     if(!token){
-      console.log('token not found')
+      if (DEBUG) console.warn('[api] addVariant: token not found');
       return false
     }
 

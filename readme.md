@@ -1,5 +1,8 @@
-<p style="display: flex; align-items: center;">
-  <img src="./zin/public/icons/navbar.svg" alt="React Logo" width="40" style="margin-right: 10px;" />
-</p>
+# Buy & Sell
 
-<img src="./zin/public/images/storeshowcase.png" alt=""  style="width: 100%" />
+![Buy & Sell Logo](./zin/public/icons/navbar.svg)
+
+![Showcase](./zin/public/images/storeshowcase.png)
+
+> Formerly branded as **Zin Store**. Project has been rebranded to **Buy & Sell**.
+"# BUY-SELL" 
